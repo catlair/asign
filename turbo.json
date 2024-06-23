@@ -1,13 +1,13 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "pipeline": {
+  "tasks": {
     "build": {
       "outputs": ["dist/**"],
-      "outputMode": "new-only"
+      "outputLogs": "new-only"
     },
     "schema": {
       "outputs": ["options*"],
-      "outputMode": "new-only",
+      "outputLogs": "new-only",
       "inputs": ["core/**/typed.ts"]
     },
     "test": {}
