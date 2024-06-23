@@ -21,6 +21,10 @@ export const config = z.object({
     enable: z.boolean().default(true).optional().describe('是否开启该功能'),
   }).optional().describe('AI 红包'),
   backupWaitTime: z.number().default(20).optional().describe('备份等待时间（秒）'),
+  exchange: z.object({
+    enable: z.boolean().default(false).optional().describe('是否开启该功能'),
+    prizeIds: z.array(z.number()).optional().describe('奖品 ID'),
+  }).optional().describe('兑换'),
 }).describe('中国移动云盘配置')
 
 const types = {

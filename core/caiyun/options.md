@@ -65,29 +65,52 @@ cookie authorization 字段
 
 备份等待时间（秒）
 
+### `exchange`
+
+#### `enable`
+
+- **类型**: `布尔值`
+- **默认值**: `false`
+
+是否开启该功能
+
+#### `prizeIds`
+
+- **类型**: `数组`
+
+奖品 ID
+
 ### 示例
 
 ```json
 {
   "caiyun": [
     {
-      "auth": "aegrotatio",
+      "auth": "territo",
       "shake": {
         "enable": true,
-        "num": 2903637084864512,
-        "delay": 8549206916595712
+        "num": 4971599373533184,
+        "delay": 46753917173760
       },
       "garden": {
-        "enable": false,
-        "digest": "perferendisOnwhevQNWlrOOADfHzXpC",
+        "enable": true,
+        "digest": "minimataNlYHrOePjOMDFqMLuCEhUFRI",
         "inviteCodes": [
-          "utilis"
+          "vetus",
+          "asperiores"
         ]
       },
       "aiRedPack": {
         "enable": true
       },
-      "backupWaitTime": 20
+      "backupWaitTime": 616626519015424,
+      "exchange": {
+        "enable": false,
+        "prizeIds": [
+          3323554999304192,
+          1781928606826496
+        ]
+      }
     }
   ]
 }
@@ -110,6 +133,10 @@ cookie authorization 字段
   "aiRedPack": {
     "enable": true
   },
-  "backupWaitTime": 20
+  "backupWaitTime": 20,
+  "exchange": {
+    "enable": false,
+    "prizeIds": []
+  }
 }
 ```

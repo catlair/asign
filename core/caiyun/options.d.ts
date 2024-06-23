@@ -53,4 +53,17 @@ export interface Caiyun {
    * 备份等待时间（秒）
    */
   backupWaitTime?: number
+  /**
+   * 兑换
+   */
+  exchange?: {
+    /**
+     * 是否开启该功能
+     */
+    enable?: boolean
+    /**
+     * 奖品 ID
+     */
+    prizeIds?: number[]
+  }
 }

@@ -1,5 +1,6 @@
 import type { Http } from '@asign/types'
 import type { BaseType } from '../types.js'
+import type { ExchangeList, ExchangeResult, ReceivePrize } from '../types/exchange.js'
 
 type ReceiveTaskExpansion = BaseType<{
   cloudCount: number
@@ -25,6 +26,19 @@ export function createSignInApi(http: Http) {
       return http.get<ReceiveTaskExpansion>(
         `${caiyunUrl}page/receiveTaskExpansion?acceptDate=${acceptDate}`,
       )
+    },
+    exchange(prizeId: string | number) {
+      return http.get<ExchangeResult>(
+        `${caiyunUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=11.0.1&smsCode=`,
+      )
+    },
+    receivePrizeDetails(prizeId: string | number) {
+      return http.get<ReceivePrize>(
+        `${caiyunUrl}page/receivePrizeDetails?prizeId=${prizeId}&marketId=sign_in_3_ex`,
+      )
+    },
+    exchangeList() {
+      return http.get<ExchangeList>(`${caiyunUrl}page/exchangeList`)
     },
   }
 }

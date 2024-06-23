@@ -89,6 +89,7 @@ async function signInMulti($: M) {
 async function signIn($: M) {
   const { todaySignIn, total, toReceive, curMonthBackup, curMonthBackupSignAccept } = await signInApi($)
   $.logger.info(`当前云朵${total}${toReceive ? `，待领取${toReceive}` : ''}`)
+  $.store.totalCloud = total
   if (curMonthBackup && !curMonthBackupSignAccept) {
     await signInMulti($)
   }
@@ -706,13 +707,13 @@ export async function run($: M) {
 /**
  * 兼容旧配置，现在只要求配置 auth （且 auth 是老版本的 token）
  */
-export function getOldConfig(config: any) {
+export function handleOldConfig(config: any) {
   const isAuthToken = (str: string) => str.includes('|')
   // 只有 token
   if (config.token && !config.auth) {
     config.auth = config.token
     config.token = undefined
-    return
+    return true
   }
   // 只有 auth
   if (config.auth && !config.token) {
@@ -721,7 +722,7 @@ export function getOldConfig(config: any) {
   // token 和 auth 都有
   if (config.token && config.auth) {
     config.auth = isAuthToken(config.auth) ? config.token : config.auth
-    return
+    return true
   }
 }
 
@@ -750,7 +751,6 @@ export async function createNewAuth($: M) {
   const token = await refreshToken($)
   if (token) {
     return Buffer.from(
-      // @ts-ignore
       `${config.platform}:${config.phone}:${token}`,
     ).toString('base64')
   }

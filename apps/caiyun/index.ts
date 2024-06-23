@@ -3,7 +3,7 @@ import {
   createGardenApi,
   createNewAuth,
   getJwtToken,
-  getOldConfig,
+  handleOldConfig,
   type M,
   run as runCore,
 } from '@asign/caiyun-core'
@@ -28,7 +28,7 @@ import { myMD5 } from './utils/md5.js'
 export type Config = M['config']
 export type Option = { pushData?: LoggerPushData[] }
 
-export async function main(
+export async function init(
   config: Config,
   localStorage: M['localStorage'] = {},
   option?: Option,
@@ -96,6 +96,20 @@ export async function main(
   logger.info(`==============`)
   logger.info(`登录账号【${config.phone}】`)
   jwtToken = await getJwtToken($)
+
+  return {
+    $,
+    logger,
+    jwtToken,
+  }
+}
+
+export async function main(
+  config: Config,
+  localStorage: M['localStorage'] = {},
+  option?: Option,
+) {
+  const { $, logger, jwtToken } = await init(config, localStorage, option)
   if (!jwtToken) return
 
   await runCore($)
@@ -132,7 +146,9 @@ export async function run(inputPath?: string) {
 
   for (let index = 0; index < caiyun.length; index++) {
     const c = caiyun[index]
-    getOldConfig(c)
+    if (handleOldConfig(c)) {
+      logger.warn('auth 配置方式过旧，请及时修改，下个版本将不再兼容')
+    }
     if (!c.auth) {
       logger.error('该配置中不存在 auth')
       continue

@@ -29,7 +29,7 @@ export async function request<T extends (...args: any[]) => any>(
     const { code, message, msg, result } = await api(...args)
     if (code !== 0) {
       $.logger.fatal(`${name}失败`, code, message || msg)
-      return
+      return typeof options === 'object' ? options.isArray === false ? {} : [] : {}
     }
     return result
   } catch (error) {

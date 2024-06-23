@@ -75,10 +75,12 @@ async function _task($: M, sid: string) {
   if (prizeName === -1) return true
   if (typeof prizeName === 'number') return
 
-  $.logger.success('获得', prizeName)
+  if (prizeName !== '谢谢参与') {
+    $.logger.success('获得', prizeName)
+    return true
+  }
 
-  // only once
-  if (prizeName !== '谢谢参与') return true
+  $.logger.debug('获得', prizeName)
 }
 
 async function init($: M) {

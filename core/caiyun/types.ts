@@ -13,6 +13,7 @@ export interface M {
     phone: string
     token: string
     inviter?: string
+    platform?: string
   }
   DATA: {
     baseUA: string
@@ -24,6 +25,8 @@ export interface M {
   store: {
     files?: string[]
     curMonthBackup?: boolean
+    /** 云朵 */
+    totalCloud?: number
     [key: string]: any
   }
   localStorage: {
