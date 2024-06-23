@@ -156,3 +156,228 @@ exports.handler = async function (event, context, callback) {
 ### APP 版
 
 使用抓包工具找到请求头中的 Authorization 就行了
+
+## 兑换
+
+`Object.entries(a.result).flatMap(x => x[1]).map(({prizeId,prizeName,pOrder,groupId}) => ({prizeId,prizeName,pOrder,groupId}))`
+
+```json
+[
+  {
+    "prizeId": 211228001,
+    "prizeName": "100G个人云空间月卡",
+    "pOrder": 50,
+    "groupId": 0
+  },
+  {
+    "prizeId": 211228003,
+    "prizeName": "1T个人云空间月卡",
+    "pOrder": 400,
+    "groupId": 0
+  },
+  {
+    "prizeId": 211228002,
+    "prizeName": "100G个人云空间年卡",
+    "pOrder": 600,
+    "groupId": 0
+  },
+  {
+    "prizeId": 211228004,
+    "prizeName": "1T个人云空间年卡",
+    "pOrder": 4800,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240531005,
+    "prizeName": "移动云盘白银会员月卡",
+    "pOrder": 500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231031003,
+    "prizeName": "移动云盘白银会员季卡",
+    "pOrder": 1500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 211228005,
+    "prizeName": "移动云盘白银会员年卡",
+    "pOrder": 6000,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240531006,
+    "prizeName": "移动云盘黄金会员月卡",
+    "pOrder": 1000,
+    "groupId": 0
+  },
+  {
+    "prizeId": 220915009,
+    "prizeName": "移动云盘黄金会员季卡",
+    "pOrder": 3000,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231031002,
+    "prizeName": "移动云盘黄金会员年卡",
+    "pOrder": 12000,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240531007,
+    "prizeName": "移动云盘钻石会员月卡",
+    "pOrder": 2500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231031007,
+    "prizeName": "移动云盘钻石会员季卡",
+    "pOrder": 7500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240207001,
+    "prizeName": "移动云盘白银畅享会员月卡",
+    "pOrder": 1499,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231031008,
+    "prizeName": "移动云盘钻石会员年卡",
+    "pOrder": 30000,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240205002,
+    "prizeName": "云手机专业版会员月卡",
+    "pOrder": 1900,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240205004,
+    "prizeName": "美图秀秀粉钻VIP月卡",
+    "pOrder": 2500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 240205003,
+    "prizeName": "美颜相机紫钻VIP月卡",
+    "pOrder": 2500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231228027,
+    "prizeName": "腾讯视频周卡",
+    "pOrder": 1500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231228028,
+    "prizeName": "爱奇艺视频周卡",
+    "pOrder": 1500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231228029,
+    "prizeName": "优酷视频周卡",
+    "pOrder": 1500,
+    "groupId": 0
+  },
+  {
+    "prizeId": 231228011,
+    "prizeName": "爱奇艺月卡",
+    "pOrder": 3000,
+    "groupId": 1
+  },
+  {
+    "prizeId": 231228012,
+    "prizeName": "腾讯视频月卡",
+    "pOrder": 3000,
+    "groupId": 1
+  },
+  {
+    "prizeId": 231228013,
+    "prizeName": "优酷视频月卡",
+    "pOrder": 3000,
+    "groupId": 1
+  },
+  {
+    "prizeId": 231228014,
+    "prizeName": "芒果TV月卡",
+    "pOrder": 3000,
+    "groupId": 1
+  },
+  {
+    "prizeId": 231228015,
+    "prizeName": "哔哩哔哩会员月卡",
+    "pOrder": 2500,
+    "groupId": 1
+  },
+  {
+    "prizeId": 231228016,
+    "prizeName": "酷狗音乐月卡",
+    "pOrder": 1800,
+    "groupId": 2
+  },
+  {
+    "prizeId": 231228017,
+    "prizeName": "QQ音乐月卡",
+    "pOrder": 1500,
+    "groupId": 2
+  },
+  {
+    "prizeId": 231228018,
+    "prizeName": "网易云音乐月卡",
+    "pOrder": 1800,
+    "groupId": 2
+  },
+  {
+    "prizeId": 231228019,
+    "prizeName": "饿了么超级会员月卡",
+    "pOrder": 1750,
+    "groupId": 5
+  },
+  {
+    "prizeId": 231228020,
+    "prizeName": "美团外卖15元通用红包",
+    "pOrder": 2500,
+    "groupId": 5
+  },
+  {
+    "prizeId": 231228021,
+    "prizeName": "美团外卖10元通用红包",
+    "pOrder": 1500,
+    "groupId": 5
+  },
+  {
+    "prizeId": 231228022,
+    "prizeName": "美团外卖5元通用红包",
+    "pOrder": 1000,
+    "groupId": 5
+  },
+  {
+    "prizeId": 231228025,
+    "prizeName": "菜鸟裹裹5元寄件券",
+    "pOrder": 500,
+    "groupId": 7
+  },
+  {
+    "prizeId": 231228026,
+    "prizeName": "菜鸟裹裹10元寄件券",
+    "pOrder": 1000,
+    "groupId": 7
+  },
+  {
+    "prizeId": 240112007,
+    "prizeName": "畅影VIP单次转存券",
+    "pOrder": 250,
+    "groupId": 8
+  },
+  {
+    "prizeId": 240117001,
+    "prizeName": "畅影SVIP单次转存券",
+    "pOrder": 450,
+    "groupId": 8
+  }
+]
+```
