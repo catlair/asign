@@ -1,20 +1,24 @@
 import type { M } from '../types.js'
 import { request } from '../utils/index.js'
 
-export async function exchangeTask($: M) {
+export async function exchangeTask($: M, prizeIds: number[]) {
   $.logger.start(`------【兑换月卡】------`)
+  let result: string
   try {
-    const prizeIds = $.config.exchange.prizeIds
     if (!prizeIds || !prizeIds.length) return
 
     const list = await getExchangeList($)
     for (const prizeId of prizeIds) {
-      await exchange($, prizeId, list.find(x => x.prizeId === prizeId))
-      await $.sleep(1000)
+      const item = list.find(x => x.prizeId === prizeId)
+      if (await exchange($, prizeId, item)) {
+        result = `兑换${item.prizeName}成功`
+      }
+      await $.sleep(300)
     }
   } catch (error) {
     $.logger.error('兑换月卡', error)
   }
+  return result
 }
 
 async function getExchangeList($: M) {
@@ -33,8 +37,7 @@ async function exchangeApi($: M, prizeId: number, prizeName: string) {
 
     if (code === 2301) {
       $.logger.fail(`本月已经兑换过了`)
-
-      return true
+      return
     }
     $.logger.fail(`兑换${prizeName}失败，${code}，${msg}`)
   } catch (error) {
@@ -66,5 +69,5 @@ async function exchange(
 
   $.logger.debug(`${prizeName}，开始兑换`)
 
-  await exchangeApi($, prizeId, prizeName)
+  return await exchangeApi($, prizeId, prizeName)
 }

@@ -10,6 +10,7 @@ import type { M } from './types.js'
 import { getGroupName, getMarketName, request } from './utils/index.js'
 
 export * from './api.js'
+export { exchangeTask } from './service/exchange.js'
 export * from './types.js'
 
 type TaskItem = TaskList['result'][keyof TaskList['result']][number]

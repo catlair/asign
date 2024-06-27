@@ -9,7 +9,7 @@ import {
 } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
 import { getAuthInfo } from '@asign/utils-pure'
-import { loadConfig, rewriteConfigSync } from '@asunajs/conf'
+import { rewriteConfigSync } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
 import {
@@ -27,6 +27,7 @@ import { myMD5 } from './utils/md5.js'
 
 export type Config = M['config']
 export type Option = { pushData?: LoggerPushData[] }
+export { sleep }
 
 export async function init(
   config: Config,
@@ -126,26 +127,17 @@ export async function main(
  * @param inputPath 配置文件地址
  */
 export async function run(inputPath?: string) {
-  const { config, path } = loadConfig<{
-    caiyun: Config[]
-    message?: Record<string, any>
-  }>(inputPath)
-
-  if (!config) {
-    throw new Error('配置文件为空')
-  }
+  const { config, path, message } = await loadConfig(inputPath)
 
   const logger = await createLogger()
 
-  const caiyun = config.caiyun
-
-  if (!caiyun || !caiyun.length) return logger.error('未找到配置文件/变量')
+  if (!config || !config.length) return logger.error('未找到配置文件/变量')
 
   const pushData: LoggerPushData[] = [{ level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' }]
   const ls = getLocalStorage(path, 'caiyun')
 
-  for (let index = 0; index < caiyun.length; index++) {
-    const c = caiyun[index]
+  for (let index = 0; index < config.length; index++) {
+    const c = config[index]
     if (handleOldConfig(c)) {
       logger.warn('auth 配置方式过旧，请及时修改，下个版本将不再兼容')
     }
@@ -178,8 +170,68 @@ export async function run(inputPath?: string) {
 
   await pushMessage({
     pushData,
-    message: config.message,
+    message,
     sendNotify,
     createRequest,
   })
+}
+
+export async function useExchange(config: Config, message: Record<string, any>) {
+  const logger = await createLogger()
+  const pushData = [{ level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' }]
+
+  try {
+    const authInfo = getAuthInfo(config.auth)
+    const { $, jwtToken } = await init(
+      {
+        ...config,
+        ...authInfo,
+      },
+      {},
+      { pushData },
+    )
+    if (!jwtToken) return
+
+    const { exchangeTask } = await import('@asign/caiyun-core')
+
+    const sendMessage = (msg?: string) => {
+      message.title = msg || message.title
+      return pushMessage({
+        pushData,
+        message,
+        sendNotify,
+        createRequest,
+      })
+    }
+
+    return {
+      exchange: async (ids: number[]) => {
+        const msg = await exchangeTask($, ids)
+        if (msg) {
+          sendMessage(msg).catch(err => logger.error(err))
+        }
+      },
+      sendMessage,
+    }
+  } catch (error) {
+    logger.error(error)
+  }
+}
+
+export async function loadConfig(inputPath?: string) {
+  const { loadConfig: _lc } = await import('@asunajs/conf')
+  const r = _lc<{
+    caiyun: Config[]
+    message?: Record<string, any>
+  }>(inputPath)
+
+  if (!r.config) {
+    throw new Error('配置文件为空')
+  }
+
+  return {
+    config: r.config.caiyun,
+    message: r.config.message,
+    path: r.path,
+  }
 }

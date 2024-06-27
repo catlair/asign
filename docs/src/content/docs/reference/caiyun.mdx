@@ -5,6 +5,11 @@ sidebar:
   order: 1
 ---
 
+import {
+  Tabs,
+  TabItem,
+} from '@astrojs/starlight/components'
+
 :::caution[特别说明]
 暂时以日常任务为主，请**每月至少登录一次**移动云盘 app 和 139 邮箱 app（记住，是两个 APP 不是其中一个），手动完成必要的任务。
 
@@ -159,7 +164,53 @@ exports.handler = async function (event, context, callback) {
 
 ## 兑换
 
-`Object.entries(a.result).flatMap(x => x[1]).map(({prizeId,prizeName,pOrder,groupId}) => ({prizeId,prizeName,pOrder,groupId}))`
+<Tabs>
+
+<TabItem label="esm">
+    
+```js
+import { loadConfig, useExchange } from '@asunajs/caiyun';
+
+const { config, message } = await loadConfig();
+
+/** 使用配置中的第一个账号 */
+const { exchange, sendMessage } = await useExchange(config[0], message);
+
+// 用网易云举例，此处为 id 数组（可多个）
+await exchange([231228018]);
+
+// 发送推送，如果兑换成功默认发送一次
+await sendMessage();
+```
+
+</TabItem>
+
+<TabItem label="cjs">
+
+```js
+const { loadConfig, useExchange } = require('@asunajs/caiyun');
+
+(async () => {
+  const { config, message } = await loadConfig()
+
+  /** 使用配置中的第一个账号 */
+  const { exchange, sendMessage } = await useExchange(config[0], message)
+
+  // 用网易云举例，此处为 id 数组（可多个）
+  await exchange([231228018])
+
+  // 发送推送，如果兑换成功默认发送一次
+  await sendMessage()
+
+})();
+
+```
+
+  </TabItem>
+
+</Tabs>
+
+### 兑换名称与ID
 
 ```json
 [
@@ -381,3 +432,4 @@ exports.handler = async function (event, context, callback) {
   }
 ]
 ```
+````
