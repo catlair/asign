@@ -42,10 +42,10 @@ export const emailTaskList = {
   /**
    * 体验“PDF转换”功能
    */
-  1014: {
-    id: 1014,
-    group: 'month',
-  },
+  // 1014: {
+  //   id: 1014,
+  //   group: 'month',
+  // },
 
   /**
    * 体验“云笔记”功能
@@ -103,10 +103,10 @@ export const cloudTaskList = {
   /**
    * 使用PC客户端
    */
-  113: {
-    id: 113,
-    group: 'month',
-  },
+  // 113: {
+  //   id: 113,
+  //   group: 'month',
+  // },
 
   /**
    * 浏览APP-我的-活动中心
@@ -119,10 +119,10 @@ export const cloudTaskList = {
   /**
    * 从固定入口访问云朵中心
    */
-  409: {
-    id: 409,
-    group: 'month',
-  },
+  // 409: {
+  //   id: 409,
+  //   group: 'month',
+  // },
 
   /**
    * 去发现频道看大片

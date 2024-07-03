@@ -8,7 +8,7 @@ import {
   run as runCore,
 } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
-import { getAuthInfo } from '@asign/utils-pure'
+import { getAuthInfo, sleepSync } from '@asign/utils-pure'
 import { rewriteConfigSync } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
@@ -196,6 +196,7 @@ export async function useExchange(config: Config, message: Record<string, any>) 
 
     const sendMessage = (msg?: string) => {
       message.title = msg || message.title
+      message.onlyError = false
       return pushMessage({
         pushData,
         message,
@@ -208,10 +209,18 @@ export async function useExchange(config: Config, message: Record<string, any>) 
       exchange: async (ids: number[]) => {
         const msg = await exchangeTask($, ids)
         if (msg) {
-          sendMessage(msg).catch(err => logger.error(err))
+          await sendMessage(msg).catch(err => logger.error(err))
         }
       },
       sendMessage,
+      /** 等待到 0 点 */
+      waitTo24Hour: () => {
+        const now = new Date()
+        const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0, 100)
+        const time = nextDay.getTime() - now.getTime()
+        if (time > 120000) return
+        return sleepSync(time)
+      },
     }
   } catch (error) {
     logger.error(error)

@@ -5,10 +5,7 @@ sidebar:
   order: 1
 ---
 
-import {
-  Tabs,
-  TabItem,
-} from '@astrojs/starlight/components'
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 :::caution[特别说明]
 暂时以日常任务为主，请**每月至少登录一次**移动云盘 app 和 139 邮箱 app（记住，是两个 APP 不是其中一个），手动完成必要的任务。
@@ -50,14 +47,14 @@ WPS 版被 Github 上某个项目引用，但并未注明出处，无所谓了
 - [x] 每月任务-邮箱 APP-可直接完成的
 - [x] 热门任务-分享文件每月 7 次
 - [x] 邮箱 APP 开盲盒
-- [x] 每月任务-PC 端登录
+- [ ] 每月任务-PC 端登录（已失效）
 - [x] 云朵大作战（仅提供部分功能）
 - [x] 每月分享 20 次
 - [x] 每月上传 1 G
 - [x] AI 猜字谜
 - [x] 自动领取每月备份奖励（APP）
 - [x] 自动领取每月通知奖励（APP）
-- [ ] 自动领取每月备份奖励（邮箱）
+- [ ] 自动领取每月通知奖励（邮箱）
 - [x] 开启备份后进行一次签到奖励翻倍
 - [ ] 更多每月任务适配中，敬请不要期待
 
@@ -164,6 +161,10 @@ exports.handler = async function (event, context, callback) {
 
 ## 兑换
 
+兑换的 id 在后面的 json 中找到。
+
+此脚本可设置在 23:59 之后 24 点之前运行，`waitTo24Hour` 函数会等待到 24 点。
+
 <Tabs>
 
 <TabItem label="esm">
@@ -171,16 +172,19 @@ exports.handler = async function (event, context, callback) {
 ```js
 import { loadConfig, useExchange } from '@asunajs/caiyun';
 
-const { config, message } = await loadConfig();
+const { config, message } = await loadConfig()
 
 /** 使用配置中的第一个账号 */
-const { exchange, sendMessage } = await useExchange(config[0], message);
+const { exchange, waitTo24Hour, sendMessage } = await useExchange(config[0], message)
+
+// 等待到 24 点（最大等待 2 分钟）
+waitTo24Hour()
 
 // 用网易云举例，此处为 id 数组（可多个）
-await exchange([231228018]);
+await exchange([231228018])
 
 // 发送推送，如果兑换成功默认发送一次
-await sendMessage();
+// await sendMessage()
 ```
 
 </TabItem>
@@ -194,13 +198,16 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
   const { config, message } = await loadConfig()
 
   /** 使用配置中的第一个账号 */
-  const { exchange, sendMessage } = await useExchange(config[0], message)
+  const { exchange, waitTo24Hour, sendMessage } = await useExchange(config[0], message)
+
+  // 等待到 24 点（最大等待 2 分钟）
+  waitTo24Hour()
 
   // 用网易云举例，此处为 id 数组（可多个）
   await exchange([231228018])
 
   // 发送推送，如果兑换成功默认发送一次
-  await sendMessage()
+  // await sendMessage()
 
 })();
 
@@ -210,7 +217,7 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
 
 </Tabs>
 
-### 兑换名称与ID
+### 兑换名称与 ID
 
 ```json
 [
@@ -432,4 +439,7 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
   }
 ]
 ```
-````
+
+```
+
+```

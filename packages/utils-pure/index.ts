@@ -169,3 +169,11 @@ export function getInToday(timestamp: string | number | Date) {
   const time = getBeijingTime(timestamp)
   return today.day === time.day && today.month === time.month && today.year === time.year
 }
+
+export function sleepSync(time: number) {
+  const start = Date.now()
+  while (Date.now() - start < time) {
+    // do nothing
+  }
+  return time
+}

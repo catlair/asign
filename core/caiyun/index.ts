@@ -1,4 +1,4 @@
-import { getXmlElement, randomHex, setStoreArray } from '@asign/utils-pure'
+import { getXmlElement, randomHex, setStoreArray, sleepSync } from '@asign/utils-pure'
 import { SKIP_TASK_LIST, TASK_LIST } from './constant/taskList.js'
 import { backupGiftTask } from './service/backupGift.js'
 import { gardenTask } from './service/garden.js'
@@ -279,7 +279,11 @@ async function beiyong1UploadImg($: M) {
 
 function getTaskRunner($: M) {
   return {
-    113: refreshToken,
+    113: async ($: M) => {
+      await refreshToken($)
+      sleepSync(1000)
+      await uploadFileDaily($)
+    },
     106: uploadFileDaily,
     107: createNoteDaily,
     434: shareTime,

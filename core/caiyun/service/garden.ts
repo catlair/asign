@@ -244,7 +244,7 @@ async function _backupFriend($: M, inviteCode: string | number) {
     $.logger.debug(`助力：${inviteCode}`)
     const { success, msg, result } = await $.gardenApi.inviteFriend(inviteCode, 'backup')
     if (success) {
-      if (result.code === 0) {
+      if (result.code === 1) {
         $.logger.success(result.msg)
         return
       }
