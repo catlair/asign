@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.2.17
+
+### Patch Changes
+
+- [`da9536f`](https://github.com/yuiasn/asuna/commit/da9536f2d73b47ec97a70b01e7b478ff49a52761) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 兑换
+
 ## 0.2.16
 
 ### Patch Changes
