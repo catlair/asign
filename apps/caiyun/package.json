@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
