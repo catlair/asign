@@ -65,20 +65,13 @@ cookie authorization 字段
 
 备份等待时间（秒）
 
-### `exchange`
+### `tasks`
 
-#### `enable`
+#### `shareFile`
 
-- **类型**: `布尔值`
-- **默认值**: `false`
+- **类型**: `字符串`
 
-是否开启该功能
-
-#### `prizeIds`
-
-- **类型**: `数组`
-
-奖品 ID
+分享任务默认使用的文件 id
 
 ### 示例
 
@@ -86,30 +79,25 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "territo",
+      "auth": "adamo",
       "shake": {
         "enable": true,
-        "num": 4971599373533184,
-        "delay": 46753917173760
+        "num": 8323347119079424,
+        "delay": 2
       },
       "garden": {
         "enable": true,
-        "digest": "minimataNlYHrOePjOMDFqMLuCEhUFRI",
+        "digest": "202CB962AC59075B964B07152D234B70",
         "inviteCodes": [
-          "vetus",
-          "asperiores"
+          "absque"
         ]
       },
       "aiRedPack": {
         "enable": true
       },
-      "backupWaitTime": 616626519015424,
-      "exchange": {
-        "enable": false,
-        "prizeIds": [
-          3323554999304192,
-          1781928606826496
-        ]
+      "backupWaitTime": 20,
+      "tasks": {
+        "shareFile": "hic"
       }
     }
   ]
@@ -134,9 +122,6 @@ cookie authorization 字段
     "enable": true
   },
   "backupWaitTime": 20,
-  "exchange": {
-    "enable": false,
-    "prizeIds": []
-  }
+  "tasks": {}
 }
 ```

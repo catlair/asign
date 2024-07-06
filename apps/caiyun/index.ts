@@ -192,7 +192,7 @@ export async function useExchange(config: Config, message: Record<string, any>) 
     )
     if (!jwtToken) return
 
-    const { exchangeTask } = await import('@asign/caiyun-core')
+    const { exchangeTask, exchangeApi } = await import('@asign/caiyun-core')
 
     const sendMessage = (msg?: string) => {
       message.title = msg || message.title
@@ -221,6 +221,8 @@ export async function useExchange(config: Config, message: Record<string, any>) 
         if (time > 120000) return
         return sleepSync(time)
       },
+      /** 快速兑换 */
+      exchangeQuickly: async (prizeId: number, prizeName?: string) => exchangeApi($, prizeId, prizeName),
     }
   } catch (error) {
     logger.error(error)

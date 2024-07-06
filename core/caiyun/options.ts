@@ -13,8 +13,5 @@ export const defuConfig = {
     enable: true,
   },
   backupWaitTime: 20,
-  exchange: {
-    enable: false,
-    prizeIds: [],
-  },
+  tasks: {},
 }

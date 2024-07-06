@@ -10,7 +10,7 @@ import type { M } from './types.js'
 import { getGroupName, getMarketName, request } from './utils/index.js'
 
 export * from './api.js'
-export { exchangeTask } from './service/exchange.js'
+export { exchangeApi, exchangeTask } from './service/exchange.js'
 export * from './types.js'
 
 type TaskItem = TaskList['result'][keyof TaskList['result']][number]
@@ -229,13 +229,14 @@ async function _clickTask($: M, id: number, currstep = 0) {
 
 async function shareTime($: M) {
   try {
-    const files = $.store.files
+    const shareFile = $.config.tasks.shareFile
+    const files = shareFile ? [shareFile] : $.store.files
     if (!files || !files[0]) {
-      $.logger.fail(`未获取到文件列表，跳过分享任务`)
+      $.logger.debug(`未获取到文件列表，跳过分享任务（不是错误，再反馈拉黑了）`)
       return
     }
     $.logger.debug('分享', files[0])
-    const { code, message } = await $.api.getOutLink(
+    const { code, message, data } = await $.api.getOutLink(
       $.config.phone,
       [files[0]],
       '',
@@ -244,7 +245,7 @@ async function shareTime($: M) {
       $.logger.success(`分享文件成功`)
       return true
     }
-    $.logger.fail(`分享文件失败`, code, message)
+    $.logger.fail(`分享文件失败`, code, message, data.result)
   } catch (error) {
     $.logger.error(`分享文件异常`, error)
   }

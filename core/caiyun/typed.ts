@@ -21,6 +21,9 @@ export const config = z.object({
     enable: z.boolean().default(true).optional().describe('是否开启该功能'),
   }).optional().describe('AI 红包'),
   backupWaitTime: z.number().default(20).optional().describe('备份等待时间（秒）'),
+  tasks: z.object({
+    shareFile: z.string().optional().describe('分享任务默认使用的文件 id'),
+  }),
 }).describe('中国移动云盘配置')
 
 const types = {

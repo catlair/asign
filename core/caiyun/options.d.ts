@@ -53,17 +53,10 @@ export interface Caiyun {
    * 备份等待时间（秒）
    */
   backupWaitTime?: number
-  /**
-   * 兑换
-   */
-  exchange?: {
+  tasks: {
     /**
-     * 是否开启该功能
+     * 分享任务默认使用的文件 id
      */
-    enable?: boolean
-    /**
-     * 奖品 ID
-     */
-    prizeIds?: number[]
+    shareFile?: string
   }
 }

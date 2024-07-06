@@ -27,7 +27,7 @@ async function getExchangeList($: M) {
   )
 }
 
-async function exchangeApi($: M, prizeId: number, prizeName: string) {
+export async function exchangeApi($: M, prizeId: number, prizeName?: string) {
   try {
     const { code, msg } = await $.api.exchange(prizeId)
     if (code === 0) {
