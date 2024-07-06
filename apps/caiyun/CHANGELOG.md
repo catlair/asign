@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.2.18
+
+### Patch Changes
+
+- [`415e29e`](https://github.com/yuiasn/asuna/commit/415e29e47f585fb91cb7289c6701cc132bf35c58) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 分享文件可主动配置
+
 ## 0.2.17
 
 ### Patch Changes
