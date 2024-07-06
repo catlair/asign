@@ -206,6 +206,9 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
   // 用网易云举例，此处为 id 数组（可多个）
   await exchange([231228018])
 
+  // 快速兑换，如果需要自定义逻辑，可以使用这个 api，在兑换前不会有校验
+  // await exchangeQuickly(231228018, '这是网易云')
+
   // 发送推送，如果兑换成功默认发送一次
   // await sendMessage()
 
@@ -218,6 +221,9 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
 </Tabs>
 
 ### 兑换名称与 ID
+
+<details>
+<summary>兑换名称与 ID、价格、分组关系</summary>
 
 ```json
 [
@@ -440,6 +446,5 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
 ]
 ```
 
-```
+</details>
 
-```
