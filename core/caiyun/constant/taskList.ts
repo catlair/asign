@@ -103,10 +103,10 @@ export const cloudTaskList = {
   /**
    * 使用PC客户端
    */
-  // 113: {
-  //   id: 113,
-  //   group: 'month',
-  // },
+  113: {
+    id: 113,
+    group: 'month',
+  },
 
   /**
    * 浏览APP-我的-活动中心

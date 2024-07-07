@@ -252,14 +252,14 @@ async function shareTime($: M) {
 }
 
 async function getAppTaskList($: M, marketname: 'sign_in_3' | 'newsign_139mail' = 'sign_in_3') {
-  const { month = [], day = [], time = [], new: new_ = [], beiyong1 = [] } = await request(
+  const data = await request(
     $,
     $.api.getTaskList,
     '获取任务列表',
     marketname,
   )
 
-  return [...month, ...day, ...time, ...new_, ...beiyong1]
+  return Object.values(data).flat()
 }
 
 async function getAllAppTaskList($: M) {
@@ -283,7 +283,7 @@ function getTaskRunner($: M) {
     113: async ($: M) => {
       await refreshToken($)
       sleepSync(1000)
-      await uploadFileDaily($)
+      await beiyong1UploadImg($)
     },
     106: uploadFileDaily,
     107: createNoteDaily,
@@ -298,7 +298,7 @@ async function emailNotice($: M, task: TaskItem) {
     const { out } = task.button
     if (!out) return
     if (out.canReceive === 1) {
-      $.logger.debug(`可以领取通知奖励`)
+      $.logger.debug(`可以领取通知奖励`, task.id)
       await request($, $.api.receiveTask, '领取邮件通知奖励', task.id)
       return
     }

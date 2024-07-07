@@ -4,7 +4,7 @@ on:
     branches:
       - release
     paths-ignore:
-      - 'docs/**'
+      - "docs/**"
 env:
   CI: true
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -35,17 +35,15 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'pnpm'
+          node-version: "lts/*"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Setup npmrc
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           echo "git-checks=false" >> .npmrc
 
-      - name: install dependencies
-        run: pnpm install
+      - run: pnpm install
 
       - name: create and publish versions
         uses: changesets/action@v1.4.6
@@ -53,8 +51,8 @@ jobs:
         with:
           publish: pnpm ci:publish
           version: pnpm ci:version
-          commit: 'ci: changesets versions'
-          title: 'ci: changesets versions'
+          commit: "ci: changesets versions"
+          title: "ci: changesets versions"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

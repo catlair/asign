@@ -153,3 +153,5 @@ packages/demo
 
 target/
 Cargo.lock
+
+bun.lockb
