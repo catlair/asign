@@ -93,6 +93,7 @@ export async function uploadFile(
     switch (resultCode) {
       case '0':
         contentID && setStoreArray($.store, 'files', [contentID])
+        $.logger.debug(`上传文件成功`)
         return true
       case '9119':
         $.logger.fail(`上传文件失败：md5校验失败`)

@@ -283,7 +283,7 @@ function getTaskRunner($: M) {
     113: async ($: M) => {
       await refreshToken($)
       sleepSync(1000)
-      await uploadFileDaily($)
+      await beiyong1UploadImg($)
     },
     106: uploadFileDaily,
     107: createNoteDaily,
@@ -298,7 +298,7 @@ async function emailNotice($: M, task: TaskItem) {
     const { out } = task.button
     if (!out) return
     if (out.canReceive === 1) {
-      $.logger.debug(`可以领取通知奖励`)
+      $.logger.debug(`可以领取通知奖励`, task.id)
       await request($, $.api.receiveTask, '领取邮件通知奖励', task.id)
       return
     }

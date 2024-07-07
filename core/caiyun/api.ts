@@ -255,8 +255,8 @@ export function createApi(http: Http) {
         {
           headers: {
             // 'hcy-cool-flag': '1',
-            'x-huawei-uploadSrc': '2',
-            'x-huawei-channelSrc': '10000023',
+            'x-huawei-uploadSrc': options.uploadSrc || '2',
+            'x-huawei-channelSrc': options.channelSrc || '10200153',
             'Content-Type': 'text/xml; charset=UTF-8',
           },
         },
@@ -524,6 +524,8 @@ export interface UploadXml {
   digest: string
   contentName: string
   contentSize: string | number
+  uploadSrc?: string
+  channelSrc?: '10000023' | '10200153'
 }
 function getUploadXml({
   phone,
