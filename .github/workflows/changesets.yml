@@ -43,9 +43,7 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           echo "git-checks=false" >> .npmrc
 
-      - uses: oven-sh/setup-bun@v2
-
-      - run: bun install
+      - run: pnpm install
 
       - name: create and publish versions
         uses: changesets/action@v1.4.6
