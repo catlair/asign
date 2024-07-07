@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.2.19
+
+### Patch Changes
+
+- [`3fbb996`](https://github.com/yuiasn/asuna/commit/3fbb99674ab505f5c908b254baf170a2a9201e91) Thanks [@catlair](https://github.com/catlair)! - fix(caiyun): pc 登录失效
+
 ## 0.2.18
 
 ### Patch Changes
