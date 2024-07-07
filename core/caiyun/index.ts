@@ -252,14 +252,14 @@ async function shareTime($: M) {
 }
 
 async function getAppTaskList($: M, marketname: 'sign_in_3' | 'newsign_139mail' = 'sign_in_3') {
-  const { month = [], day = [], time = [], new: new_ = [], beiyong1 = [] } = await request(
+  const data = await request(
     $,
     $.api.getTaskList,
     '获取任务列表',
     marketname,
   )
 
-  return [...month, ...day, ...time, ...new_, ...beiyong1]
+  return Object.values(data).flat()
 }
 
 async function getAllAppTaskList($: M) {
