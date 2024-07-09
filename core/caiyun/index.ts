@@ -15,17 +15,27 @@ export * from './types.js'
 
 type TaskItem = TaskList['result'][keyof TaskList['result']][number]
 
-export async function getSsoTokenApi($: M, phone: number | string) {
+export async function _getSsoTokenApi($: M, phone: number | string) {
   try {
-    const specToken = await $.api.querySpecToken(phone)
-    if (!specToken.success) {
-      $.logger.fatal('获取 ssoToken 失败', specToken.message)
+    const { success, data, code, message } = await $.api.querySpecToken(phone)
+    if (!success) {
+      $.logger.debug(`获取 ssoToken 失败`, code, message, data)
       return
     }
-    return specToken.data.token
+    return data.token
   } catch (error) {
     $.logger.error(`获取 ssoToken 异常`, error)
   }
+}
+
+export async function getSsoTokenApi($: M, phone: number | string) {
+  let token: string
+  for (let index = 0; index < 5; index++) {
+    token = await _getSsoTokenApi($, phone)
+    if (token) return token
+    await $.sleep(2000)
+  }
+  $.logger.fatal('获取 ssoToken 失败，请查看 debug 信息')
 }
 
 export async function loginEmail($: M) {
