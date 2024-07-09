@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.2.20
+
+### Patch Changes
+
+- [`31ab468`](https://github.com/yuiasn/asuna/commit/31ab468cc925c2525981ffcb878d63666d1cf3cb) Thanks [@catlair](https://github.com/catlair)! - chore(caiyun): 增加 getSsoTokenApi 日志
+
 ## 0.2.19
 
 ### Patch Changes
