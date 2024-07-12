@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.0
+
+### Minor Changes
+
+- [`909dd60`](https://github.com/yuiasn/asuna/commit/909dd604c59e040e3ce772ae51d398cd7926b553) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 果园邀请助力（被动互助）
+
 ## 0.2.19
 
 ### Patch Changes
