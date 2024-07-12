@@ -39,7 +39,7 @@ const Comments = () => {
     <div id={id} class='w-full'>
       {mounted()
         ? (
-          <div class='comments-container'>
+          <div class='comments-container giscus'>
             <Giscus
               id={id}
               repo='asunajs/docs'
@@ -48,9 +48,9 @@ const Comments = () => {
               categoryId='DIC_kwDOL2pMgc4CfHTT'
               mapping='pathname'
               strict='0'
-              reactions-enabled='1'
-              emit-metadata='0'
-              input-position='top'
+              reactionsEnabled='1'
+              emitMetadata='0'
+              inputPosition='top'
               theme={theme()}
               lang='zh-CN'
               loading='lazy'

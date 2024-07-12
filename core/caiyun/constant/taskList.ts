@@ -3,17 +3,17 @@ export const emailTaskList = {
   /**
    * 从固定入口签到
    */
-  1005: {
-    id: 1005,
-    group: 'time',
-  },
+  // 1005: {
+  //   id: 1005,
+  //   group: 'time',
+  // },
   /**
    * 去“发现广场”浏览精彩内容
    */
-  1008: {
-    id: 1008,
-    group: 'month',
-  },
+  // 1008: {
+  //   id: 1008,
+  //   group: 'month',
+  // },
 
   /**
    * 前往“云盘”查看个人动态
@@ -58,10 +58,10 @@ export const emailTaskList = {
   /**
    * 登录移动云盘APP云朵中心
    */
-  1017: {
-    id: 1017,
-    group: 'month',
-  },
+  // 1017: {
+  //   id: 1017,
+  //   group: 'month',
+  // },
 
   /** 月月开通 月月有礼 */
   1021: {
@@ -127,10 +127,10 @@ export const cloudTaskList = {
   /**
    * 去发现频道看大片
    */
-  426: {
-    id: 426,
-    group: 'month',
-  },
+  // 426: {
+  //   id: 426,
+  //   group: 'month',
+  // },
 
   /**
    * 使用移动云手机
