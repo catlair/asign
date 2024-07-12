@@ -258,6 +258,45 @@ async function _backupFriend($: M, inviteCode: string | number) {
   }
 }
 
+export async function setInviteCode($: M) {
+  try {
+    $.http.post('https://caiyun.deno.dev/code', {
+      inviteCode: await request($, $.gardenApi.getInviteCode, '获取邀请码'),
+      id: $.md5($.config.phone),
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (error) {
+    $.logger.debug('设置邀请码异常', error)
+  }
+}
+
+export async function getInviteCodes($: M): Promise<number[]> {
+  try {
+    return await $.http.get(`https://caiyun.deno.dev/code?user=${$.md5($.config.phone)}`)
+  } catch (error) {
+    $.logger.debug('获取邀请码异常', error)
+  }
+  return []
+}
+
+/**
+ * 完成邀请
+ */
+async function completeInvite($: M, inviteCodes: number[]) {
+  try {
+    await $.http.post('https://caiyun.deno.dev/invite', { inviteCodes, id: $.md5($.config.phone) }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+  } catch (error) {
+    $.logger.debug('完成邀请异常', error)
+  }
+}
+
 /**
  * 果园助力
  */
@@ -267,6 +306,25 @@ async function backupFriend($: M) {
       await _backupFriend($, inviteCode)
       await $.sleep(5000)
     }
+  } catch (error) {
+    $.logger.error('果园助力异常', error)
+  }
+}
+
+/**
+ * 果园助力
+ */
+async function backupFriendNew($: M) {
+  try {
+    const inviteCodes = await getInviteCodes($)
+    if (inviteCodes.length === 0) {
+      return
+    }
+    for (const inviteCode of inviteCodes) {
+      await _backupFriend($, inviteCode)
+      await $.sleep(5000)
+    }
+    await completeInvite($, inviteCodes)
   } catch (error) {
     $.logger.error('果园助力异常', error)
   }
@@ -310,6 +368,9 @@ export async function gardenTask($: M) {
     if ($.config.garden?.inviteCodes?.length) {
       $.logger.info('果园微信助力')
       await backupFriend($)
+    } else {
+      $.logger.info('果园微信助力（测试）')
+      await backupFriendNew($)
     }
   } catch (error) {
     $.logger.error('果园任务异常', error)

@@ -25,7 +25,7 @@ export function createGardenApi(http: Http) {
   const gardenUrl = 'https://happy.mail.10086.cn/jsp/cn/garden'
 
   return {
-    login(token: string, account: string | number) {
+    login(token: string, account?: string | number) {
       return http.get(
         `${gardenUrl}/login/caiyunsso.do?token=${token}&account=${account}&targetSourceId=001208&sourceid=1014&enableShare=1`,
         {
@@ -83,7 +83,7 @@ export function createGardenApi(http: Http) {
       })
     },
     getInviteCode() {
-      return http.get<Garden<string>>(`${gardenUrl}/friend/inviteCode.do`)
+      return http.get<Garden<number>>(`${gardenUrl}/friend/inviteCode.do`)
     },
     getBackupUser() {
       return http.get<Garden<any[]>>(`${gardenUrl}/friend/backupUser.do`)
