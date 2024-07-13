@@ -42,6 +42,7 @@ async function request<T extends (...args: any[]) => any>(
     const { success, msg, result } = await api(...args)
     if (!success) {
       $.logger.error(`${name}失败`, msg)
+      result && $.logger.debug(result)
     } else {
       return result
     }
@@ -60,15 +61,15 @@ async function getTodaySign($: M) {
   return todayCheckin
 }
 
-async function initTree($: M) {
-  const { collectWater, treeLevel, nickName } = await request(
+async function initTree($: M): Promise<[boolean, { treeLevel: number; collectWater: number }]> {
+  const { collectWater, treeLevel, nickName, uid } = await request(
     $,
     $.gardenApi.initTree,
     '初始化果园',
   )
-  if (!nickName) return false
-  $.logger.info(`${nickName}拥有${treeLevel}级果树，当前水滴${collectWater}`)
-  return true
+  if (!nickName) return [true] as any
+  $.logger.info(`${nickName}[${uid}]拥有${treeLevel}级果树，当前水滴${collectWater}`)
+  return [false, { treeLevel, collectWater }]
 }
 
 async function signInGarden($: M) {
@@ -99,9 +100,9 @@ async function clickCartoon($: M) {
       )
       if (![1, -1, -2].includes(code)) {
         $.logger.error(`领取场景水滴${cartoonType}失败`, code, msg)
-      } else {
-        $.logger.debug(`领取场景水滴${cartoonType}`)
+        return
       }
+      $.logger.debug(`领取场景水滴${cartoonType}`)
     },
     async () => await $.sleep(5000),
   )
@@ -246,7 +247,7 @@ async function _backupFriend($: M, inviteCode: string | number) {
     if (success) {
       if (result.code === 1) {
         $.logger.success(result.msg)
-        return
+        return true
       }
 
       $.logger.fail('助力失败', result.code, result.msg)
@@ -255,6 +256,52 @@ async function _backupFriend($: M, inviteCode: string | number) {
     $.logger.fail('助力失败', msg)
   } catch (error) {
     $.logger.fail('果园助力异常', error)
+  }
+}
+
+export async function setInviteCode($: M) {
+  try {
+    const data = await $.http.post('https://caiyun.deno.dev/code', {
+      inviteCode: await request($, $.gardenApi.getInviteCode, '获取邀请码'),
+      id: $.md5($.config.phone),
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      throwHttpErrors: true,
+    })
+    if (!data.ok) {
+      $.logger.debug('设置邀请码失败', data)
+    }
+  } catch (error) {
+    $.logger.debug('设置邀请码异常', error)
+  }
+}
+
+export async function getInviteCodes($: M): Promise<number[]> {
+  try {
+    return await $.http.get(`https://caiyun.deno.dev/code?user=${$.md5($.config.phone)}`, {
+      throwHttpErrors: true,
+    })
+  } catch (error) {
+    $.logger.debug('获取邀请码异常', error)
+  }
+  return []
+}
+
+/**
+ * 完成邀请
+ */
+async function completeInvite($: M, inviteCodes: number[]) {
+  try {
+    await $.http.post('https://caiyun.deno.dev/invite', { inviteCodes, id: $.md5($.config.phone) }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      throwHttpErrors: true,
+    })
+  } catch (error) {
+    $.logger.debug('完成邀请异常', error)
   }
 }
 
@@ -272,6 +319,80 @@ async function backupFriend($: M) {
   }
 }
 
+/**
+ * 果园助力
+ */
+async function backupFriendNew($: M) {
+  try {
+    await setInviteCode($)
+    const inviteCodes = await getInviteCodes($)
+    if (inviteCodes.length === 0) return
+    const successArr: number[] = []
+    for (const inviteCode of inviteCodes) {
+      if (await _backupFriend($, inviteCode)) successArr.push(inviteCode)
+      await $.sleep(5000)
+    }
+    await completeInvite($, successArr)
+  } catch (error) {
+    $.logger.error('果园助力异常', error)
+  }
+}
+
+/**
+ * 浇水
+ */
+async function watering($: M, level: number) {
+  $.logger.debug(`给果树浇水`)
+  try {
+    const { water, upgrade, code, msg } = await request($, $.gardenApi.watering, '浇水')
+    if (code !== 1) {
+      $.logger.fail('浇水失败', code, msg || '[c:请求错误]')
+      return
+    }
+    $.logger.success(`浇水成功，消耗${water}水滴，${upgrade ? '升级' : '未升级'}`)
+    if (upgrade && level % 2 === 1) {
+      await openBox($)
+    }
+  } catch (error) {
+    $.logger.error('果园浇水异常', error)
+  }
+}
+
+async function openBox($: M) {
+  const { msg, code, water } = await request($, $.gardenApi.openBox, '开宝箱')
+  if (code !== 1) {
+    $.logger.fail('开宝箱失败', code, msg || '[c:请求错误]')
+    return
+  }
+  $.logger.success('开宝箱成功，获得', water, '水滴')
+}
+
+async function _waterFriend($: M, uid: number) {
+  try {
+    const { msg, code } = await request($, $.gardenApi.waterFriend, '浇水', uid)
+    if (code !== 1) {
+      $.logger.fail('浇水失败', code, msg || '[c:请求错误]')
+      return
+    }
+    $.logger.debug(uid, '浇水成功')
+    return true
+  } catch (error) {
+    $.logger.error('果园给好友浇水异常', uid, error)
+  }
+}
+
+async function waterFriend($: M) {
+  const waterFriends = $.config.garden.waterFriends
+  if (!waterFriends || waterFriends.length < 1) return
+  $.logger.debug(`给好友果树浇水`)
+  for (const uid of waterFriends) {
+    for (let index = 0; index < 5; index++) {
+      await _waterFriend($, uid)
+      await $.sleep(4000)
+    }
+  }
+}
+
 export async function loginGarden($: M) {
   const token = await getSsoTokenApi($, $.config.phone)
   if (!token) throw new Error('获取 ssoToken 失败')
@@ -283,7 +404,9 @@ export async function gardenTask($: M) {
     $.logger.info(`------【果园】------`)
     await loginGarden($)
 
-    if (!(await initTree($))) {
+    const [initErr, tree] = await initTree($)
+
+    if (initErr) {
       $.logger.warn('获取果园信息失败，请确认已经激活果园')
       return
     }
@@ -310,6 +433,17 @@ export async function gardenTask($: M) {
     if ($.config.garden?.inviteCodes?.length) {
       $.logger.info('果园微信助力')
       await backupFriend($)
+    } else {
+      $.logger.info('果园微信助力（测试）')
+      await backupFriendNew($)
+    }
+
+    // 先给好友浇水
+    await waterFriend($)
+
+    // 随机浇水，就是玩，嘿嘿
+    if (tree.treeLevel < 9 && tree.collectWater && Math.random() < 0.2) {
+      await watering($, tree.treeLevel)
     }
   } catch (error) {
     $.logger.error('果园任务异常', error)

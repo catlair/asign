@@ -25,7 +25,7 @@ export function createGardenApi(http: Http) {
   const gardenUrl = 'https://happy.mail.10086.cn/jsp/cn/garden'
 
   return {
-    login(token: string, account: string | number) {
+    login(token: string, account?: string | number) {
       return http.get(
         `${gardenUrl}/login/caiyunsso.do?token=${token}&account=${account}&targetSourceId=001208&sourceid=1014&enableShare=1`,
         {
@@ -83,7 +83,7 @@ export function createGardenApi(http: Http) {
       })
     },
     getInviteCode() {
-      return http.get<Garden<string>>(`${gardenUrl}/friend/inviteCode.do`)
+      return http.get<Garden<number>>(`${gardenUrl}/friend/inviteCode.do`)
     },
     getBackupUser() {
       return http.get<Garden<any[]>>(`${gardenUrl}/friend/backupUser.do`)
@@ -104,6 +104,52 @@ export function createGardenApi(http: Http) {
       >(
         `${gardenUrl}/wx/inviteFriend.do?inviteCode=${inviteCode}&inviteType=${inviteType}&clientName=HCY`,
       )
+    },
+    /**
+     * 浇水
+     */
+    watering() {
+      return http.get<
+        Garden<{
+          msg: string // 浇水成功
+          code: number // 1
+          /**
+           * 1 升级
+           */
+          upgrade: number
+          /**
+           * 消耗水滴数
+           */
+          water: number
+        }>
+      >(`${gardenUrl}/user/watering.do?isFast=1`)
+    },
+    /**
+     * 开宝箱
+     */
+    openBox() {
+      return http.get<
+        Garden<{
+          msg: string // 开宝箱成功
+          code: number // 1
+          /**
+           * 获得水滴数
+           */
+          water: number
+        }>
+      >(`${gardenUrl}/prize/openBox.do`)
+    },
+    /**
+     * 给好友浇水
+     */
+    waterFriend(id: number) {
+      return http.get<
+        Garden<{
+          msg: string // 浇水成功
+          code: number // 1
+          upgrade: number
+        }>
+      >(`${gardenUrl}/user/waterFriend.do?treeId=${id}`)
     },
   }
 }

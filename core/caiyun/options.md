@@ -49,6 +49,12 @@ cookie authorization 字段
 
 邀请码
 
+#### `waterFriends`
+
+- **类型**: `数组`
+
+需要给哪些好友浇水，好友 uid
+
 ### `aiRedPack`
 
 #### `enable`
@@ -79,17 +85,24 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "adamo",
+      "auth": "sustineo",
       "shake": {
         "enable": true,
-        "num": 8323347119079424,
-        "delay": 2
+        "num": 4207517255073792,
+        "delay": 590791646904320
       },
       "garden": {
         "enable": true,
         "digest": "202CB962AC59075B964B07152D234B70",
         "inviteCodes": [
-          "absque"
+          "casso",
+          "tergiversatio",
+          "surculus",
+          "numquam"
+        ],
+        "waterFriends": [
+          2152706353397760,
+          8646499105767424
         ]
       },
       "aiRedPack": {
@@ -97,7 +110,7 @@ cookie authorization 字段
       },
       "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "hic"
+        "shareFile": "delego"
       }
     }
   ]
@@ -116,7 +129,8 @@ cookie authorization 字段
   "garden": {
     "enable": true,
     "digest": "202CB962AC59075B964B07152D234B70",
-    "inviteCodes": []
+    "inviteCodes": [],
+    "waterFriends": []
   },
   "aiRedPack": {
     "enable": true
