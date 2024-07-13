@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.1
+
+### Patch Changes
+
+- [`15439c1`](https://github.com/yuiasn/asuna/commit/15439c15d63f88773f44c15b5aa094664b8402b8) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 果园浇水
+
 ## 0.3.0
 
 ### Minor Changes
