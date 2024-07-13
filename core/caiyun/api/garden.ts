@@ -105,6 +105,52 @@ export function createGardenApi(http: Http) {
         `${gardenUrl}/wx/inviteFriend.do?inviteCode=${inviteCode}&inviteType=${inviteType}&clientName=HCY`,
       )
     },
+    /**
+     * 浇水
+     */
+    watering() {
+      return http.get<
+        Garden<{
+          msg: string // 浇水成功
+          code: number // 1
+          /**
+           * 1 升级
+           */
+          upgrade: number
+          /**
+           * 消耗水滴数
+           */
+          water: number
+        }>
+      >(`${gardenUrl}/user/watering.do?isFast=1`)
+    },
+    /**
+     * 开宝箱
+     */
+    openBox() {
+      return http.get<
+        Garden<{
+          msg: string // 开宝箱成功
+          code: number // 1
+          /**
+           * 获得水滴数
+           */
+          water: number
+        }>
+      >(`${gardenUrl}/prize/openBox.do`)
+    },
+    /**
+     * 给好友浇水
+     */
+    waterFriend(id: number) {
+      return http.get<
+        Garden<{
+          msg: string // 浇水成功
+          code: number // 1
+          upgrade: number
+        }>
+      >(`${gardenUrl}/user/waterFriend.do?treeId=${id}`)
+    },
   }
 }
 

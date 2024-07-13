@@ -6,6 +6,8 @@ import { request } from '../utils/index.js'
 
 export async function aiRedPackTask($: M) {
   $.logger.start(`------【AI红包】------`)
+  $.logger.fail('bug，停止运行，也没人反馈，不修了？')
+  return
   if (isWps()) {
     $.logger.fail('AI红包', '当前环境为WPS，跳过')
     return

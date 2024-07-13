@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 :::caution[特别说明]
 暂时以日常任务为主，请**每月至少登录一次**移动云盘 app 和 139 邮箱 app（记住，是两个 APP 不是其中一个），手动完成必要的任务。
@@ -42,12 +42,14 @@ WPS 版被 Github 上某个项目引用，但并未注明出处，无所谓了
 - [x] 每日任务-上传
 - [x] ~~每日任务-云笔记~~（官方下线）
 - [x] APP 抽奖（摇一摇）
-- [x] 浇水种树-云盘 APP（不支持浇水，只获取水滴，非技术原因，而是逻辑问题，所有暂不考虑）
-- [x] 浇水种树-邮箱 APP（不支持浇水，只获取水滴，非技术原因，而是逻辑问题，所有暂不考虑）
+- [x] 浇水种树-云盘 APP（不完全支持，最后需要验证码领取云朵，所以不会升 10 级）
+- [x] 浇水种树-邮箱 APP（不完全支持，最后需要验证码领取云朵，所以不会升 10 级）
+- [x] 果园每日助力（强制性运行）
+- [x] 为好友浇水（可配置）
 - [x] 每月任务-邮箱 APP-可直接完成的
 - [x] 热门任务-分享文件每月 7 次
 - [x] 邮箱 APP 开盲盒
-- [ ] 每月任务-PC 端登录（已失效）
+- [x] 每月任务-PC 端登录
 - [x] 云朵大作战（仅提供部分功能）
 - [x] 每月分享 20 次
 - [x] 每月上传 1 G
@@ -89,6 +91,14 @@ WPS 版被 Github 上某个项目引用，但并未注明出处，无所谓了
 
 手动进入 APP 的果园页面
 
+### 果园的水滴莫名其妙被人偷了
+
+使用本脚本的人会互相进行水滴助力，而果园助力默认好友（奇妙的操作，鬼才产品经理），导致果园会有大量未知好友，被偷属于正常操作，你可以偷回来（
+
+### 果园的水滴莫名其妙加了很多好友
+
+同上一条，目前果园没有删除好友功能。同时为了公平性，互相助力是强制开启的。
+
 ## 使用方法
 
 :::tip[提示]
@@ -106,7 +116,7 @@ npm install @asunajs/caiyun
 使用 cjs
 
 ```js
-const { run } = require('@asunajs/caiyun');
+const { run } = require("@asunajs/caiyun");
 
 (async () => {
   await run();
@@ -116,7 +126,7 @@ const { run } = require('@asunajs/caiyun');
 使用 esm
 
 ```js
-import { run } from '@asunajs/caiyun';
+import { run } from "@asunajs/caiyun";
 
 await run();
 ```
@@ -124,7 +134,7 @@ await run();
 在阿里云函数中使用，其他环境请自行摸索
 
 ```js
-const { run } = require('@asunajs/caiyun');
+const { run } = require("@asunajs/caiyun");
 
 exports.handler = async function (event, context, callback) {
   callback(null, await run());
@@ -174,7 +184,7 @@ import { loadConfig, useExchange } from '@asunajs/caiyun';
 
 const { config, message } = await loadConfig()
 
-/** 使用配置中的第一个账号 */
+/\*_ 使用配置中的第一个账号 _/
 const { exchange, waitTo24Hour, sendMessage } = await useExchange(config[0], message)
 
 // 等待到 24 点（最大等待 2 分钟）
@@ -185,7 +195,8 @@ await exchange([231228018])
 
 // 发送推送，如果兑换成功默认发送一次
 // await sendMessage()
-```
+
+````
 
 </TabItem>
 
@@ -214,7 +225,7 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
 
 })();
 
-```
+````
 
   </TabItem>
 
@@ -447,4 +458,3 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
 ```
 
 </details>
-

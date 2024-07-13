@@ -39,6 +39,10 @@ export interface Caiyun {
      * 邀请码
      */
     inviteCodes?: string[]
+    /**
+     * 需要给哪些好友浇水，好友 uid
+     */
+    waterFriends?: number[]
   }
   /**
    * AI 红包
