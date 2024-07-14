@@ -28,6 +28,17 @@ sidebar:
 
 ## 签到 URL 获取
 
-1. 通过手机抓包签到过程
-2. 找到类似，注意后面 query 需要完整 `https://drive-m.quark.cn/1/clouddrive/capacity/growth/info?__t=1720880459186&sign_cyclic=true&kps=xxxxxxxxxxxxxxx`，这就是 info
-3. 找到类似，注意后面 query 需要完整 `https://drive-m.quark.cn/1/clouddrive/capacity/growth/sign?kps=AAT2SBxxxxxxxx`，这就是 sign
+- 通过手机抓包签到过程
+- 活动界面找到类似，注意后面 query 需要完整 `https://drive-m.quark.cn/1/clouddrive/capacity/growth/info?__t=1720880459186&sign_cyclic=true&kps=xxxxxxxxxxxxxxx`，从链接中提取出 `vcode`、`kps` 和 `sign`
+- 当然也可以直接查看 headers 中的 `x-u-kps-wg`（对应 kps）、`x-u-sign-wg`（对应 sign）和 `x-u-vcode`（对应 vcode）
+
+### 自动提取
+
+:::note[提示]
+将完整的 URL 粘贴到下方即可自动提取
+:::
+
+import { QuarkUrl } from '../../../components/solid/QuarkUrl.tsx';
+
+<QuarkUrl name="haha" client:only="solid-js"></QuarkUrl>
+

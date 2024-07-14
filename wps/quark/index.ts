@@ -2,8 +2,14 @@ import { createApi, type M, run } from '@asign/quark-core'
 import { createLogger } from '@asign/utils-pure'
 import { createSimpleRequest, getPushConfig, sendWpsNotify } from '@asign/wps-utils'
 
-function main(urls: { sign: string; info: string }, option?: { pushData: any }) {
-  if (!urls.sign || !urls.info) return
+type Config = {
+  kps: string
+  sign: string
+  vcode: string
+}
+
+function main(query: Config, option?: { pushData: any }) {
+  if (!query.kps || !query.sign) return
   const logger = createLogger({ pushData: option && option.pushData })
 
   const $: M = {
@@ -14,7 +20,7 @@ function main(urls: { sign: string; info: string }, option?: { pushData: any }) 
     })),
     logger: logger as any,
     sleep: Time.sleep,
-    urls,
+    query,
   }
 
   $.logger.start(`--------------`)
@@ -27,6 +33,7 @@ const sheet = Application.Sheets.Item('夸克网盘') || Application.Sheets.Item
 const usedRange = sheet.UsedRange
 const columnA = sheet.Columns('A')
 const columnB = sheet.Columns('B')
+const columnC = sheet.Columns('C')
 const len = usedRange.Row + usedRange.Rows.Count - 1
 const pushData = []
 
@@ -36,7 +43,8 @@ for (let i = 1; i <= len; i++) {
     console.log(`执行第 ${i} 行`)
     main({
       sign: columnB.Rows(i).Text,
-      info: cell.Text,
+      kps: cell.Text,
+      vcode: columnC.Rows(i).Text,
     }, { pushData })
   }
 }

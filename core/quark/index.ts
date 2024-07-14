@@ -3,9 +3,13 @@ import type { M } from './types.js'
 export * from './api.js'
 export * from './types.js'
 
+function getQuery($: M) {
+  return `__t=${Date.now()}&sign_cyclic=true&fr=android&kps=${$.query.kps}&sign=${$.query.sign}&vcode=${$.query.vcode}&pr=ucpro&uc_param_str=`
+}
+
 export async function getInfo($: M) {
   try {
-    const { data, code, status, message } = await $.api.getInfo($.urls.info)
+    const { data, code, status, message } = await $.api.getInfo(getQuery($))
     if (code !== 0) {
       $.logger.fail(`获取用户信息失败`, code, status, message)
       return
@@ -18,7 +22,7 @@ export async function getInfo($: M) {
 
 export async function signIn($: M) {
   try {
-    const { data, code, status, message } = await $.api.sign($.urls.sign)
+    const { data, code, status, message } = await $.api.sign(getQuery($))
     if (code === 0) {
       return data.sign_daily_reward
     }

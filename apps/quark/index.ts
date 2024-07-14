@@ -4,11 +4,15 @@ import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
 import { createLogger, type LoggerPushData, pushMessage, sleep } from '@asunajs/utils'
 
-export type Config = { sign: string; info: string }
+export type Config = {
+  kps: string
+  sign: string
+  vcode: string
+}
 export type Option = { pushData?: LoggerPushData[] }
 
-export async function main(urls: Config, option?: Option) {
-  if (!urls) return
+export async function main(query: Config, option?: Option) {
+  if (!query) return
   const logger = await createLogger({ pushData: option?.pushData })
 
   const $: M = {
@@ -22,7 +26,7 @@ export async function main(urls: Config, option?: Option) {
       }),
     ),
     logger,
-    urls,
+    query,
     sleep,
   }
 
