@@ -32,17 +32,13 @@ export interface Caiyun {
      */
     enable?: boolean
     /**
-     * 上传文件的 md5，必须为本账号已经上传过的文件的 md5。用于上传视频和图片任务
-     */
-    digest?: string
-    /**
      * 邀请码
      */
     inviteCodes?: string[]
     /**
-     * 需要给哪些好友浇水，好友 uid
+     * 需要给哪个好友浇水，好友 uid
      */
-    waterFriends?: number[]
+    waterFriend?: number
   }
   /**
    * AI 红包
@@ -63,4 +59,8 @@ export interface Caiyun {
      */
     shareFile?: string
   }
+  /**
+   * 默认上传目录
+   */
+  catalog?: string
 }

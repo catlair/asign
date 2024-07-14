@@ -1,7 +1,10 @@
 import { createTime as _createTime, getXmlElement, randomHex, randomNumber, setStoreArray } from '@asign/utils-pure'
+import type { UploadXml } from '../api.js'
 import type { M } from '../types.js'
 
 export * from './aiRedPack.js'
+
+type UploadFileOptions = Partial<UploadXml> & { ext?: string }
 
 export async function uploadFileRequest(
   $: M,
@@ -13,6 +16,7 @@ export async function uploadFileRequest(
     manualRename = 2,
     contentName = 'asign-' + randomHex(4) + ext,
     createTime = _createTime(),
+    ...options
   } = {},
   needUpload?: boolean,
 ): Promise<{
@@ -31,6 +35,7 @@ export async function uploadFileRequest(
         digest,
         manualRename,
         contentName,
+        ...options,
       },
     )
     const isNeedUpload = getXmlElement(xml, 'isNeedUpload')
@@ -71,7 +76,8 @@ export async function uploadFile(
     manualRename = 2,
     contentName = 'asign-' + randomHex(4) + ext,
     createTime = _createTime(),
-  } = {},
+    ...options
+  } = {} as UploadFileOptions,
   file: Buffer | string,
 ) {
   try {
@@ -82,6 +88,7 @@ export async function uploadFile(
       manualRename,
       contentName,
       createTime,
+      ...options,
     }, true)
     if (!redirectionUrl || !file) {
       return Boolean(contentID)
@@ -108,6 +115,15 @@ export async function uploadFile(
   return false
 }
 
+export async function uploadRandomFile($: M, options?: UploadFileOptions) {
+  try {
+    const buffer = randomHex(32)
+    return await uploadFile($, $.config.catalog, { ...options, digest: $.md5(buffer) }, buffer)
+  } catch (error) {
+    $.logger.error(`uploadRandomFile 异常`, error)
+  }
+}
+
 export async function pcUploadFileRequest($: M, path: string) {
   try {
     const { success, message, data } = await $.api.pcUploadFileRequest(
@@ -126,10 +142,6 @@ export async function pcUploadFileRequest($: M, path: string) {
   } catch (error) {
     $.logger.error(`上传文件请求异常`, error)
   }
-}
-
-export function getParentCatalogID() {
-  return '00019700101000000001'
 }
 
 export function getBackParentCatalogID() {
