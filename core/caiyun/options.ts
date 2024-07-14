@@ -6,13 +6,12 @@ export const defuConfig = {
   },
   garden: {
     enable: true,
-    digest: '202CB962AC59075B964B07152D234B70',
     inviteCodes: [],
-    waterFriends: [],
   },
   aiRedPack: {
     enable: true,
   },
   backupWaitTime: 20,
   tasks: {},
+  catalog: '00019700101000000001',
 }

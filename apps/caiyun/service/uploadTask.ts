@@ -1,5 +1,5 @@
 import type { M } from '@asign/caiyun-core'
-import { getParentCatalogID, uploadFileRequest } from '@asign/caiyun-core/service'
+import { uploadFileRequest } from '@asign/caiyun-core/service'
 import { createTime as _createTime, isWps, randomHex, randomNumber, setStoreArray } from '@asign/utils-pure'
 import { got } from '@asunajs/http'
 import { randomBytes } from 'crypto'
@@ -25,7 +25,7 @@ async function _upload($: M) {
     createTime: _createTime(),
   }
   $.logger.debug(new Date().toLocaleString(), JSON.stringify(uploadInfo))
-  const success = await uploadFile($, getParentCatalogID(), uploadInfo, file.randomBuffer)
+  const success = await uploadFile($, $.config.catalog, uploadInfo, file.randomBuffer)
 
   if (success) {
     $.logger.debug('上传成功')

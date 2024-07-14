@@ -2,7 +2,12 @@ import { generateMarkdown, generateTypescripts, z } from '@asign/typed'
 import { writeFileSync } from 'fs'
 
 export const config = z.object({
-  cookie: z.string().describe('cookie'),
+  sign: z.string().describe('sign url').describe(
+    'https://drive-m.quark.cn/1/clouddrive/capacity/growth/sign?kps=xxxxxxxxxxx',
+  ),
+  info: z.string().describe('info url').describe(
+    'https://drive-m.quark.cn/1/clouddrive/capacity/growth/info?__t=xxxxxxxxxxx',
+  ),
 }).describe('阿里云盘配置')
 
 const types = {

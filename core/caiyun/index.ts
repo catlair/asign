@@ -2,7 +2,7 @@ import { getXmlElement, randomHex, setStoreArray, sleepSync } from '@asign/utils
 import { SKIP_TASK_LIST, TASK_LIST } from './constant/taskList.js'
 import { backupGiftTask } from './service/backupGift.js'
 import { gardenTask } from './service/garden.js'
-import { aiRedPackTask, getParentCatalogID, pcUploadFileRequest, uploadFile } from './service/index.js'
+import { aiRedPackTask, pcUploadFileRequest, uploadRandomFile } from './service/index.js'
 import { msgPushOnTask } from './service/msgPush.js'
 import { taskExpansionTask } from './service/taskExpansion.js'
 import type { TaskList } from './TaskType.js'
@@ -200,7 +200,7 @@ async function getNoteAuthToken($: M) {
 }
 
 async function uploadFileDaily($: M) {
-  const contentID = await pcUploadFileRequest($, getParentCatalogID())
+  const contentID = await pcUploadFileRequest($, $.config.catalog)
   if (contentID) {
     setStoreArray($.store, 'files', contentID)
   }
@@ -279,21 +279,12 @@ async function getAllAppTaskList($: M) {
   return list1.concat(list2)
 }
 
-async function beiyong1UploadImg($: M) {
-  try {
-    const buffer = randomHex(32)
-    await uploadFile($, getParentCatalogID(), { ext: '.png', digest: $.md5(buffer) }, buffer)
-  } catch (error) {
-    $.logger.error(`beiyong1UploadImg异常`, error)
-  }
-}
-
 function getTaskRunner($: M) {
   return {
     113: async ($: M) => {
       await refreshToken($)
       sleepSync(1000)
-      await beiyong1UploadImg($)
+      await uploadRandomFile($)
     },
     106: uploadFileDaily,
     107: createNoteDaily,
@@ -354,7 +345,7 @@ async function appTask($: M) {
           await _handleClick()
           // 如果是上传任务，则主动上传
           if (task.name.includes('上传') && (task.name.includes('图') || task.name.includes('照'))) {
-            await beiyong1UploadImg($)
+            await uploadRandomFile($)
             return
           }
         }
@@ -699,7 +690,6 @@ export async function run($: M) {
     shareFindTask,
     blindboxTask,
     hc1Task,
-    aiRedPackTask,
     shakeTask,
     receive,
     msgPushOnTask,
@@ -709,6 +699,10 @@ export async function run($: M) {
   if (config) {
     if (config.garden && config.garden.enable) {
       taskList.push(gardenTask)
+    }
+
+    if (config.aiRedPack && config.aiRedPack.enable) {
+      taskList.push(aiRedPackTask)
     }
   }
 

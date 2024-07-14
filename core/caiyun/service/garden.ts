@@ -3,7 +3,7 @@ import type { ClientTypeHeaders } from '../api.js'
 import { getSsoTokenApi } from '../index.js'
 import type { M } from '../types.js'
 import type { TaskList } from '../types/garden.js'
-import { getParentCatalogID, uploadFileRequest } from './index.js'
+import { uploadRandomFile } from './index.js'
 
 async function request<T extends (...args: any[]) => any>(
   $: M,
@@ -131,32 +131,20 @@ async function doTask(
   tasks: TaskList['result'],
   headers?: ClientTypeHeaders,
 ) {
-  const fileInfo = {
-    contentSize: '133967',
-    digest: $.config.garden.digest,
-  }
   const taskMap = {
     '2002': async () => {
       if (
-        await uploadFileRequest($, getParentCatalogID(), {
-          ext: '.png',
-          ...fileInfo,
-        })
+        await uploadRandomFile($, { channelSrc: '10000023' })
       ) {
-        $.logger.debug(`上传图片成功`)
-        await $.sleep(2000)
+        await $.sleep(6000)
         return true
       }
     },
     '2003': async () => {
       if (
-        await uploadFileRequest($, getParentCatalogID(), {
-          ext: '.mp4',
-          ...fileInfo,
-        })
+        await uploadRandomFile($, { ext: '.mp4', channelSrc: '10000023' })
       ) {
-        $.logger.debug(`上传视频成功`)
-        await $.sleep(2000)
+        await $.sleep(6000)
         return true
       }
     },
@@ -240,18 +228,25 @@ async function givenWater(
   )
 }
 
+/**
+ * @returns
+ *
+ * 1 成功
+ *
+ * -3 没有次数
+ */
 async function _backupFriend($: M, inviteCode: string | number) {
   try {
     $.logger.debug(`助力：${inviteCode}`)
     const { success, msg, result } = await $.gardenApi.inviteFriend(inviteCode, 'backup')
     if (success) {
       if (result.code === 1) {
-        $.logger.success(result.msg)
-        return true
+        $.logger.debug(result.msg)
+        return result.code
       }
 
       $.logger.fail('助力失败', result.code, result.msg)
-      return
+      return result.code // -3 次数用完
     }
     $.logger.fail('助力失败', msg)
   } catch (error) {
@@ -261,7 +256,7 @@ async function _backupFriend($: M, inviteCode: string | number) {
 
 export async function setInviteCode($: M) {
   try {
-    const data = await $.http.post('https://caiyun.deno.dev/code', {
+    const data = await $.http.post('https://caiyun.as.thefish.icu/code', {
       inviteCode: await request($, $.gardenApi.getInviteCode, '获取邀请码'),
       id: $.md5($.config.phone),
     }, {
@@ -280,7 +275,7 @@ export async function setInviteCode($: M) {
 
 export async function getInviteCodes($: M): Promise<number[]> {
   try {
-    return await $.http.get(`https://caiyun.deno.dev/code?user=${$.md5($.config.phone)}`, {
+    return await $.http.get(`https://caiyun.as.thefish.icu/code?user=${$.md5($.config.phone)}`, {
       throwHttpErrors: true,
     })
   } catch (error) {
@@ -294,7 +289,7 @@ export async function getInviteCodes($: M): Promise<number[]> {
  */
 async function completeInvite($: M, inviteCodes: number[]) {
   try {
-    await $.http.post('https://caiyun.deno.dev/invite', { inviteCodes, id: $.md5($.config.phone) }, {
+    await $.http.post('https://caiyun.as.thefish.icu/invite', { inviteCodes, id: $.md5($.config.phone) }, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -328,9 +323,13 @@ async function backupFriendNew($: M) {
     const inviteCodes = await getInviteCodes($)
     if (inviteCodes.length === 0) return
     const successArr: number[] = []
-    for (const inviteCode of inviteCodes) {
-      if (await _backupFriend($, inviteCode)) successArr.push(inviteCode)
-      await $.sleep(5000)
+    for (let index = 0; index < inviteCodes.length; index++) {
+      const inviteCode = inviteCodes[index]
+      const result = await _backupFriend($, inviteCode)
+      if (result === 1) successArr.push(inviteCode)
+      else if (result === -3) break
+      // 第二个，且不是最后一个多等待
+      await $.sleep(index === 1 && index < inviteCodes.length - 1 ? 20000 : 6000)
     }
     await completeInvite($, successArr)
   } catch (error) {
@@ -382,14 +381,12 @@ async function _waterFriend($: M, uid: number) {
 }
 
 async function waterFriend($: M) {
-  const waterFriends = $.config.garden.waterFriends
-  if (!waterFriends || waterFriends.length < 1) return
+  const waterFriend = $.config.garden.waterFriend
+  if (!waterFriend) return
   $.logger.debug(`给好友果树浇水`)
-  for (const uid of waterFriends) {
-    for (let index = 0; index < 5; index++) {
-      await _waterFriend($, uid)
-      await $.sleep(4000)
-    }
+  for (let index = 0; index < 5; index++) {
+    await _waterFriend($, waterFriend)
+    await $.sleep(4000)
   }
 }
 

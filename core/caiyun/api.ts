@@ -525,7 +525,13 @@ export interface UploadXml {
   contentName: string
   contentSize: string | number
   uploadSrc?: string
-  channelSrc?: '10000023' | '10200153'
+  /**
+   * 10000023 移动
+   * 10200153 PC
+   * 10000034 web
+   * 10230043 web ？
+   */
+  channelSrc?: '10000023' | '10200153' | '10200153' | '10000034' | '10230043'
 }
 function getUploadXml({
   phone,

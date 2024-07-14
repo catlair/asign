@@ -5,7 +5,7 @@ export * from './types.js'
 
 export async function getInfo($: M) {
   try {
-    const { data, code, status, message } = await $.api.getInfo()
+    const { data, code, status, message } = await $.api.getInfo($.urls.info)
     if (code !== 0) {
       $.logger.fail(`获取用户信息失败`, code, status, message)
       return
@@ -18,12 +18,15 @@ export async function getInfo($: M) {
 
 export async function signIn($: M) {
   try {
-    const { data, code, status, message } = await $.api.sign()
-    if (code !== 0) {
-      $.logger.fail(`签到失败`, code, status, message)
+    const { data, code, status, message } = await $.api.sign($.urls.sign)
+    if (code === 0) {
+      return data.sign_daily_reward
+    }
+    if (code === 44210) {
+      $.logger.info(`今日已签到`)
       return
     }
-    return data.sign_daily_reward
+    $.logger.fail(`签到失败`, code, status, message)
   } catch (error) {
     $.logger.error(`签到异常`, error)
   }

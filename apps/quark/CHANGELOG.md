@@ -1,5 +1,11 @@
 # @asunajs/quark
 
+## 0.2.0
+
+### Minor Changes
+
+- [`c6ef26d`](https://github.com/yuiasn/asuna/commit/c6ef26d3a34bd09803510f4f3f40a0c99c039fa7) Thanks [@catlair](https://github.com/catlair)! - feat(quark): cookie 配置失效
+
 ## 0.1.0
 
 ### Minor Changes
