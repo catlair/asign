@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.2
+
+### Patch Changes
+
+- [`3ee9bd3`](https://github.com/yuiasn/asuna/commit/3ee9bd394ecba6239830f3b9b8695977c89ab0e3) Thanks [@catlair](https://github.com/catlair)! - fix(caiyun): 果园上传文件使用错误的设备
+
 ## 0.3.1
 
 ### Patch Changes
