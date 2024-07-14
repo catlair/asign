@@ -1,8 +1,14 @@
-### `cookie`
+### `sign`
 
 - **类型**: `字符串`
 
-cookie
+sign url
+
+### `info`
+
+- **类型**: `字符串`
+
+info url
 
 ### 示例
 
@@ -10,7 +16,8 @@ cookie
 {
   "quark": [
     {
-      "cookie": "delinquo"
+      "sign": "alo",
+      "info": "depraedor"
     }
   ]
 }

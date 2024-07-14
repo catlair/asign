@@ -5,6 +5,10 @@ export interface M {
   api: ApiType
   logger: LoggerType
   sleep: (time: number) => Promise<number>
+  urls: {
+    sign: string
+    info: string
+  }
 }
 
 export interface BaseResult<T = unknown> {

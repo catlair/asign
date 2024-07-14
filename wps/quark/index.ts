@@ -2,8 +2,8 @@ import { createApi, type M, run } from '@asign/quark-core'
 import { createLogger } from '@asign/utils-pure'
 import { createSimpleRequest, getPushConfig, sendWpsNotify } from '@asign/wps-utils'
 
-function main(cookie: string, option?: { pushData: any }) {
-  if (!cookie) return
+function main(urls: { sign: string; info: string }, option?: { pushData: any }) {
+  if (!urls.sign || !urls.info) return
   const logger = createLogger({ pushData: option && option.pushData })
 
   const $: M = {
@@ -11,10 +11,10 @@ function main(cookie: string, option?: { pushData: any }) {
       'content-type': 'application/json',
       'user-agent':
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0',
-      cookie,
     })),
     logger: logger as any,
     sleep: Time.sleep,
+    urls,
   }
 
   $.logger.start(`--------------`)
@@ -26,6 +26,7 @@ function main(cookie: string, option?: { pushData: any }) {
 const sheet = Application.Sheets.Item('夸克网盘') || Application.Sheets.Item('quark') || ActiveSheet
 const usedRange = sheet.UsedRange
 const columnA = sheet.Columns('A')
+const columnB = sheet.Columns('B')
 const len = usedRange.Row + usedRange.Rows.Count - 1
 const pushData = []
 
@@ -33,7 +34,10 @@ for (let i = 1; i <= len; i++) {
   const cell = columnA.Rows(i)
   if (cell.Text) {
     console.log(`执行第 ${i} 行`)
-    main(cell.Text, { pushData })
+    main({
+      sign: columnB.Rows(i).Text,
+      info: cell.Text,
+    }, { pushData })
   }
 }
 

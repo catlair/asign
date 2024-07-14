@@ -3,7 +3,11 @@
  */
 export interface Quark {
   /**
-   * cookie
+   * sign url
    */
-  cookie: string
+  sign: string
+  /**
+   * info url
+   */
+  info: string
 }

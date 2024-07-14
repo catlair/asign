@@ -24,7 +24,6 @@
     "@asunajs/push": "workspace:^"
   },
   "devDependencies": {
-    "@asign/cookie": "workspace:^",
     "@asign/build": "workspace:^",
     "@asign/quark-core": "workspace:^",
     "@asign/utils-pure": "workspace:^",

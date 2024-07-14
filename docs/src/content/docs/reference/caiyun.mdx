@@ -184,7 +184,7 @@ import { loadConfig, useExchange } from '@asunajs/caiyun';
 
 const { config, message } = await loadConfig()
 
-/\*_ 使用配置中的第一个账号 _/
+// 使用配置中的第一个账号
 const { exchange, waitTo24Hour, sendMessage } = await useExchange(config[0], message)
 
 // 等待到 24 点（最大等待 2 分钟）
@@ -196,7 +196,7 @@ await exchange([231228018])
 // 发送推送，如果兑换成功默认发送一次
 // await sendMessage()
 
-````
+```
 
 </TabItem>
 
@@ -225,7 +225,7 @@ const { loadConfig, useExchange } = require('@asunajs/caiyun');
 
 })();
 
-````
+```
 
   </TabItem>
 

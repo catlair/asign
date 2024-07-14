@@ -1,19 +1,15 @@
-import { createCookieJar } from '@asign/cookie'
 import { createApi, type M, run as runCore } from '@asign/quark-core'
 import { loadConfig } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
 import { createLogger, type LoggerPushData, pushMessage, sleep } from '@asunajs/utils'
 
-export type Config = { cookie: string }
+export type Config = { sign: string; info: string }
 export type Option = { pushData?: LoggerPushData[] }
 
-export async function main({ cookie }: Config, option?: Option) {
-  if (!cookie) return
+export async function main(urls: Config, option?: Option) {
+  if (!urls) return
   const logger = await createLogger({ pushData: option?.pushData })
-
-  const cookieJar = createCookieJar()
-  cookieJar.setCookieString(cookie)
 
   const $: M = {
     api: createApi(
@@ -23,10 +19,10 @@ export async function main({ cookie }: Config, option?: Option) {
           'user-agent':
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0',
         },
-        cookieJar,
       }),
     ),
     logger,
+    urls,
     sleep,
   }
 
@@ -40,7 +36,7 @@ export async function main({ cookie }: Config, option?: Option) {
  * @param path 配置文件地址
  */
 export async function run(inputPath?: string) {
-  const { config, path } = loadConfig<{
+  const { config } = loadConfig<{
     quark: Config[]
     message?: Record<string, any>
   }>(inputPath)
@@ -49,13 +45,13 @@ export async function run(inputPath?: string) {
 
   const quark = config.quark
 
-  if (!quark || !quark.length || !quark[0].cookie) return logger.error('未找到配置文件/变量')
+  if (!quark || !quark.length || !quark[0].sign) return logger.error('未找到配置文件/变量')
 
   const pushData = []
 
   for (let index = 0; index < quark.length; index++) {
     const c = quark[index]
-    if (!c.cookie) continue
+    if (!c.sign) continue
     try {
       await main(c, { pushData })
     } catch (error) {
