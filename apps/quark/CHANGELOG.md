@@ -1,5 +1,11 @@
 # @asunajs/quark
 
+## 0.2.1
+
+### Patch Changes
+
+- [`be6f42a`](https://github.com/yuiasn/asuna/commit/be6f42a9cb0a3d5fae1f61fd44a4be310c7f75c1) Thanks [@catlair](https://github.com/catlair)! - feat(quark): 更改配置方式
+
 ## 0.2.0
 
 ### Minor Changes

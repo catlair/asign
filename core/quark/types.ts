@@ -5,9 +5,10 @@ export interface M {
   api: ApiType
   logger: LoggerType
   sleep: (time: number) => Promise<number>
-  urls: {
+  query: {
+    kps: string
     sign: string
-    info: string
+    vcode: string
   }
 }
 

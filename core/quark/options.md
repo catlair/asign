@@ -1,14 +1,14 @@
+### `kps`
+
+- **类型**: `字符串`
+
 ### `sign`
 
 - **类型**: `字符串`
 
-sign url
-
-### `info`
+### `vcode`
 
 - **类型**: `字符串`
-
-info url
 
 ### 示例
 
@@ -16,8 +16,9 @@ info url
 {
   "quark": [
     {
-      "sign": "alo",
-      "info": "depraedor"
+      "kps": "comptus",
+      "sign": "vicissitudo",
+      "vcode": "synagoga"
     }
   ]
 }
