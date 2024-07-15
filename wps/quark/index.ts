@@ -30,6 +30,11 @@ function main(query: Config, option?: { pushData: any }) {
 
 // 获取当前工作表的使用范围
 const sheet = Application.Sheets.Item('夸克网盘') || Application.Sheets.Item('quark') || ActiveSheet
+
+if (!sheet) {
+  console.error('请确定单元格名为 夸克网盘 或 quark 或者已经聚焦到对应单元格')
+}
+
 const usedRange = sheet.UsedRange
 const columnA = sheet.Columns('A')
 const columnB = sheet.Columns('B')

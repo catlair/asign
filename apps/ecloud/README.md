@@ -74,7 +74,7 @@ at caiyun.js:1523:29
 
 ## wps 代码
 
-https://npmmirror.com/package/@asunajs/dist/files?version
+https://www.npmjs.com/package/@asunajs/dist?activeTab=code
 
 选择 ecloud.wps.js
 
