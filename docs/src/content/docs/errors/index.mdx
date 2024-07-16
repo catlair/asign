@@ -31,6 +31,15 @@ npm install nodemailer
 
 问题确实不大，主要出现在 console.log 打印了一个循环引用的对象时，此时删除这条打印即可
 
+### TypeError:Cannot read properties of null (reading 'UsedRange')
+at getPushConfig
+
+`getPushConfig`是获取推送配置的函数，`UsedRange`是表格使用的部分，出现该错误表示你没有创建推送单元格。
+
+如果不需要推送，请忽略错误，你前面都运行了，这个错误也不影响你。
+
+如果你需要推送且已经创建推送单元格，那请仔细阅读文档，包括单元格名称和格式是都符合要求。
+
 ## 运行时错误
 
 ### 不能在 undefined 上读取属性
