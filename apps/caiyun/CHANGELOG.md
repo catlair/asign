@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.3
+
+### Patch Changes
+
+- [`eda40a8`](https://github.com/yuiasn/asuna/commit/eda40a877e7be60f91f4c0c4651db29b99a4eda6) Thanks [@catlair](https://github.com/catlair)! - fix(caiyun): upload 1G task
+
 ## 0.3.2
 
 ### Patch Changes
