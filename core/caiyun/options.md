@@ -72,6 +72,12 @@ cookie authorization 字段
 
 分享任务默认使用的文件 id
 
+#### `skipTasks`
+
+- **类型**: `数组`
+
+跳过的任务 id
+
 ### `catalog`
 
 - **类型**: `字符串`
@@ -85,28 +91,34 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "sum",
+      "auth": "abundans",
       "shake": {
-        "enable": false,
-        "num": 15,
-        "delay": 4763152281501696
+        "enable": true,
+        "num": 6667335358218240,
+        "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "commodo",
-          "perspiciatis"
+          "temeritas"
         ],
-        "waterFriend": 4395851262722048
+        "waterFriend": 1171979553996800
       },
       "aiRedPack": {
         "enable": true
       },
-      "backupWaitTime": 4451416376606720,
+      "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "aequitas"
+        "shareFile": "universe",
+        "skipTasks": [
+          "contigo",
+          "amita",
+          "surgo",
+          "spiculum",
+          "vulnero"
+        ]
       },
-      "catalog": "00019700101000000001"
+      "catalog": "venio"
     }
   ]
 }
@@ -129,7 +141,9 @@ cookie authorization 字段
     "enable": true
   },
   "backupWaitTime": 20,
-  "tasks": {},
+  "tasks": {
+    "skipTasks": []
+  },
   "catalog": "00019700101000000001"
 }
 ```

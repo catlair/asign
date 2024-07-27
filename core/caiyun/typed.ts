@@ -12,7 +12,7 @@ export const config = z.object({
     enable: z.boolean().default(true).optional().describe(
       '是否开启该功能，需要注意的是果园需要自己去 APP 手动激活一下，否则等待你的全是报错',
     ),
-    inviteCodes: z.array(z.string()).optional().describe('邀请码'),
+    inviteCodes: z.array(z.string()).optional().describe('邀请码，如果不知道是啥就不管，也没用'),
     waterFriend: z.number().optional().describe('需要给哪个好友浇水，好友 uid'),
   }).optional().describe('果园配置'),
   aiRedPack: z.object({
@@ -20,9 +20,12 @@ export const config = z.object({
   }).optional().describe('AI 红包'),
   backupWaitTime: z.number().default(20).optional().describe('备份等待时间（秒）'),
   tasks: z.object({
-    shareFile: z.string().optional().describe('分享任务默认使用的文件 id'),
+    shareFile: z.string().optional().describe('分享任务默认使用的文件 id，请确保该文件存在且后续不被删除'),
+    skipTasks: z.array(z.string()).optional().describe('跳过的任务 id'),
   }),
-  catalog: z.string().optional().describe('默认上传目录').default('00019700101000000001'),
+  catalog: z.string().optional().describe(
+    '上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在',
+  ).default('00019700101000000001'),
 }).describe('中国移动云盘配置')
 
 const types = {

@@ -17,7 +17,7 @@ export async function uploadFileRequest(
     contentName = 'asign-' + randomHex(4) + ext,
     createTime = _createTime(),
     ...options
-  } = {},
+  } = {} as UploadFileOptions,
   needUpload?: boolean,
 ): Promise<{
   contentID?: string

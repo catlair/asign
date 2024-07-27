@@ -58,6 +58,10 @@ export interface Caiyun {
      * 分享任务默认使用的文件 id
      */
     shareFile?: string
+    /**
+     * 跳过的任务 id
+     */
+    skipTasks?: string[]
   }
   /**
    * 默认上传目录

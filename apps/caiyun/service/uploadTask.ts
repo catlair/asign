@@ -73,6 +73,7 @@ export async function uploadFile(
       manualRename,
       contentName,
       createTime,
+      channelSrc: '10000023',
     }, true)
     if (!redirectionUrl || !randomBuffer) {
       return Boolean(contentID)

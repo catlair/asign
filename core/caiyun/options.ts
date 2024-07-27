@@ -12,6 +12,8 @@ export const defuConfig = {
     enable: true,
   },
   backupWaitTime: 20,
-  tasks: {},
+  tasks: {
+    skipTasks: [],
+  },
   catalog: '00019700101000000001',
 }
