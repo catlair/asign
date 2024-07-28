@@ -155,7 +155,3 @@ target/
 Cargo.lock
 
 bun.lockb
-
-pnpm-lock.yaml
-package-lock.json
-yarn.lock
