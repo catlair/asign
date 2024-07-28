@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.4
+
+### Patch Changes
+
+- [`66bb167`](https://github.com/yuiasn/asuna/commit/66bb167d3a3e3212a4b63c206fa0dae0fd2ed613) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 支持跳过任务
+
 ## 0.3.3
 
 ### Patch Changes
