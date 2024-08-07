@@ -13,6 +13,7 @@ import { rewriteConfigSync } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
 import {
+  compare,
   createLogger,
   getLocalStorage,
   type LoggerPushData,
@@ -131,9 +132,16 @@ export async function run(inputPath?: string) {
 
   const logger = await createLogger()
 
+  const versionInfo = await getVersion()
+
+  versionInfo && logger.info(versionInfo)
+
   if (!config || !config.length) return logger.error('未找到配置文件/变量')
 
-  const pushData: LoggerPushData[] = [{ level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' }]
+  const pushData: LoggerPushData[] = [
+    { level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' },
+  ]
+  versionInfo && pushData.push({ level: 3, type: 'info', date: new Date(), msg: versionInfo })
   const ls = getLocalStorage(path, 'caiyun')
 
   for (let index = 0; index < config.length; index++) {
@@ -244,5 +252,27 @@ export async function loadConfig(inputPath?: string) {
     config: r.config.caiyun,
     message: r.config.message,
     path: r.path,
+  }
+}
+
+interface Npmmirror {
+  'dist-tags': {
+    latest: string
+  }
+  'time': Record<string, string>
+}
+
+async function getVersion() {
+  try {
+    const http = createRequest()
+    const { 'dist-tags': distTags } = await http.get<Npmmirror>('https://registry.npmmirror.com/@asunajs/caiyun/')
+
+    const npmVersion = distTags.latest
+    if (compare(npmVersion, '__ASIGN_VERSION__', '>')) {
+      return '检测到新版本：' + npmVersion + '，当前版本：__ASIGN_VERSION__，请及时更新！'
+    }
+
+    return '当前版本：__ASIGN_VERSION__'
+  } catch {
   }
 }

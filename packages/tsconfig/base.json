@@ -10,9 +10,9 @@
     "resolveJsonModule": true
   },
   "exclude": [
-    "node_modules",
-    "dist",
-    "**/asign.config.*",
-    "out"
+    "${configDir}/node_modules",
+    "${configDir}/dist",
+    "${configDir}/**/asign.config.*",
+    "${configDir}/out"
   ]
 }
