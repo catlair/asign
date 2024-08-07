@@ -1,6 +1,6 @@
 import * as swc from '@swc/core'
 
-export * from './tsup.js'
+export * from './ts1.js'
 
 export async function transform(inputCode: string) {
   const code = inputCode

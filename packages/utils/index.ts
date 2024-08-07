@@ -4,6 +4,7 @@ import fs, { existsSync, readFileSync, writeFileSync } from 'fs'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
+export { compare } from 'compare-versions'
 export { set as setIn } from 'lodash-es'
 
 export function sleep(time: number) {

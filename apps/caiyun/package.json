@@ -27,11 +27,12 @@
   },
   "devDependencies": {
     "@asign/build": "workspace:^",
-    "tsconfig": "workspace:*",
     "@asign/caiyun-core": "workspace:^",
     "@asign/utils-pure": "workspace:^",
     "@asunajs/utils": "workspace:^",
-    "dotenv": "^16.4.5"
+    "compare-versions": "^6.1.1",
+    "dotenv": "^16.4.5",
+    "tsconfig": "workspace:*"
   },
   "publishConfig": {
     "directory": "dist",
