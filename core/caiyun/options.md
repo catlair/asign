@@ -40,7 +40,7 @@ cookie authorization 字段
 
 - **类型**: `数组`
 
-邀请码
+邀请码，如果不知道是啥就不管，也没用
 
 #### `waterFriend`
 
@@ -70,20 +70,20 @@ cookie authorization 字段
 
 - **类型**: `字符串`
 
-分享任务默认使用的文件 id
+分享任务默认使用的文件 id，请确保该文件存在且后续不被删除
 
 #### `skipTasks`
 
 - **类型**: `数组`
 
-跳过的任务 id
+跳过的任务 id，可抓包获取，也可查看日志输出（任务日志会在任务名后面拼接上数字 id 的）。切记，配置优先级最高，配置无论任务是否能够自动完成都将跳过。
 
 ### `catalog`
 
 - **类型**: `字符串`
 - **默认值**: `"00019700101000000001"`
 
-默认上传目录
+上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在
 
 ### 示例
 
@@ -91,34 +91,34 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "abundans",
+      "auth": "amissio",
       "shake": {
-        "enable": true,
-        "num": 6667335358218240,
+        "enable": false,
+        "num": 6047861154250752,
         "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "temeritas"
+          "demens",
+          "turpis",
+          "ascisco",
+          "veritas"
         ],
-        "waterFriend": 1171979553996800
+        "waterFriend": 6382160541908992
       },
       "aiRedPack": {
         "enable": true
       },
       "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "universe",
+        "shareFile": "defungo",
         "skipTasks": [
-          "contigo",
-          "amita",
-          "surgo",
-          "spiculum",
-          "vulnero"
+          5763730042257408,
+          2822761835659264
         ]
       },
-      "catalog": "venio"
+      "catalog": "colo"
     }
   ]
 }

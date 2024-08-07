@@ -1,4 +1,14 @@
+import { replace } from 'esbuild-plugin-replace'
 import { defineConfig } from 'tsup'
+
+/**
+ * @param {string} version
+ */
+export function setVersion(version) {
+  return replace({
+    __ASIGN_VERSION__: version,
+  })
+}
 
 export const tsupDefuConfig = defineConfig({
   clean: true,
@@ -21,7 +31,7 @@ export const appDefuConfig = defineConfig({
   format: ['cjs', 'esm'],
   esbuildOptions: (options) => {
     // 判断是否是 esm，避免重复引入 require
-    if (options.define['TSUP_FORMAT'] === '"esm"') {
+    if (options.define?.['TSUP_FORMAT'] === '"esm"') {
       options.banner = {
         js:
           `import{createRequire}from'module';if(!globalThis.require)globalThis.require=createRequire(import.meta.url);`,
