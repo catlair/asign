@@ -1,5 +1,13 @@
 # @asunajs/caiyun
 
+## 0.3.5
+
+### Patch Changes
+
+- [`db9fd67`](https://github.com/yuiasn/asuna/commit/db9fd67f42a8ddf67417a27a79e67cadbf21753c) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 输出版本信息
+
+- [`1d9b860`](https://github.com/yuiasn/asuna/commit/1d9b860fcade0a50a15383bbce12488edc980189) Thanks [@catlair](https://github.com/catlair)! - fix(caiyun): 打印任务完成情况
+
 ## 0.3.4
 
 ### Patch Changes
