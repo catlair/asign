@@ -7,10 +7,11 @@ export function QuarkUrl() {
   function getQuery() {
     try {
       const { searchParams } = new URL(url())
+      const getStr = (str: string) => encodeURIComponent(searchParams.get(str) || '')
       return {
-        kps: searchParams.get('kps') || '',
-        sign: searchParams.get('sign') || '',
-        vcode: searchParams.get('vcode') || '',
+        kps: getStr('kps'),
+        sign: getStr('sign'),
+        vcode: getStr('vcode'),
       }
     } catch (error) {
       console.error(error)
