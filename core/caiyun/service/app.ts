@@ -8,6 +8,44 @@ import { refreshToken } from './auth.js'
 
 type TaskItem = TaskList['result'][keyof TaskList['result']][number]
 
+async function _handleClick($: M, task: TaskItem, doingList: number[]) {
+  if (await _clickTask($, task.id, task.currstep)) {
+    await _handleAppTask($, task)
+    doingList.push(task.id)
+    await $.sleep(500)
+  }
+}
+
+async function _switchAppTask($: M, task: TaskItem, doingList: number[]) {
+  switch (task.groupid) {
+    case 'beiyong1': {
+      await _handleClick($, task, doingList)
+      // 如果是上传任务，则主动上传
+      if (task.name.includes('上传') && (task.name.includes('图') || task.name.includes('照'))) {
+        await uploadRandomFile($)
+        return
+      }
+    }
+    case 'month': {
+      // 在没开启备份的前提下，本月 20 号前不做 app 的月任务
+      if (task.marketname === 'sign_in_3' && ($.store.curMonthBackup === false && new Date().getDate() < 20)) {
+        $.logger.debug('跳过任务（未开启备份）', task.name)
+        return
+      }
+    }
+    default: {
+      if (TASK_LIST[task.id]) {
+        await _handleClick($, task, doingList)
+        return
+      }
+      if (!SKIP_TASK_LIST.includes(task.id)) {
+        await clickTask($, task.id)
+        return
+      }
+    }
+  }
+}
+
 export async function appTask($: M) {
   $.logger.start('------【任务列表】------')
   const taskList = await getAllAppTaskList($)
@@ -22,69 +60,32 @@ export async function appTask($: M) {
     if ($.config.tasks?.skipTasks?.includes(task.id)) continue
     if (task.state === 'FINISH' || task.enable !== 1) continue
 
-    const _handleClick = async () => {
-      if (await _clickTask($, task.id, task.currstep)) {
-        await _handleAppTask($, task)
-        doingList.push(task.id)
-        await $.sleep(500)
-      }
-    }
-    const _switchAppTask = async () => {
-      switch (task.groupid) {
-        case 'beiyong1': {
-          await _handleClick()
-          // 如果是上传任务，则主动上传
-          if (task.name.includes('上传') && (task.name.includes('图') || task.name.includes('照'))) {
-            await uploadRandomFile($)
-            return
-          }
-        }
-        case 'month': {
-          // 在没开启备份的前提下，本月 20 号前不做 app 的月任务
-          if (task.marketname === 'sign_in_3' && ($.store.curMonthBackup === false && new Date().getDate() < 20)) {
-            $.logger.debug('跳过任务（未开启备份）', task.name)
-            return
-          }
-        }
-        default: {
-          if (TASK_LIST[task.id]) {
-            await _handleClick()
-            return
-          }
-          if (!SKIP_TASK_LIST.includes(task.id)) {
-            await clickTask($, task.id)
-            return
-          }
-        }
-      }
-    }
-
-    await _switchAppTask()
+    await _switchAppTask($, task, doingList)
   }
 
   const skipCheck = [434, 1021]
 
-  if (doingList.length <= 0) {
-    for (const task of await getAllAppTaskList($)) {
-      if (skipCheck.includes(task.id)) continue
-      const printFail = (msg: string) =>
-        $.logger.fail(
-          msg,
-          `请前往${getMarketName(task.marketname)}手动完成${getGroupName(task.groupid)}：${task.name}(${task.id})`,
-        )
+  if (doingList.length <= 0) return
 
-      if (doingList.includes(task.id)) {
-        if (task.state === 'FINISH') {
-          $.logger.success('成功', task.name)
-          continue
-        }
-        printFail('失败')
+  for (const task of await getAllAppTaskList($)) {
+    if (skipCheck.includes(task.id)) continue
+    const printFail = (msg: string) =>
+      $.logger.fail(
+        msg,
+        `请前往${getMarketName(task.marketname)}手动完成${getGroupName(task.groupid)}：${task.name}(${task.id})`,
+      )
+
+    if (doingList.includes(task.id)) {
+      if (task.state === 'FINISH') {
+        $.logger.success('成功', task.name)
         continue
       }
-      if (task.groupid === 'month' || task.groupid === 'day') {
-        if (task.state !== 'FINISH') {
-          printFail('未完成')
-        }
+      printFail('失败')
+      continue
+    }
+    if (task.groupid === 'month' || task.groupid === 'day') {
+      if (task.state !== 'FINISH') {
+        printFail('未完成')
       }
     }
   }
@@ -202,7 +203,7 @@ async function shareTime($: M) {
       '',
     )
     if (code === '0') {
-      $.logger.success(`分享文件成功`)
+      $.logger.success(`分享文件成功`, message)
       return true
     }
     $.logger.fail(`分享文件失败`, code, message, data.result)
