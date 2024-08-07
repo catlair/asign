@@ -1,5 +1,16 @@
 # @asunajs/caiyun
 
+## 0.3.5
+
+### Patch Changes
+
+- [#17](https://github.com/yuiasn/asuna/pull/17) [`f9af652`](https://github.com/yuiasn/asuna/commit/f9af652fae8c3da21213bb30ce4be83686138a58) Thanks [@github-actions](https://github.com/apps/github-actions)! - feat(caiyun): 输出版本信息
+
+- [#17](https://github.com/yuiasn/asuna/pull/17) [`1d9b860`](https://github.com/yuiasn/asuna/commit/1d9b860fcade0a50a15383bbce12488edc980189) Thanks [@github-actions](https://github.com/apps/github-actions)! - fix(caiyun): 打印任务完成情况
+
+- Updated dependencies []:
+  - @asunajs/conf@0.0.7
+
 ## 0.3.4
 
 ### Patch Changes

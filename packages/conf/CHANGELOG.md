@@ -1,5 +1,12 @@
 # @asunajs/conf
 
+## 0.0.7
+
+### Patch Changes
+
+- Updated dependencies [[`f9af652`](https://github.com/yuiasn/asuna/commit/f9af652fae8c3da21213bb30ce4be83686138a58)]:
+  - @asunajs/utils@0.0.3
+
 ## 0.0.6
 
 ### Patch Changes

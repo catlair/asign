@@ -1,5 +1,11 @@
 # @asunajs/utils
 
+## 0.0.3
+
+### Patch Changes
+
+- [#17](https://github.com/yuiasn/asuna/pull/17) [`f9af652`](https://github.com/yuiasn/asuna/commit/f9af652fae8c3da21213bb30ce4be83686138a58) Thanks [@github-actions](https://github.com/apps/github-actions)! - feat(caiyun): 输出版本信息
+
 ## 0.0.2
 
 ### Patch Changes

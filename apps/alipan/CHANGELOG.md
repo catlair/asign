@@ -1,5 +1,12 @@
 # @asunajs/alipan
 
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @asunajs/conf@0.0.7
+
 ## 0.1.5
 
 ### Patch Changes

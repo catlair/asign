@@ -1,5 +1,12 @@
 # @asunajs/quark
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies []:
+  - @asunajs/conf@0.0.7
+
 ## 0.2.1
 
 ### Patch Changes
