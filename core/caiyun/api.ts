@@ -20,7 +20,7 @@ import type {
   NoteBooks,
   OpenBlindbox,
   Orchestration,
-  PcUploadFile,
+  OutLink,
   QuerySpecToken,
   Shake,
   SignInfoInWx,
@@ -229,9 +229,9 @@ export function createApi(http: Http) {
           sortDirection: 1,
           catalogSortType: 0,
           contentSortType: 0,
-          filterType: 1,
+          filterType: 0,
           startNumber: 1,
-          endNumber: 40,
+          endNumber: 100,
         },
       )
     },
@@ -274,39 +274,6 @@ export function createApi(http: Http) {
           'Range': `bytes=0-${(size - 1).toString()}`,
         },
       })
-    },
-    pcUploadFileRequest(
-      account: string | number,
-      parentCatalogID: string,
-      contentSize: number,
-      contentName: string,
-      digest: string,
-    ) {
-      return http.post<PcUploadFile>(
-        `${yun139Url}/orchestration/personalCloud/uploadAndDownload/v1.0/pcUploadFileRequest`,
-        {
-          commonAccountInfo: { account: String(account) },
-          fileCount: 1,
-          totalSize: contentSize,
-          uploadContentList: [
-            {
-              contentName,
-              contentSize,
-              comlexFlag: 0,
-              digest,
-            },
-          ],
-          newCatalogName: '',
-          parentCatalogID,
-          operation: 0,
-          path: '',
-          manualRename: 2,
-          autoCreatePath: [],
-          tagID: '',
-          tagType: '',
-          seqNo: '',
-        },
-      )
     },
     createBatchOprTask(account: string, contentIds: string[]) {
       return http.post<CreateBatchOprTask>(
@@ -373,7 +340,7 @@ export function createApi(http: Http) {
       return http.get<Hecheng1T>(`${caiyunUrl}/market/signin/hecheng1T/info`)
     },
     getOutLink(account: string, coIDLst: string[], dedicatedName: string) {
-      return http.post<Orchestration<{ getOutLinkRes: any }>>(
+      return http.post<OutLink>(
         `${yun139Url}/orchestration/personalCloud-rebuild/outlink/v1.0/getOutLink`,
         {
           getOutLinkReq: {
@@ -390,6 +357,20 @@ export function createApi(http: Http) {
               isWatermark: 0,
               shareChannel: '3001',
             },
+            commonAccountInfo: {
+              account,
+              accountType: 1,
+            },
+          },
+        },
+      )
+    },
+    delOutLink(account: string, linkIDs: string[]) {
+      return http.post<Orchestration<{ getOutLinkRes: any }>>(
+        `${yun139Url}/orchestration/personalCloud-rebuild/outlink/v1.0/delOutLink`,
+        {
+          delOutLinkReq: {
+            linkIDs,
             commonAccountInfo: {
               account,
               accountType: 1,

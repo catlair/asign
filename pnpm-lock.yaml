@@ -199,6 +199,9 @@ importers:
       '@swc/core':
         specifier: ^1.6.5
         version: 1.7.2
+      esbuild:
+        specifier: ^0.23.0
+        version: 0.23.0
       esbuild-plugin-replace:
         specifier: ^1.4.0
         version: 1.4.0

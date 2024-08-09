@@ -124,26 +124,6 @@ export async function uploadRandomFile($: M, options?: UploadFileOptions) {
   }
 }
 
-export async function pcUploadFileRequest($: M, path: string) {
-  try {
-    const { success, message, data } = await $.api.pcUploadFileRequest(
-      $.config.phone,
-      path,
-      0,
-      'asign' + randomHex(4) + '.png',
-      'd41d8cd98f00b204e9800998ecf8427e',
-    )
-    if (success && data && data.uploadResult) {
-      return data.uploadResult.newContentIDList.map(
-        ({ contentID }) => contentID,
-      )
-    }
-    $.logger.error(`上传文件请求失败`, message)
-  } catch (error) {
-    $.logger.error(`上传文件请求异常`, error)
-  }
-}
-
 export function getBackParentCatalogID() {
   return '00019700101000000043'
 }

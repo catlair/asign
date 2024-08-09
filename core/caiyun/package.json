@@ -16,6 +16,9 @@
     },
     "./service": {
       "import": "./service/index.ts"
+    },
+    "./api": {
+      "import": "./api/index.ts"
     }
   },
   "scripts": {

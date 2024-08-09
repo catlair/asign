@@ -1,6 +1,7 @@
-import { randomHex, setStoreArray, sleepSync } from '@asign/utils-pure'
+import { randomHex, sleepSync } from '@asign/utils-pure'
+import { getFileList } from '../api/file.js'
 import { SKIP_TASK_LIST, TASK_LIST } from '../constant/taskList.js'
-import { pcUploadFileRequest, uploadRandomFile } from '../service/index.js'
+import { uploadRandomFile } from '../service/index.js'
 import type { TaskList } from '../TaskType.js'
 import type { M } from '../types'
 import { getGroupName, getMarketName, request } from '../utils/index.js'
@@ -17,6 +18,8 @@ async function _handleClick($: M, task: TaskItem, doingList: number[]) {
 }
 
 async function _switchAppTask($: M, task: TaskItem, doingList: number[]) {
+  if (task.id === 434) $.store.shareCount = getShareCount(task.name)
+
   switch (task.groupid) {
     case 'beiyong1': {
       await _handleClick($, task, doingList)
@@ -46,6 +49,17 @@ async function _switchAppTask($: M, task: TaskItem, doingList: number[]) {
   }
 }
 
+function getShareCount(str: string) {
+  return +str.replace(`分享文件有好礼<span id='share_title'>`, '').replace('/7</span>', '')
+}
+
+function printShareCount($: M, name: string) {
+  const count = getShareCount(name)
+  if (count > $.store.shareCount) {
+    $.logger.success('分享文件有好礼', count, '天')
+  }
+}
+
 export async function appTask($: M) {
   $.logger.start('------【任务列表】------')
   const taskList = await getAllAppTaskList($)
@@ -63,12 +77,17 @@ export async function appTask($: M) {
     await _switchAppTask($, task, doingList)
   }
 
-  const skipCheck = [434, 1021]
+  const skipCheck = [1021]
 
   if (doingList.length <= 0) return
 
   for (const task of await getAllAppTaskList($)) {
     if (skipCheck.includes(task.id)) continue
+    // 分享文件有好礼
+    if (task.id === 434) {
+      printShareCount($, task.name)
+      continue
+    }
     const printFail = (msg: string) =>
       $.logger.fail(
         msg,
@@ -109,7 +128,7 @@ function getTaskRunner($: M) {
       sleepSync(1000)
       await uploadRandomFile($)
     },
-    106: uploadFileDaily,
+    106: uploadRandomFile,
     107: createNoteDaily,
     434: shareTime,
     110: $.node && $.node.uploadTask,
@@ -150,13 +169,6 @@ async function getAppTaskList($: M, marketname: 'sign_in_3' | 'newsign_139mail' 
   return Object.values(data).flat()
 }
 
-async function uploadFileDaily($: M) {
-  const contentID = await pcUploadFileRequest($, $.config.catalog)
-  if (contentID) {
-    setStoreArray($.store, 'files', contentID)
-  }
-}
-
 async function createNoteDaily($: M) {
   if (!$.config.auth) {
     $.logger.info(`未配置 authToken，跳过云笔记任务执行`)
@@ -188,22 +200,60 @@ async function _clickTask($: M, id: number, currstep = 0) {
   return currstep === 0 ? await clickTask($, id) : true
 }
 
+async function _getFileList($: M) {
+  try {
+    const { message, code, data, success } = await getFileList($.http)
+    if (success) {
+      $.logger.debug(`测试 file/list`)
+      return data.items.filter(item => item.type === 'file')
+    }
+    if (code === '04510001') return false
+    $.logger.fail(`获取文件列表失败`, code, message)
+  } catch (error) {
+    $.logger.error(`获取文件列表异常`, error)
+  }
+}
+
+async function getShareFile($: M) {
+  const files = await _getFileList($)
+  if (files) {
+    const file = files.find(item => item.name === '中国移动云盘产品手册.pdf') || files[0]
+    return file && file.fileId
+  }
+  return $.config.tasks.shareFile || $.store.files?.[0]
+}
+
+async function delShareFile($: M, linkIDs: string[]) {
+  try {
+    const { code, message, data } = await $.api.delOutLink($.config.phone, linkIDs)
+    if (code === '0') {
+      $.logger.debug(`分享文件成功`, message)
+      return true
+    }
+    $.logger.debug(`分享文件失败`, code, message, data.result)
+  } catch (error) {
+    $.logger.debug(`删除分享文件失败`, error)
+  }
+}
+
 async function shareTime($: M) {
   try {
-    const shareFile = $.config.tasks.shareFile
-    const files = shareFile ? [shareFile] : $.store.files
-    if (!files || !files[0]) {
-      $.logger.debug(`未获取到文件列表，跳过分享任务（不是错误，再反馈拉黑了）`)
+    const shareFile = await getShareFile($)
+    if (!shareFile) {
+      $.logger.debug(`未获取到文件列表，跳过分享任务`)
       return
     }
-    $.logger.debug('分享', files[0])
+    $.logger.debug('分享', shareFile)
     const { code, message, data } = await $.api.getOutLink(
       $.config.phone,
-      [files[0]],
+      [shareFile],
       '',
     )
     if (code === '0') {
       $.logger.success(`分享文件成功`, message)
+      try {
+        await delShareFile($, [data.getOutLinkRes.getOutLinkResSet[0].linkID])
+      } catch {}
       return true
     }
     $.logger.fail(`分享文件失败`, code, message, data.result)

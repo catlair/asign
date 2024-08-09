@@ -268,11 +268,10 @@ async function getVersion() {
     const { 'dist-tags': distTags } = await http.get<Npmmirror>('https://registry.npmmirror.com/@asunajs/caiyun/')
 
     const npmVersion = distTags.latest
-    if (compare(npmVersion, '__ASIGN_VERSION__', '>')) {
-      return '检测到新版本：' + npmVersion + '，当前版本：__ASIGN_VERSION__，请及时更新！'
-    }
 
-    return '当前版本：__ASIGN_VERSION__'
+    return compare(npmVersion, '__ASIGN_VERSION__', '>')
+      ? '检测到新版本：' + npmVersion + '，当前版本：__ASIGN_VERSION__，请及时更新！'
+      : '当前版本：__ASIGN_VERSION__'
   } catch {
   }
 }

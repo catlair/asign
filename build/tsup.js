@@ -10,6 +10,13 @@ export function setVersion(version) {
   })
 }
 
+/**
+ * @param {import('esbuild').BuildOptions} options
+ */
+function setEsbuildOptions(options) {
+  options.charset = 'utf8'
+}
+
 export const tsupDefuConfig = defineConfig({
   clean: true,
   platform: 'node',
@@ -24,12 +31,16 @@ export const tsupDefuConfig = defineConfig({
       js: `.${format === 'cjs' ? 'cjs' : format === 'esm' ? 'mjs' : 'js'}`,
     }
   },
+  esbuildOptions: (options) => {
+    setEsbuildOptions(options)
+  },
 })
 
 export const appDefuConfig = defineConfig({
   ...tsupDefuConfig,
   format: ['cjs', 'esm'],
   esbuildOptions: (options) => {
+    setEsbuildOptions(options)
     // 判断是否是 esm，避免重复引入 require
     if (options.define?.['TSUP_FORMAT'] === '"esm"') {
       options.banner = {

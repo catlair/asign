@@ -19,6 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "@swc/core": "^1.6.5",
+    "esbuild": "^0.23.0",
     "esbuild-plugin-replace": "^1.4.0",
     "tsconfig": "workspace:*"
   }

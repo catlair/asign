@@ -27,6 +27,7 @@ export interface M {
     curMonthBackup?: boolean
     /** 云朵 */
     totalCloud?: number
+    shareCount?: number
     [key: string]: any
   }
   localStorage: {
@@ -357,6 +358,20 @@ export interface Orchestration<T = any> {
     }
   } & T
 }
+
+export type OutLink = Orchestration<{
+  getOutLinkRes: {
+    getOutLinkResSet: [
+      {
+        objID: string
+        passwd: string
+        linkID: string
+        linkUrl: string
+        linkUrlMin: null
+      },
+    ]
+  }
+}>
 
 export type CreateBatchOprTask = Orchestration<{
   createBatchOprTaskRes: {
