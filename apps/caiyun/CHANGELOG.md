@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.6
+
+### Patch Changes
+
+- [`a3a4042`](https://github.com/yuiasn/asuna/commit/a3a4042f3dc88f69369646ce498b0c96804dd1fd) Thanks [@catlair](https://github.com/catlair)! - fix(caiyun): share
+
 ## 0.3.5
 
 ### Patch Changes
