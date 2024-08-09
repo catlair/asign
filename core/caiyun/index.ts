@@ -478,28 +478,6 @@ export async function run($: M) {
   await afterTask($)
 }
 
-/**
- * 兼容旧配置，现在只要求配置 auth （且 auth 是老版本的 token）
- */
-export function handleOldConfig(config: any) {
-  const isAuthToken = (str: string) => str.includes('|')
-  // 只有 token
-  if (config.token && !config.auth) {
-    config.auth = config.token
-    config.token = undefined
-    return true
-  }
-  // 只有 auth
-  if (config.auth && !config.token) {
-    return
-  }
-  // token 和 auth 都有
-  if (config.token && config.auth) {
-    config.auth = isAuthToken(config.auth) ? config.token : config.auth
-    return true
-  }
-}
-
 export function getTokenExpireTime(token: string) {
   return Number(token.split('|')[3])
 }

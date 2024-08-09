@@ -309,9 +309,9 @@ export function createApi(http: Http) {
         },
       )
     },
-    clickTask(id: number) {
-      return http.get<{ code: number; msg: string }>(
-        `${caiyunUrl}/market/signin/task/click?key=task&id=${id}`,
+    clickTask(id: number, key = 'task') {
+      return http.get<{ code: number; msg: string; result?: { msg: string } }>(
+        `${caiyunUrl}/market/signin/task/click?key=${key}&id=${id}`,
       )
     },
     getTaskList(marketname: 'sign_in_3' | 'newsign_139mail' = 'sign_in_3') {

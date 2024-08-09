@@ -1,12 +1,4 @@
-import {
-  createApi,
-  createGardenApi,
-  createNewAuth,
-  getJwtToken,
-  handleOldConfig,
-  type M,
-  run as runCore,
-} from '@asign/caiyun-core'
+import { createApi, createGardenApi, createNewAuth, getJwtToken, type M, run as runCore } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
 import { getAuthInfo, sleepSync } from '@asign/utils-pure'
 import { rewriteConfigSync } from '@asunajs/conf'
@@ -146,9 +138,6 @@ export async function run(inputPath?: string) {
 
   for (let index = 0; index < config.length; index++) {
     const c = config[index]
-    if (handleOldConfig(c)) {
-      logger.warn('auth 配置方式过旧，请及时修改，下个版本将不再兼容')
-    }
     if (!c.auth) {
       logger.error('该配置中不存在 auth')
       continue

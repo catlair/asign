@@ -18,13 +18,17 @@ async function _handleClick($: M, task: TaskItem, doingList: number[]) {
 }
 
 async function _switchAppTask($: M, task: TaskItem, doingList: number[]) {
-  if (task.id === 434) $.store.shareCount = getShareCount(task.name)
+  if (task.id === 434) {
+    $.store.shareCount = getShareCount(task.name)
+    $.logger.debug('shareCount', $.store.shareCount)
+  }
 
   switch (task.groupid) {
     case 'beiyong1': {
       await _handleClick($, task, doingList)
       // 如果是上传任务，则主动上传
       if (task.name.includes('上传') && (task.name.includes('图') || task.name.includes('照'))) {
+        $.logger.debug('尝试完成', task.name)
         await uploadRandomFile($)
         return
       }
@@ -87,6 +91,11 @@ export async function appTask($: M) {
     if (task.id === 434) {
       printShareCount($, task.name)
       continue
+    }
+    // 七夕
+    if (task.id === 481 && task.currstep === 2) {
+      await clickTask($, 481, 'randomCloudTask')
+      return true
     }
     const printFail = (msg: string) =>
       $.logger.fail(
@@ -227,7 +236,7 @@ async function delShareFile($: M, linkIDs: string[]) {
   try {
     const { code, message, data } = await $.api.delOutLink($.config.phone, linkIDs)
     if (code === '0') {
-      $.logger.debug(`分享文件成功`, message)
+      $.logger.debug(`删除分享成功`, message)
       return true
     }
     $.logger.debug(`分享文件失败`, code, message, data.result)
@@ -270,15 +279,17 @@ async function getNoteAuthToken($: M) {
   }
 }
 
-async function clickTask($: M, task: number) {
+async function clickTask($: M, id: number, taskStr?: string) {
   try {
-    const { code, msg } = await $.api.clickTask(task)
+    const { code, msg, result } = await $.api.clickTask(id, taskStr)
     if (code === 0) {
+      if (result && result.msg) $.logger.info(id, result.msg)
       return true
     }
-    $.logger.fail(`点击任务${task}失败`, msg)
+
+    $.logger.fail(`点击任务${id}失败`, msg)
   } catch (error) {
-    $.logger.error(`点击任务${task}异常`, error)
+    $.logger.error(`点击任务${id}异常`, error)
   }
   return false
 }
