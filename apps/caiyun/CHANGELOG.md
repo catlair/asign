@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.7
+
+### Patch Changes
+
+- [`efe3f94`](https://github.com/yuiasn/asuna/commit/efe3f94e7a1861f61bb72790964d9ecd995261f6) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 七夕
+
 ## 0.3.6
 
 ### Patch Changes
