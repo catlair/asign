@@ -442,27 +442,44 @@ async function afterTask($: M) {
   }
 }
 
+export const tasks = {
+  appTask,
+  backupGiftTask,
+  blindboxTask,
+  hc1Task,
+  msgPushOnTask,
+  receive,
+  shakeTask,
+  shareFindTask,
+  signIn,
+  signInWx,
+  taskExpansionTask,
+  wxDraw,
+  gardenTask,
+  afterTask,
+}
+
 export async function run($: M) {
   const { config } = $
 
   const taskList = [
-    signIn,
-    taskExpansionTask,
-    signInWx,
-    wxDraw,
-    appTask,
-    shareFindTask,
-    blindboxTask,
-    hc1Task,
-    shakeTask,
-    receive,
-    msgPushOnTask,
-    backupGiftTask,
+    // signIn,
+    // taskExpansionTask,
+    // signInWx,
+    // wxDraw,
+    // appTask,
+    // shareFindTask,
+    // blindboxTask,
+    // hc1Task,
+    // shakeTask,
+    // receive,
+    // msgPushOnTask,
+    // backupGiftTask,
   ]
 
   if (config) {
     if (config.garden && config.garden.enable) {
-      taskList.push(gardenTask)
+      // taskList.push(gardenTask)
     }
 
     if (config.aiRedPack && config.aiRedPack.enable) {

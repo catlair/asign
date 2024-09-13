@@ -12,8 +12,12 @@ export const config = z.object({
     enable: z.boolean().default(true).optional().describe(
       '是否开启该功能，需要注意的是果园需要自己去 APP 手动激活一下，否则等待你的全是报错',
     ),
-    inviteCodes: z.array(z.string()).optional().describe('邀请码，如果不知道是啥就不管，也没用'),
-    waterFriend: z.number().optional().describe('需要给哪个好友浇水，好友 uid'),
+    inviteCodes: z.array(z.string()).optional().describe(
+      '邀请码，如果不知道是啥就不管，也没用. 配置后默认助力功能失效',
+    ),
+    waterFriend: z.number().optional().describe(
+      '需要给哪个好友浇水，好友 uid(果园输出的昵称后面的数字就是 uid). 浇水会消耗自己的水滴, 所有用来干嘛, 你懂的',
+    ),
   }).optional().describe('果园配置'),
   aiRedPack: z.object({
     enable: z.boolean().default(true).optional().describe('是否开启该功能'),
@@ -24,7 +28,7 @@ export const config = z.object({
     skipTasks: z.array(z.number()).optional().describe(
       '跳过的任务 id，可抓包获取，也可查看日志输出（任务日志会在任务名后面拼接上数字 id 的）。切记，配置优先级最高，配置无论任务是否能够自动完成都将跳过。',
     ),
-  }),
+  }).optional(),
   catalog: z.string().optional().describe(
     '上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在',
   ).default('00019700101000000001'),

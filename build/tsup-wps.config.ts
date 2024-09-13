@@ -32,5 +32,8 @@ export default defineConfig((options) => {
         code.replace(/^\(\(\)=>\{/g, '').replace(/\}\)\(\);\n$/g, ''),
       )
     },
+    esbuildOptions(options) {
+      options.charset = 'utf8'
+    },
   }
 })

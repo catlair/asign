@@ -1,4 +1,11 @@
-import { createTime as _createTime, getXmlElement, randomHex, randomNumber, setStoreArray } from '@asign/utils-pure'
+import {
+  createTime as _createTime,
+  getXmlElement,
+  isWps,
+  randomHex,
+  randomNumber,
+  setStoreArray,
+} from '@asign/utils-pure'
 import type { UploadXml } from '../api.js'
 import type { M } from '../types.js'
 
@@ -11,11 +18,11 @@ export async function uploadFileRequest(
   parentCatalogID: string,
   {
     ext = '.png',
-    digest = randomHex(32).toUpperCase(),
-    contentSize = randomNumber(1, 1000) as number | string,
+    digest,
+    contentSize,
     manualRename = 2,
-    contentName = 'asign-' + randomHex(4) + ext,
-    createTime = _createTime(),
+    contentName,
+    createTime,
     ...options
   } = {} as UploadFileOptions,
   needUpload?: boolean,
@@ -26,6 +33,10 @@ export async function uploadFileRequest(
   contentName?: string
 }> {
   try {
+    digest || (digest = randomHex(32).toUpperCase())
+    createTime || (createTime = _createTime())
+    contentSize || (contentSize = randomNumber(1, 1000))
+    contentName || (contentName = 'asign-' + randomHex(4) + ext)
     const xml = await $.api.uploadFileRequest(
       {
         phone: $.config.phone,
@@ -71,11 +82,11 @@ export async function uploadFile(
   parentCatalogID: string,
   {
     ext = '.png',
-    digest = randomHex(32).toUpperCase(),
-    contentSize = randomNumber(1, 1000) as number | string,
+    digest,
+    contentSize,
     manualRename = 2,
-    contentName = 'asign-' + randomHex(4) + ext,
-    createTime = _createTime(),
+    contentName,
+    createTime,
     ...options
   } = {} as UploadFileOptions,
   file: Buffer | string,
@@ -117,6 +128,16 @@ export async function uploadFile(
 
 export async function uploadRandomFile($: M, options?: UploadFileOptions) {
   try {
+    if (isWps()) {
+      const map = [
+        { key: '1', value: 'c4ca4238a0b923820dcc509a6f75849b' },
+        { key: '2', value: 'c81e728d9d4c2f636f067f89cc14862c' },
+        { key: '3', value: 'eccbc87e4b5ce2fe28308fd9f2a7baf3' },
+        { key: '123', value: '202cb962ac59075b964b07152d234b70' },
+      ]
+      const r = randomNumber(0, map.length)
+      return await uploadFile($, $.config.catalog, { digest: map[r].value }, map[r].key)
+    }
     const buffer = randomHex(32)
     return await uploadFile($, $.config.catalog, { ...options, digest: $.md5(buffer) }, buffer)
   } catch (error) {

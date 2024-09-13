@@ -95,7 +95,6 @@ export async function appTask($: M) {
     // 七夕
     if (task.id === 481 && task.currstep === 2) {
       await clickTask($, 481, 'randomCloudTask')
-      return true
     }
     const printFail = (msg: string) =>
       $.logger.fail(
@@ -137,7 +136,7 @@ function getTaskRunner($: M) {
       sleepSync(1000)
       await uploadRandomFile($)
     },
-    106: uploadRandomFile,
+    106: ($: M) => uploadRandomFile($),
     107: createNoteDaily,
     434: shareTime,
     110: $.node && $.node.uploadTask,
