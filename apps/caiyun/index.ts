@@ -1,5 +1,6 @@
 import { createApi, createGardenApi, createNewAuth, getJwtToken, type M, run as runCore } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
+import type { LoggerType } from '@asign/types'
 import { getAuthInfo, sleepSync } from '@asign/utils-pure'
 import { rewriteConfigSync } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
@@ -19,23 +20,25 @@ import { uploadTask } from './service/uploadTask.js'
 import { myMD5 } from './utils/md5.js'
 
 export type Config = M['config']
-export type Option = { pushData?: LoggerPushData[] }
+export type Option = { localStorage?: M['localStorage']; logger: LoggerType; jwtToken?: string }
 export { sleep }
 
 export async function init(
   config: Config,
-  localStorage: M['localStorage'] = {},
-  option?: Option,
+  { logger, localStorage = {}, jwtToken }: Option,
 ) {
   config = defu(config, defuConfig)
-  const logger = await createLogger({ pushData: option?.pushData })
+  if (!config.phone) {
+    logger.error(`auth 格式解析错误，请查看是否填写正确的 auth`)
+    return
+  }
   if (config.phone.length !== 11 || !config.phone.startsWith('1')) {
     logger.info(`auth 格式解析错误，请查看是否填写正确的 auth`)
     return
   }
 
   const baseUA =
-    'Mozilla/5.0 (Linux; Android 13; 22041216C Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.178 Mobile Safari/537.36'
+    'Mozilla/5.0 (Linux; Android 13; 22041216C Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/128.0.6613.88 Mobile Safari/537.36'
 
   const DATA: M['DATA'] = {
     baseUA,
@@ -43,8 +46,6 @@ export async function init(
     mailRequested: 'cn.cj.pe',
     mcloudRequested: 'com.chinamobile.mcloud',
   }
-
-  let jwtToken: string
 
   const http = createRequest({
     hooks: {
@@ -89,7 +90,7 @@ export async function init(
 
   logger.info(`==============`)
   logger.info(`登录账号【${config.phone}】`)
-  jwtToken = await getJwtToken($)
+  jwtToken ||= await getJwtToken($)
 
   return {
     $,
@@ -100,10 +101,9 @@ export async function init(
 
 export async function main(
   config: Config,
-  localStorage: M['localStorage'] = {},
   option?: Option,
 ) {
-  const { $, logger, jwtToken } = await init(config, localStorage, option)
+  const { $, logger, jwtToken } = await init(config, option)
   if (!jwtToken) return
 
   await runCore($)
@@ -111,7 +111,7 @@ export async function main(
   logger.info(`==============\n\n`)
   return {
     newAuth,
-    localStorage,
+    localStorage: option.localStorage,
   }
 }
 
@@ -122,18 +122,19 @@ export async function main(
 export async function run(inputPath?: string) {
   const { config, path, message } = await loadConfig(inputPath)
 
-  const logger = await createLogger()
-
-  const versionInfo = await getVersion()
-
-  versionInfo && logger.info(versionInfo)
-
-  if (!config || !config.length) return logger.error('未找到配置文件/变量')
-
   const pushData: LoggerPushData[] = [
     { level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' },
   ]
-  versionInfo && pushData.push({ level: 3, type: 'info', date: new Date(), msg: versionInfo })
+  const logger = await createLogger({ pushData })
+
+  const versionInfo = await getVersion()
+  if (versionInfo) {
+    logger.info(versionInfo)
+    pushData.push({ level: 3, type: 'info', date: new Date(), msg: versionInfo })
+  }
+
+  if (!config || !config.length) return logger.error('未找到配置文件/变量')
+
   const ls = getLocalStorage(path, 'caiyun')
 
   for (let index = 0; index < config.length; index++) {
@@ -149,8 +150,7 @@ export async function run(inputPath?: string) {
           ...c,
           ...authInfo,
         },
-        ls[authInfo.phone],
-        { pushData },
+        { logger, localStorage: ls[authInfo.phone] },
       )
       if (newAuth) {
         rewriteConfigSync(path, ['caiyun', index, 'auth'], newAuth)
@@ -174,8 +174,8 @@ export async function run(inputPath?: string) {
 }
 
 export async function useExchange(config: Config, message: Record<string, any>) {
-  const logger = await createLogger()
   const pushData = [{ level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' }]
+  const logger = await createLogger({ pushData })
 
   try {
     const authInfo = getAuthInfo(config.auth)
@@ -184,8 +184,7 @@ export async function useExchange(config: Config, message: Record<string, any>) 
         ...config,
         ...authInfo,
       },
-      {},
-      { pushData },
+      { logger },
     )
     if (!jwtToken) return
 

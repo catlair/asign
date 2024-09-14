@@ -177,3 +177,22 @@ export function sleepSync(time: number) {
   }
   return time
 }
+
+/**
+ * 2024-09-12 20:00:48
+ */
+export function getTimestamp() {
+  const now = new Date()
+  return now.getUTCFullYear()
+    + '-',
+    +pad2(now.getUTCMonth() + 1)
+    + '-',
+    +pad2(now.getUTCDate())
+    + ' ',
+    // +8 时区
+    +pad2(now.getUTCHours() + 8)
+    + ':',
+    +pad2(now.getUTCMinutes())
+    + ':',
+    +pad2(now.getUTCSeconds())
+}

@@ -1,5 +1,6 @@
 import type { Http } from '@asign/types'
 import { hashCode } from '@asign/utils-pure'
+import { createAiApi } from './api/ai.js'
 import { createAiRedPackApi } from './api/aiRedPack.js'
 import { createBackupGiftApi } from './api/backupGift.js'
 import { createMailChatApi } from './api/mailChat.js'
@@ -492,6 +493,7 @@ export function createApi(http: Http) {
     ...createBackupGiftApi(http),
     ...createAiRedPackApi(http),
     ...createMailChatApi(http),
+    ...createAiApi(http),
   }
 }
 

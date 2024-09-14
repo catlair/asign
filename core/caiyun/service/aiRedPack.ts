@@ -5,9 +5,9 @@ import type { M } from '../types.js'
 import { request } from '../utils/index.js'
 
 export async function aiRedPackTask($: M) {
-  $.logger.start(`------【AI红包】------`)
-  $.logger.fail('bug，停止运行，也没人反馈，不修了？')
-  return
+  // $.logger.start(`------【AI红包】------`)
+  // $.logger.fail('bug，停止运行，也没人反馈，不修了？')
+  // return
   if (isWps()) {
     $.logger.fail('AI红包', '当前环境为WPS，跳过')
     return
@@ -21,7 +21,7 @@ export async function aiRedPackTask($: M) {
 
     let count = 4
 
-    while (!(await _task($, sid)) && count > 0) {
+    while (!(await _task($)) && count > 0) {
       count--
     }
   } catch (error) {
@@ -39,7 +39,7 @@ async function blindboxJournaling({ api, sleep }: M) {
   await sleep(200)
 }
 
-async function _task($: M, sid: string) {
+async function _task($: M) {
   const sleep = $.sleep
 
   await sleep(1000)
@@ -48,22 +48,18 @@ async function _task($: M, sid: string) {
   if (!puzzleCards) return
 
   const puzzleCard = puzzleCards[randomNumber(0, puzzleCards.length - 1)]
-  $.logger.debug('谜面', puzzleCard.puzzle)
+  $.logger.debug('谜面 -> ', puzzleCard.puzzle)
 
   await sleep(200)
 
-  const taskId = await getMailChatTaskId($, sid, puzzleCard.puzzle)
-  if (!taskId) return
-
-  await sleep(1000)
-
-  const msg = await getMailChatMsg($, sid, taskId)
-  if (!msg) return
+  const { msg, exit } = await getMailChatMsg($, puzzleCard.puzzle)
+  if (exit) throw new Error(msg)
+  if (!msg) return $.logger.debug(msg)
 
   const tip = matchResult(msg)
   if (!tip) return $.logger.fail('AI红包', '未获取到谜底')
 
-  $.logger.debug('谜底', tip)
+  $.logger.debug('谜底 -> ', tip)
 
   await sleep(400)
 
@@ -111,41 +107,42 @@ async function getPuzzleCards($: M) {
   return puzzleCards
     .filter(item => item.puzzleTitleContext)
     .map(item => ({
-      puzzle: item.puzzleTitleContext + '---' + item.puzzleTipContext,
+      puzzle: item.puzzleTitleContext,
       id: item.id,
     }))
 }
 
-async function getMailChatTaskId($: M, sid: string, q: string) {
+async function getMailChatMsg($: M, dialogue: string) {
   try {
-    const { code, taskId, summary } = await $.api.mailChatTask(sid, q)
-    if (code !== 'S_OK') {
-      $.logger.fail('获取AI聊天任务ID失败', summary)
-      return
+    const { code, success, message, data } = await $.api.addChat(dialogue)
+    if (!success) {
+      $.logger.fail('获取AI聊天消息失败', code, message)
+      if (code === '10000007' || code === '01000004') {
+        return { exit: true, msg: message }
+      }
+      return {}
     }
-    return taskId
-  } catch (error) {
-    $.logger.error('获取AI聊天任务ID异常', error)
-  }
-}
+    if (!data.flowResult) return { exit: true, msg: JSON.stringify({ code, message, success, data }) }
 
-async function getMailChatMsg($: M, sid: string, id: string) {
-  try {
-    const { code, summary, var: data } = await $.api.mailChatMsg(sid, id)
-    if (code !== 'S_OK' || (data && data.result === '')) {
-      $.logger.fail('获取AI聊天消息失败', summary)
-      summary === 'loading' && await $.sleep(5000)
-      return
+    return {
+      msg: data.flowResult.outContent,
+      id: data.dialogueId,
+      session: data.sessionId,
     }
-    return data.result
   } catch (error) {
     $.logger.error('获取AI聊天消息异常', error)
   }
 }
 
 function matchResult(result: string) {
-  const match = result.split(/[—-]/)
-  return match[match.length - 1]
+  if (!result.includes('<p>') || !result.includes('——')) {
+    return
+  }
+  const [, r1] = result.split('<p>')
+  const [r2] = r1.split(/<\/p\s?>/)
+  if (!r2) return
+  const [, r3] = r2.trim().split(/—+/)
+  return r3 && r3.trim()
 }
 
 /**
