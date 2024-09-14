@@ -112,6 +112,10 @@ async function uploadFileApi(url: string, id: string, randomBuffer: Buffer) {
     stream.on('response', async (res) => {
       resolve(res.ok)
     })
+    // stream.on('uploadProgress', ({ transferred, total }) => {
+    //   const logUpdate = `进度: ${transferred}/${total || size})`
+    //   process.stdout.write(`\r${logUpdate}`)
+    // })
   })
 }
 

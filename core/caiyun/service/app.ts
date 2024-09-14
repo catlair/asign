@@ -83,8 +83,6 @@ export async function appTask($: M) {
 
   const skipCheck = [1021]
 
-  if (doingList.length <= 0) return
-
   for (const task of await getAllAppTaskList($)) {
     if (skipCheck.includes(task.id)) continue
     // 分享文件有好礼
@@ -95,7 +93,6 @@ export async function appTask($: M) {
     // 七夕
     if (task.id === 481 && task.currstep === 2) {
       await clickTask($, 481, 'randomCloudTask')
-      return true
     }
     const printFail = (msg: string) =>
       $.logger.fail(
@@ -111,7 +108,7 @@ export async function appTask($: M) {
       printFail('失败')
       continue
     }
-    if (task.groupid === 'month' || task.groupid === 'day') {
+    if (task.groupid === 'month' || task.groupid === 'day' || task.groupid === 'cloudEmail') {
       if (task.state !== 'FINISH') {
         printFail('未完成')
       }
@@ -137,7 +134,7 @@ function getTaskRunner($: M) {
       sleepSync(1000)
       await uploadRandomFile($)
     },
-    106: uploadRandomFile,
+    106: ($: M) => uploadRandomFile($),
     107: createNoteDaily,
     434: shareTime,
     110: $.node && $.node.uploadTask,
