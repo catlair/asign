@@ -7,3 +7,5 @@ packages:
   - 'build'
   - 'docs'
   - 'tools/*'
+  - 'api/*'
+  - 'web'

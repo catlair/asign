@@ -81,6 +81,7 @@ export async function main(index: number, config: Config, option?: { pushData: a
         num: 15,
         delay: 2,
       },
+      catalog: '00019700101000000001',
       ...config,
     } as any,
     gardenApi: createGardenApi(http),
@@ -101,7 +102,7 @@ export async function main(index: number, config: Config, option?: { pushData: a
 const sheet = Application.Sheets.Item('移动云盘') || Application.Sheets.Item('caiyun') || ActiveSheet
 const usedRange = sheet.UsedRange
 const AColumn = sheet.Columns('A')
-const len = usedRange.Row + usedRange.Rows.Count - 1,
+const len = Number(usedRange.Row) + usedRange.Rows.Count - 1,
   BColumn = sheet.Columns('B')
 const pushData = [{ type: 'info', date: new Date(), msg: '唯一发布地址：https://as.js.cool' }]
 

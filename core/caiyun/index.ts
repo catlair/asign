@@ -442,6 +442,23 @@ async function afterTask($: M) {
   }
 }
 
+export const tasks = {
+  appTask,
+  backupGiftTask,
+  blindboxTask,
+  hc1Task,
+  msgPushOnTask,
+  receive,
+  shakeTask,
+  shareFindTask,
+  signIn,
+  signInWx,
+  taskExpansionTask,
+  wxDraw,
+  gardenTask,
+  afterTask,
+}
+
 export async function run($: M) {
   const { config } = $
 

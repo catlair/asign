@@ -95,10 +95,11 @@ export async function serverChan(
   return _send(apiOption, 'Server酱', {
     url: `https://sctapi.ftqq.com/${token}.send`,
     headers: {
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'application/json',
     },
     data: {
       text: title,
+      title,
       desp: text.replace(/\n/g, '\n\n'),
       ...option,
     },

@@ -40,13 +40,13 @@ cookie authorization 字段
 
 - **类型**: `数组`
 
-邀请码，如果不知道是啥就不管，也没用
+邀请码，如果不知道是啥就不管，也没用. 配置后默认助力功能失效
 
 #### `waterFriend`
 
 - **类型**: `数字`
 
-需要给哪个好友浇水，好友 uid
+需要给哪个好友浇水，好友 uid(果园输出的昵称后面的数字就是 uid). 浇水会消耗自己的水滴, 所有用来干嘛, 你懂的
 
 ### `aiRedPack`
 
@@ -91,34 +91,35 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "amissio",
+      "auth": "depono",
       "shake": {
-        "enable": false,
-        "num": 6047861154250752,
-        "delay": 2
+        "enable": true,
+        "num": 7665159296253952,
+        "delay": 5263132331081728
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "demens",
-          "turpis",
-          "ascisco",
-          "veritas"
+          "vulgo",
+          "bibo",
+          "corrumpo"
         ],
-        "waterFriend": 6382160541908992
+        "waterFriend": 1160392426389504
       },
       "aiRedPack": {
         "enable": true
       },
-      "backupWaitTime": 20,
+      "backupWaitTime": 8656152845877248,
       "tasks": {
-        "shareFile": "defungo",
+        "shareFile": "summopere",
         "skipTasks": [
-          5763730042257408,
-          2822761835659264
+          7692440829952000,
+          7060839408336896,
+          2136573531389952,
+          1438186790191104
         ]
       },
-      "catalog": "colo"
+      "catalog": "00019700101000000001"
     }
   ]
 }
