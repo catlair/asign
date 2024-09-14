@@ -1,5 +1,11 @@
 # @asunajs/caiyun
 
+## 0.3.9
+
+### Patch Changes
+
+- [`5fab36e`](https://github.com/yuiasn/asuna/commit/5fab36ef8e601b855781de96bd855e220f39511d) Thanks [@catlair](https://github.com/catlair)! - feat(caiyun): 更新 ai 红包
+
 ## 0.3.8
 
 ### Patch Changes
