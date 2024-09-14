@@ -20,10 +20,8 @@ function _getFileDir() {
     if (['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts'].find(ext => ext === extname(process.argv[1]))) {
       return dirname(process.argv[1])
     }
-    return __dirname
-  } catch {
-    return __dirname
-  }
+  } catch {}
+  return __dirname
 }
 
 /**
