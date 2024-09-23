@@ -1,11 +1,11 @@
 import { randomHex, sleepSync } from '@asign/utils-pure'
 import { getFileList } from '../api/file.js'
-import { SKIP_TASK_LIST, TASK_LIST } from '../constant/taskList.js'
+import { SKIP_TASK_LIST, TASK_LIST } from '../constant/task-list.js'
 import { uploadRandomFile } from '../service/index.js'
-import type { TaskList } from '../TaskType.js'
+import type { TaskList } from '../task-type.js'
 import type { M } from '../types'
 import { getGroupName, getMarketName, request } from '../utils/index.js'
-import { refreshToken } from './auth.js'
+import { getNoteAuthToken, refreshToken } from './auth.js'
 
 type TaskItem = TaskList['result'][keyof TaskList['result']][number]
 
@@ -176,12 +176,12 @@ async function getAppTaskList($: M, marketname: 'sign_in_3' | 'newsign_139mail' 
 }
 
 async function createNoteDaily($: M) {
-  if (!$.config.auth) {
+  if (!$.config.token) {
     $.logger.info(`未配置 authToken，跳过云笔记任务执行`)
     return
   }
-  const headers = await getNoteAuthToken($)
-  if (!headers) {
+  const { headers } = await getNoteAuthToken($)
+  if (!headers || !headers.app_auth) {
     $.logger.info(`获取鉴权信息失败，跳过云笔记任务执行`)
     return
   }
@@ -265,14 +265,6 @@ async function shareTime($: M) {
     $.logger.fail(`分享文件失败`, code, message, data.result)
   } catch (error) {
     $.logger.error(`分享文件异常`, error)
-  }
-}
-
-async function getNoteAuthToken($: M) {
-  try {
-    return $.api.getNoteAuthToken($.config.auth, $.config.phone)
-  } catch (error) {
-    $.logger.error('获取云笔记 Auth Token 异常', error)
   }
 }
 

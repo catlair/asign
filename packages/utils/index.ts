@@ -1,6 +1,6 @@
 import type { LoggerType } from '@asign/types'
 import crypto, { createCipheriv, createDecipheriv } from 'crypto'
-import fs, { existsSync, readFileSync, writeFileSync } from 'fs'
+import fs from 'fs'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -96,39 +96,6 @@ export function getConfig(name: string) {
   return configPath ? readJsonFile(configPath) : undefined
 }
 
-function _getLocalStorage(path: string) {
-  return existsSync(path) ? JSON.parse(readFileSync(path, 'utf-8')) : {}
-}
-
-export function getLocalStorage(configPath: string, item: string) {
-  // 获取 configPath 的 dir ，接上 "asign.ls.json"
-  try {
-    return (
-      _getLocalStorage(path.resolve(dirname(configPath), 'asign.ls.json'))[
-        item
-      ] || {}
-    )
-  } catch {}
-  return {}
-}
-
-export function setLocalStorage(
-  configPath: string,
-  item: string,
-  value: Record<string, any>,
-) {
-  try {
-    const lsPath = path.resolve(dirname(configPath), 'asign.ls.json')
-    const ls = _getLocalStorage(lsPath)
-
-    ls[item] = value
-
-    writeFileSync(lsPath, JSON.stringify(ls))
-  } catch (e) {
-    console.error(e)
-  }
-}
-
 export async function pushMessage({
   pushData,
   message,
@@ -172,12 +139,12 @@ function getAlgorithm(keyHex: string) {
   }
 }
 
-export function _aesDecrypt(text: string, key: string, iv: string) {
+function _aesDecrypt(text: string, key: string, iv: string) {
   const decipher = createDecipheriv(getAlgorithm(key), Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'))
   return decipher.update(text, 'hex', 'utf-8') + decipher.final('utf-8')
 }
 
-export function _aesEncrypt(text: string, key: string, iv: string) {
+function _aesEncrypt(text: string, key: string, iv: string) {
   const cipher = createCipheriv(getAlgorithm(key), Buffer.from(key, 'hex'), Buffer.from(iv, 'hex'))
   return cipher.update(text, 'utf-8', 'hex') + cipher.final('hex')
 }

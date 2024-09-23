@@ -1,9 +1,26 @@
 import type { Http, LoggerType } from '@asign/types'
+import type { getStorage } from '@asign/unstorage'
 import type { ApiType } from './api.js'
 import type { GardenApiType } from './api/garden.js'
 import { Caiyun } from './options.d.js'
 
 export type { Caiyun }
+
+export interface LocalStorage {
+  shareFind?: {
+    /** 最后更新时间 */
+    lastUpdate: number
+    /** 完成次数 */
+    count: number
+  }
+  userId?: string
+  aiCloud?: {
+    /** 最后更新时间 */
+    lastUpdate: number
+    /** 完成次数 */
+    count: number
+  }
+}
 
 export interface M {
   api: ApiType
@@ -14,6 +31,7 @@ export interface M {
     token: string
     inviter?: string
     platform?: string
+    userId?: string
   }
   DATA: {
     baseUA: string
@@ -28,19 +46,15 @@ export interface M {
     /** 云朵 */
     totalCloud?: number
     shareCount?: number
+    /** AI  */
+    aiSession?: { sessionId: string; dialogueId: string }[]
     [key: string]: any
   }
-  localStorage: {
-    shareFind?: {
-      /** 最后更新时间 */
-      lastUpdate: number
-      /** 完成次数 */
-      count: number
-    }
-  }
+  localStorage?: Awaited<ReturnType<typeof getStorage>>
   node?: {
     uploadTask: ($: M, progressNum: number) => Promise<void>
     myMD5: (s: string) => string
+    encryptAiUserId: (userId: string) => string
   }
   md5: (input: any) => string
   http?: Http

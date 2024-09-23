@@ -78,4 +78,4 @@ exports.handler = async function(event, context, callback) {
 1. 打开并登录阿里云盘，https://www.alipan.com/
 2. 打开开发者工具 F12
 3. 选择控制台/Console
-4. 输入 `JSON.parse(localStorage.getItem('token')).refresh_token` 回车就能看到 refresh_token 了
+4. 输入 `JSON.parse(localStorage.getItemItem('token')).refresh_token` 回车就能看到 refresh_token 了

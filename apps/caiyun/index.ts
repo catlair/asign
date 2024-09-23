@@ -1,31 +1,24 @@
 import { createApi, createGardenApi, createNewAuth, getJwtToken, type M, run as runCore } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
 import type { LoggerType } from '@asign/types'
+import { getStorage } from '@asign/unstorage'
 import { getAuthInfo, sleepSync } from '@asign/utils-pure'
-import { rewriteConfigSync } from '@asunajs/conf'
+import { loadConfig as _lc, rewriteConfigSync } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
-import {
-  createLogger,
-  getLocalStorage,
-  type LoggerPushData,
-  md5,
-  pushMessage,
-  setLocalStorage,
-  sleep,
-} from '@asunajs/utils'
-import { compare } from 'compare-versions'
+import { createLogger, type LoggerPushData, md5, pushMessage, sleep } from '@asunajs/utils'
 import { defu } from 'defu'
-import { uploadTask } from './service/uploadTask.js'
+import { uploadTask } from './service/upload-task.js'
+import { encryptAiUserId } from './utils/ai-userid-aes.js'
 import { myMD5 } from './utils/md5.js'
 
 export type Config = M['config']
-export type Option = { localStorage?: M['localStorage']; logger: LoggerType; jwtToken?: string }
+export type Option = { localStorage?: Awaited<ReturnType<typeof getStorage>>; logger: LoggerType; jwtToken?: string }
 export { sleep }
 
 export async function init(
   config: Config,
-  { logger, localStorage = {}, jwtToken }: Option,
+  { logger, localStorage, jwtToken }: Option,
 ) {
   config = defu(config, defuConfig)
   if (!config.phone) {
@@ -81,6 +74,7 @@ export async function init(
     node: {
       uploadTask,
       myMD5,
+      encryptAiUserId,
     },
     md5,
     store: {},
@@ -109,10 +103,7 @@ export async function main(
   await runCore($)
   const newAuth = await createNewAuth($)
   logger.info(`==============\n\n`)
-  return {
-    newAuth,
-    localStorage: option.localStorage,
-  }
+  return { newAuth }
 }
 
 /**
@@ -127,15 +118,13 @@ export async function run(inputPath?: string) {
   ]
   const logger = await createLogger({ pushData })
 
-  const versionInfo = await getVersion()
-  if (versionInfo) {
-    logger.info(versionInfo)
-    pushData.push({ level: 3, type: 'info', date: new Date(), msg: versionInfo })
-  }
+  // const versionInfo = await getVersion()
+  // if (versionInfo) {
+  //   logger.info(versionInfo)
+  pushData.push({ level: 3, type: 'info', date: new Date(), msg: `当前版本 __ASIGN_VERSION__` })
+  // }
 
   if (!config || !config.length) return logger.error('未找到配置文件/变量')
-
-  const ls = getLocalStorage(path, 'caiyun')
 
   for (let index = 0; index < config.length; index++) {
     const c = config[index]
@@ -145,25 +134,20 @@ export async function run(inputPath?: string) {
     }
     try {
       const authInfo = getAuthInfo(c.auth)
-      const { newAuth, localStorage } = await main(
+      const { newAuth } = await main(
         {
           ...c,
           ...authInfo,
         },
-        { logger, localStorage: ls[authInfo.phone] },
+        { logger, localStorage: await getStorage('caiyun-' + authInfo.phone) },
       )
       if (newAuth) {
         rewriteConfigSync(path, ['caiyun', index, 'auth'], newAuth)
-      }
-      if (localStorage) {
-        ls[authInfo.phone] = localStorage
       }
     } catch (error) {
       logger.error(error)
     }
   }
-
-  setLocalStorage(path, 'caiyun', ls)
 
   await pushMessage({
     pushData,
@@ -226,8 +210,7 @@ export async function useExchange(config: Config, message: Record<string, any>) 
 }
 
 export async function loadConfig(inputPath?: string) {
-  const { loadConfig: _lc } = await import('@asunajs/conf')
-  const r = _lc<{
+  const r = await _lc<{
     caiyun: Config[]
     message?: Record<string, any>
   }>(inputPath)
@@ -243,23 +226,23 @@ export async function loadConfig(inputPath?: string) {
   }
 }
 
-interface Npmmirror {
-  'dist-tags': {
-    latest: string
-  }
-  'time': Record<string, string>
-}
+// interface Npmmirror {
+//   'dist-tags': {
+//     latest: string
+//   }
+//   'time': Record<string, string>
+// }
 
-async function getVersion() {
-  try {
-    const http = createRequest()
-    const { 'dist-tags': distTags } = await http.get<Npmmirror>('https://registry.npmmirror.com/@asunajs/caiyun/')
+// async function getVersion() {
+//   try {
+//     const http = createRequest()
+//     const { 'dist-tags': distTags } = await http.get<Npmmirror>('https://registry.npmmirror.com/@asunajs/caiyun/')
 
-    const npmVersion = distTags.latest
+//     const npmVersion = distTags.latest
 
-    return compare(npmVersion, '__ASIGN_VERSION__', '>')
-      ? '检测到新版本：' + npmVersion + '，当前版本：__ASIGN_VERSION__，请及时更新！'
-      : '当前版本：__ASIGN_VERSION__'
-  } catch {
-  }
-}
+//     return compare(npmVersion, '__ASIGN_VERSION__', '>')
+//       ? '检测到新版本：' + npmVersion + '，当前版本：__ASIGN_VERSION__，请及时更新！'
+//       : '当前版本：__ASIGN_VERSION__'
+//   } catch {
+//   }
+// }

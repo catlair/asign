@@ -1,0 +1,50 @@
+{
+  "name": "@asign/unstorage",
+  "version": "0.0.0",
+  "description": "配置读取",
+  "exports": {
+    ".": {
+      "import": "./index.ts"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "prepublish": "copyfiles package.json README.md dist/",
+    "build": "tsup --dts-resolve"
+  },
+  "author": "catlair",
+  "license": "MIT",
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": false,
+    "access": "public",
+    "exports": {
+      ".": {
+        "import": "./index.mjs",
+        "types": "./index.d.ts",
+        "require": "./index.cjs"
+      }
+    },
+    "main": "./index.cjs",
+    "types": "./index.d.cts",
+    "module": "./index.mjs",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "unstorage": "^1.12.0"
+  },
+  "devDependencies": {
+    "@asign/build": "workspace:^",
+    "tsconfig": "workspace:*"
+  },
+  "repository": {
+    "url": "git+https://github.com/asunajs/asign.git"
+  },
+  "bugs": {
+    "url": "https://github.com/asunajs/asign/issues"
+  },
+  "engines": {
+    "node": ">= 14.12.1"
+  },
+  "homepage": "https://as.js.cool"
+}

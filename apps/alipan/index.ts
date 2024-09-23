@@ -80,7 +80,7 @@ export async function main(config: Config, option?: Option) {
  * @param path 配置文件地址
  */
 export async function run(inputPath?: string) {
-  const { config, path } = loadConfig<{
+  const { config, path } = await loadConfig<{
     alipan: Config[]
     message?: Record<string, any>
   }>(inputPath)

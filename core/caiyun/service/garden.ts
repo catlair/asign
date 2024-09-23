@@ -1,8 +1,8 @@
 import { asyncForEach } from '@asign/utils-pure'
 import type { ClientTypeHeaders } from '../api.js'
-import { getSsoTokenApi } from '../index.js'
 import type { M } from '../types.js'
 import type { TaskList } from '../types/garden.js'
+import { getSsoTokenApi } from './auth.js'
 import { uploadRandomFile } from './index.js'
 
 async function request<T extends (...args: any[]) => any>(

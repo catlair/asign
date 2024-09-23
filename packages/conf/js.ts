@@ -1,14 +1,10 @@
 import { setIn } from '@asunajs/utils'
 import { readFileSync, writeFileSync } from 'fs'
-import createJITI from 'jiti'
 import { generateCode, loadFile, parseModule, writeFile } from 'magicast'
-import { dirname, resolve } from 'path'
-import { fileURLToPath } from 'url'
 
-export function parseJavaScript<T = any>(path: string): T {
-  return createJITI(dirname(fileURLToPath(import.meta.url)), { cache: true })(
-    path.startsWith('.') ? path : resolve(path),
-  )
+export async function parseJavaScript<T = any>(path: string): Promise<T> {
+  const mod = await import(path)
+  return (mod.default || mod) as T
 }
 
 export function setInJavaScript(

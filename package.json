@@ -34,6 +34,7 @@
     "copyfiles": "^2.4.1",
     "dotenv": "^16.4.5",
     "dprint": "^0.46.3",
+    "fastify-cli": "^7.0.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "oxlint": "^0.4.4",
@@ -44,5 +45,13 @@
   },
   "private": true,
   "packageManager": "pnpm@9.0.4",
-  "workspaces": ["packages/*", "core/*", "apps/*", "wps/*", "tools/*", "build", "docs"]
+  "workspaces": [
+    "packages/*",
+    "core/*",
+    "apps/*",
+    "wps/*",
+    "tools/*",
+    "build",
+    "docs"
+  ]
 }

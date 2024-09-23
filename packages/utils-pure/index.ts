@@ -117,7 +117,11 @@ export function hashCode(str: string) {
 }
 
 export function isWps(): boolean {
-  return globalThis.setTimeout === undefined && globalThis.HTTP
+  try {
+    return globalThis.URLSearchParams === undefined && globalThis.HTTP
+  } catch {
+    return false
+  }
 }
 
 export function createTime() {
@@ -195,4 +199,18 @@ export function getTimestamp() {
     +pad2(now.getUTCMinutes())
     + ':',
     +pad2(now.getUTCSeconds())
+}
+
+/**
+ * 随机从数组中获取一个元素, 获取后删除
+ */
+export function randomRemove<T>(arr: T[]): T | undefined {
+  return arr.splice(randomNumber(0, arr.length), 1)[0]
+}
+
+/**
+ * 时间为当前月
+ */
+export function isCurrentMonth(time: Date | number | string) {
+  return new Date(time).getMonth() === new Date().getMonth()
 }

@@ -1,8 +1,8 @@
 import { isWps, randomNumber } from '@asign/utils-pure'
 import { caiyunUrl, mw2TogetherUrl } from '../constant/index.js'
-import { loginEmail } from '../index.js'
 import type { M } from '../types.js'
 import { request } from '../utils/index.js'
+import { loginEmail, setUserId } from './auth.js'
 
 export async function aiRedPackTask($: M) {
   $.logger.start(`------【AI红包】------`)
@@ -16,6 +16,8 @@ export async function aiRedPackTask($: M) {
 
     const sid = await init($)
     if (!sid) return
+
+    await setUserId($)
 
     let count = 4
 
@@ -37,6 +39,12 @@ async function blindboxJournaling({ api, sleep }: M) {
   await sleep(200)
 }
 
+function saveSession($: M, { sessionId, dialogueId }) {
+  $.store.aiSession || ($.store.aiSession = [])
+  $.store.aiSession.push({ sessionId, dialogueId })
+  $.logger.debug('保存会话', sessionId, dialogueId)
+}
+
 async function _task($: M) {
   const sleep = $.sleep
 
@@ -50,12 +58,13 @@ async function _task($: M) {
 
   await sleep(200)
 
-  const { msg, exit } = await getMailChatMsg($, puzzleCard.puzzle)
-  if (exit) throw new Error(msg)
-  if (!msg) return $.logger.debug(msg)
+  const { msg, exitMsg, needMatch, failMsg } = await getMailChatMsg($, puzzleCard.puzzle)
+  if (exitMsg) throw new Error(exitMsg)
+  if (failMsg) return $.logger.fail('AI红包', failMsg)
+  if (!msg) return $.logger.debug('获取AI聊天消息失败')
 
-  const tip = matchResult(msg)
-  if (!tip) return $.logger.fail('AI红包', '未获取到谜底')
+  const tip = needMatch ? matchResult(msg) : msg
+  if (!tip) return $.logger.fail('AI红包', '未获取到谜底', msg)
 
   $.logger.debug('谜底 -> ', tip)
 
@@ -103,7 +112,7 @@ async function getPuzzleCards($: M) {
     return
   }
   return puzzleCards
-    .filter(item => item.puzzleTitleContext)
+    .filter(({ puzzleTitleContext }) => puzzleTitleContext && puzzleTitleContext.length < 6)
     .map(item => ({
       puzzle: item.puzzleTitleContext,
       id: item.id,
@@ -112,21 +121,33 @@ async function getPuzzleCards($: M) {
 
 async function getMailChatMsg($: M, dialogue: string) {
   try {
-    const { code, success, message, data } = await $.api.addChat(dialogue)
+    const { code, success, message, data } = await $.api.addChat(dialogue, $.config.userId)
     if (!success) {
       $.logger.fail('获取AI聊天消息失败', code, message)
       if (code === '10000007' || code === '01000004') {
-        return { exit: true, msg: message }
+        return { exitMsg: message }
       }
       return {}
     }
-    if (!data.flowResult) return { exit: true, msg: JSON.stringify({ code, message, success, data }) }
 
-    return {
-      msg: data.flowResult.outContent,
-      id: data.dialogueId,
-      session: data.sessionId,
+    if (data.sessionId) {
+      saveSession($, data)
     }
+
+    if (data.flowResult) {
+      return {
+        msg: data.flowResult.outContent,
+        needMatch: true,
+      }
+    }
+
+    if (data.leadCopy) {
+      return {
+        msg: data.leadCopy.linkName,
+      }
+    }
+
+    return { failMsg: JSON.stringify({ code, message, success, data }) }
   } catch (error) {
     $.logger.error('获取AI聊天消息异常', error)
   }
@@ -140,7 +161,8 @@ function matchResult(result: string) {
   const [r2] = r1.split(/<\/p\s?>/)
   if (!r2) return
   const [, r3] = r2.trim().split(/—+/)
-  return r3 && r3.trim()
+  const r4 = r3 && r3.trim().replace(/<br\s?\/>/, '')
+  return r4 && r4.split('/')[0]
 }
 
 /**

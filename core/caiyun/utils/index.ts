@@ -1,4 +1,4 @@
-import type { ItemBaseType } from '../TaskType.js'
+import type { ItemBaseType } from '../task-type.js'
 import type { M } from '../types.js'
 
 type RequestOptions = {

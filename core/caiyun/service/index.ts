@@ -9,7 +9,7 @@ import {
 import type { UploadXml } from '../api.js'
 import type { M } from '../types.js'
 
-export * from './aiRedPack.js'
+export * from './ai-redpack.js'
 
 type UploadFileOptions = Partial<UploadXml> & { ext?: string }
 

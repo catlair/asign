@@ -1,5 +1,5 @@
 import type { Http } from '@asign/types'
-import { riddlesUrl } from '../constant'
+import { riddlesUrl } from '../constant/index.js'
 import type { BaseType } from '../types.js'
 
 type PuzzleCard = BaseType<

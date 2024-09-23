@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.3.9",
+  "version": "0.4.0-rc1",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
@@ -25,6 +25,7 @@
   "author": "catlair",
   "license": "MIT",
   "dependencies": {
+    "@asign/unstorage": "workspace:^",
     "@asunajs/conf": "workspace:^",
     "@asunajs/http": "workspace:^",
     "@asunajs/push": "workspace:^",

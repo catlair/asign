@@ -1,12 +1,12 @@
 import type { Http } from '@asign/types'
 import { hashCode } from '@asign/utils-pure'
+import { createAiRedPackApi } from './api/ai-redpack.js'
 import { createAiApi } from './api/ai.js'
-import { createAiRedPackApi } from './api/aiRedPack.js'
-import { createBackupGiftApi } from './api/backupGift.js'
-import { createMailChatApi } from './api/mailChat.js'
-import { createMsgPushApi } from './api/msgPush.js'
+import { createBackupGiftApi } from './api/backup-gift.js'
+import { createMailChatApi } from './api/mail-chat.js'
+import { createMsgPushApi } from './api/msg-push.js'
 import { createSignInApi } from './api/signin.js'
-import type { TaskList } from './TaskType.js'
+import type { TaskList } from './task-type.js'
 import type {
   BaseType,
   BatchList,
@@ -82,33 +82,35 @@ export function createApi(http: Http) {
       account: string | number,
     ): Promise<
       {
-        app_auth: string
-        app_number: string
-        note_token: string
+        headers: {
+          app_auth: string
+          app_number: string
+          note_token: string
+        }
+        body: string
       } | undefined
     > {
       const resp = await http.post(
-        `${mnoteUrl}/noteServer/api/authTokenRefresh.do`,
+        `https://note.mcloud.139.com/noteServer/api/authTokenRefresh.do`,
         {
           authToken: token,
           userPhone: String(account),
         },
         {
           headers: {
-            APP_CP: 'pc',
-            APP_NUMBER: String(account),
-            CP_VERSION: '7.7.1.20240115',
+            'APP_CP': 'android',
+            'APP_NUMBER': String(account),
+            'CP_VERSION': '3.2.0',
+            'x-huawei-channelsrc': '10001400',
+            'User-Agent': 'mobile',
           },
           native: true,
         },
       )
 
-      const headers = resp.headers
-      if (!headers.app_auth) return
       return {
-        app_auth: headers.app_auth,
-        app_number: headers.app_number,
-        note_token: headers.note_token,
+        body: (resp.body),
+        headers: resp.headers,
       }
     },
     syncNoteBook(headers: Record<string, string>) {
@@ -471,7 +473,7 @@ export function createApi(http: Http) {
         },
       )
     },
-    getCloudRecord(pn = 1, ps = 10, type = 1) {
+    getCloudRecord(pn = 1, ps = 50, type = 1) {
       return http.get<CloudRecord>(
         `${caiyunUrl}/market/signin/public/cloudRecord?type=${type}&pageNumber=${pn}&pageSize=${ps}`,
       )

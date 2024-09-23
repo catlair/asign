@@ -40,7 +40,7 @@ export async function main(query: Config, option?: Option) {
  * @param path 配置文件地址
  */
 export async function run(inputPath?: string) {
-  const { config } = loadConfig<{
+  const { config } = await loadConfig<{
     quark: Config[]
     message?: Record<string, any>
   }>(inputPath)

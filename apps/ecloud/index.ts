@@ -51,7 +51,7 @@ export async function main(config: M['config'], option?: Option) {
  * @param inputPath 配置文件地址
  */
 export async function run(inputPath?: string) {
-  const { config } = loadConfig<{
+  const { config } = await loadConfig<{
     ecloud: M['config'][]
     message?: Record<string, any>
   }>(inputPath)

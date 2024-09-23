@@ -17,6 +17,10 @@ export default defineConfig([
   },
   {
     ...qlDefuConfig,
+    entry: ['index.ts'],
     noExternal: Object.keys(dependencies),
+    esbuildPlugins: [
+      setVersion(require('./package.json').version),
+    ],
   },
 ])

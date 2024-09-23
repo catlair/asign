@@ -11,12 +11,15 @@ interface ChatEvent {
     sessionId: string
     resultType: number
     commands: string
-    flowResult: {
+    /**
+     * 情况 一
+     */
+    flowResult?: {
       outContent: string
       outAuditTime: string
       outAuditStatus: number
     }
-    recommend: {
+    recommend?: {
       intentionList: any[]
       contextList: any[]
       queryList: {
@@ -24,6 +27,17 @@ interface ChatEvent {
         query: string
       }[]
     }
+    /**
+     * 情况 二, type 1 ?
+     */
+    leadCopy?: {
+      type: number
+      promptCopy: string
+      buttonCopy: string
+      linkURL: string
+      linkName: string
+    }
+    text?: string
   }
 }
 
@@ -34,13 +48,15 @@ function parseEventStream(eventStreamData: string): ChatEvent {
   }
 }
 
+const clientInfo = '4||1|11.2.2||22041216C|||android 13|||||'
+
 export function createAiApi(http: Http) {
   return {
-    async addChat(dialogue: string) {
+    async addChat(dialogue: string, userId: string) {
       const text = await http.post<string>(
         `${aiUrl}/api/outer/assistant/chat/add`,
         {
-          userId: '',
+          userId,
           sessionId: '',
           content: {
             dialogue,
@@ -59,11 +75,9 @@ export function createAiApi(http: Http) {
         },
         {
           headers: {
-            'x-yun-client-info': '1||1|11.2.2||22041216C|||android 13|||||',
+            'x-yun-client-info': clientInfo,
             'Content-Type': 'application/json',
             'accept': 'text/event-stream',
-            'User-Agent':
-              'Mozilla/5.0 (Linux; Android 13; 22041216C Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/128.0.6613.88 Mobile Safari/537.36 MCloudApp/11.2.2',
             'x-yun-api-version': 'v4',
             'Origin': 'https://yun.139.com',
             'X-Requested-With': 'com.chinamobile.mcloud',
@@ -72,6 +86,15 @@ export function createAiApi(http: Http) {
         },
       )
       return parseEventStream(text)
+    },
+    submitAccredit() {
+      return http.post(`${aiUrl}/api/outer/assistant/accredit/submit`, { sourceBusiness: 1 }, {
+        headers: {
+          'x-yun-api-version': 'v1',
+          'x-yun-app-channel': '101',
+          'x-yun-client-info': clientInfo,
+        },
+      })
     },
   }
 }
