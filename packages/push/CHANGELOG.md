@@ -1,5 +1,11 @@
 # @asunajs/push
 
+## 0.0.5
+
+### Patch Changes
+
+- [#27](https://github.com/yuiasn/asuna/pull/27) [`b579ce1`](https://github.com/yuiasn/asuna/commit/b579ce187d38e7225bf6a6d4655d09b8ccbea757) Thanks [@github-actions](https://github.com/apps/github-actions)! - fix(push): 微信 BOT 推送
+
 ## 0.0.4
 
 ### Patch Changes

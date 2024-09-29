@@ -1,5 +1,14 @@
 # @asunajs/ecloud
 
+## 0.0.3
+
+### Patch Changes
+
+- [#27](https://github.com/yuiasn/asuna/pull/27) [`b6e6a8c`](https://github.com/yuiasn/asuna/commit/b6e6a8c800a7b9897dace9455399b4e889d6beee) Thanks [@github-actions](https://github.com/apps/github-actions)! - feat(ecloud): print size
+
+- Updated dependencies [[`b579ce1`](https://github.com/yuiasn/asuna/commit/b579ce187d38e7225bf6a6d4655d09b8ccbea757)]:
+  - @asunajs/push@0.0.5
+
 ## 0.0.2
 
 ### Patch Changes
