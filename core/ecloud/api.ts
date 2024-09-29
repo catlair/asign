@@ -1,5 +1,5 @@
 import type { Http } from '@asign/types'
-import type { AccessToken, AppConf, EncryptConf, ListGrow, PrizeMarket, UserBrief, UserSign } from './types'
+import type { AccessToken, AppConf, EncryptConf, ListGrow, PrizeMarket, UserBrief, UserSign, UserSize } from './types'
 
 type LoginRedirect = {
   lt: string
@@ -125,6 +125,13 @@ export function createApi(http: Http) {
       return http.get<ListGrow>(
         `https://cloud.189.cn/api/portal/listGrow.action?noCache=${Math.random()}`,
       )
+    },
+    getUserSizeInfo() {
+      return http.get<UserSize>(`https://cloud.189.cn/api/portal/getUserSizeInfo.action?noCache=${Math.random()}`, {
+        headers: {
+          referrer: 'https://cloud.189.cn/web/main/file/folder/-11',
+        },
+      })
     },
     http,
   }

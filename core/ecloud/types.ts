@@ -83,3 +83,5 @@ export type UserSign = BaseError & {
   netdiskBonus: number
   isSign: boolean
 }
+
+export type UserSize = BaseError | string

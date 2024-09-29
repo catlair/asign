@@ -85,16 +85,16 @@ export function setStoreArray(
   return Reflect.set(store, key, values)
 }
 
-export function getAuthInfo(basicToken: string) {
-  basicToken = basicToken.replace('Basic ', '')
+export function getAuthInfo(auth: string) {
+  auth = auth.replace('Basic ', '')
 
-  const rawToken = Buffer.from(basicToken, 'base64').toString('utf-8')
+  const rawToken = Buffer.from(auth, 'base64').toString('utf-8')
   const [platform, phone, token] = rawToken.split(':')
 
   return {
     phone,
     token,
-    auth: `Basic ${basicToken}`,
+    auth: `Basic ${auth}`,
     platform,
   }
 }

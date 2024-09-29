@@ -278,10 +278,46 @@ async function init($: M) {
   // }
 }
 
+/**
+ * 将 size 转换为 xx G xxx M （1024）
+ * @description 先转换为 G， 不满 1024 部分则为 M
+ * @param size
+ */
+function convertSizeToGigaMega(size: number): string {
+  console.log(size)
+  const gigabytes = Math.floor(size / (1073741824))
+  const megabytes = (size - 1073741824 * gigabytes) / 1048576
+
+  return !megabytes
+    ? `${gigabytes}G`
+    : `${gigabytes}G ${megabytes}M`
+}
+
+async function printSize($: M) {
+  try {
+    const xml = await $.api.getUserSizeInfo()
+    if (typeof xml !== 'string') {
+      $.logger.info('获取空间大小异常', JSON.stringify(xml))
+      return
+    }
+    const cloudCapacityInfo = getXmlElement(xml, 'cloudCapacityInfo'),
+      familyCapacityInfo = getXmlElement(xml, 'familyCapacityInfo'),
+      cloudSize = +getXmlElement(cloudCapacityInfo, 'totalSize'),
+      familySize = +getXmlElement(familyCapacityInfo, 'totalSize')
+    $.logger.info(
+      `云盘空间：${convertSizeToGigaMega(cloudSize)}`,
+      `家庭空间：${convertSizeToGigaMega(familySize)}`,
+    )
+  } catch (error) {
+    $.logger.debug('获取空间大小异常', error.message)
+  }
+}
+
 export async function run($: M) {
   $.logger.info('开始签到', $.config.username)
   try {
     const { draw, sign } = await init($)
+    await printSize($)
     if (!sign) {
       await $.sleep(2000)
       await signIn($)
@@ -298,6 +334,7 @@ export async function run($: M) {
 
     await $.sleep(5000)
     await signInFamily($, $.store && $.store.AccessToken)
+    await printSize($)
   } catch (error) {
     $.logger.error('运行异常', error)
   }
