@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.4.0-rc1",
+  "version": "0.4.0-rc3",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
@@ -66,5 +66,6 @@
   "engines": {
     "node": ">= 14.12.1"
   },
-  "homepage": "https://as.js.cool"
+  "homepage": "https://as.js.cool",
+  "private": true
 }

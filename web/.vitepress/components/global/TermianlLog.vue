@@ -16,7 +16,7 @@
           >&bull;</span
         >
       </div>
-      <span class="ml-8 align-baseline">terminal --- logger -  </span>
+      <span class="ml-8 align-baseline">terminal --- logger - </span>
       <span
         :class="`ml-8 align-baseline text-${
           props.isRuning ? 'green' : 'blue'
@@ -28,7 +28,7 @@
       <p class="text-gray-500">该终端无法操作,仅用于输出日志!</p>
       <OutputItem
         v-for="item in props.data"
-        :msg="item.args[0]"
+        :msg="item.args.reduce((a, b) => a + ' ' + b, '')"
         :type="item.type"
         :time="item.date"
       ></OutputItem>

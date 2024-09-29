@@ -87,14 +87,14 @@ export async function getUserId($: M) {
 }
 
 export async function setUserId($: M) {
-  let userId = await $.localStorage.getItem<string | null>(DB_KEYS.USER_ID)
+  let userId = await $.localStorage?.getItem<string | null>(DB_KEYS.USER_ID)
   if (userId) {
     $.config.userId = userId
     return
   }
   if ((userId = await getUserId($))) {
     $.config.userId = userId
-    await $.localStorage.setItem(DB_KEYS.USER_ID, userId)
+    await $.localStorage?.setItem(DB_KEYS.USER_ID, userId)
   }
 }
 

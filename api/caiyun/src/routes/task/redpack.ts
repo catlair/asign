@@ -13,15 +13,16 @@ type Body = {
   config: Record<string, any>
 }
 
-const fn: FastifyPluginAsync = async (fastify): Promise<void> => {
-  fastify.post<{ Body: Body }>('/shake', {}, async (request, reply) => {
+const fn: FastifyPluginAsync = async (fastify) => {
+  fastify.post<{ Body: Body }>('/redpack', {}, async (request, reply) => {
+    const { auth, config } = request.body
     const logger = await createLogger(reply)
     try {
-      const { $ } = await init(getAuthInfo(request.body.auth), {
+      const { $ } = await init(getAuthInfo(auth), {
         logger,
       })
-      $.config = defu({ shake: request.body.config }, $.config)
-      await tasks.shakeTask($)
+      $.config = defu({ shake: config }, $.config)
+      await tasks.aiRedPackTask($)
     } catch (error) {
       logger.error(error)
     } finally {

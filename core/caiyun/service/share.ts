@@ -83,7 +83,9 @@ export function getCloudRecord($: M) {
  * 返回需要次数
  */
 async function getShareFindCount($: M) {
-  const store = await $.localStorage.getItem<LocalStorage['shareFind']>(DB_KEYS.SHARE_FIND)
+  const store = $.localStorage
+    ? await $.localStorage.getItem<LocalStorage['shareFind']>(DB_KEYS.SHARE_FIND)
+    : undefined
   if (!store) {
     const num = await getCloudRecordByFx($)
     await setDataNum($, DB_KEYS.SHARE_FIND, num)

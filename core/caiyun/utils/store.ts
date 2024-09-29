@@ -7,6 +7,7 @@ interface LocalStorage {
 }
 
 export async function setDataNum($: M, key: string, num: number) {
+  if (!$.localStorage) return
   if (!num) return
 
   await $.localStorage.setItem(key, {
@@ -22,6 +23,7 @@ export async function addDataNum($: M, key: string, num?: number | void) {
 }
 
 export async function getDataNum($: M, key: string) {
+  if (!$.localStorage) return
   const data = await $.localStorage.getItem<LocalStorage>(key)
   if (!data) return 0
   return isCurrentMonth(data.lastUpdate) ? data.count : 0

@@ -2,7 +2,13 @@
   "compilerOptions": {
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
-    "target": "ES2022"
+    "baseUrl": "./",
+    "target": "ES2022",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts"

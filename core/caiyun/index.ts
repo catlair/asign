@@ -97,6 +97,8 @@ export const tasks = {
   receive,
   shakeTask,
   shareFindTask,
+  aiRedPackTask,
+  aiCloudTask,
   signIn,
   signInWx,
   taskExpansionTask,

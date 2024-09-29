@@ -20,6 +20,8 @@ const types = {
   debug: "DBG",
   start: "STR",
   success: "SUC",
+  fail: "FAI",
+  fatal: "FTL",
 };
 
 const colorMap = {
@@ -29,6 +31,8 @@ const colorMap = {
   DBG: "gray",
   STR: "purple",
   SUC: "green",
+  FTL: "red",
+  FAI: "red",
 };
 
 const logType = types[props.type];
