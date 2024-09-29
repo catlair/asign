@@ -167,7 +167,7 @@ export async function workWeixinBot(
     data: {
       msgtype,
       [msgtype]: {
-        centent: `${title}\n\n${text}`,
+        content: `${title}\n\n${text}`,
       },
       ...option,
     },
