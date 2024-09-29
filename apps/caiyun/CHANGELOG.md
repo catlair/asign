@@ -2,6 +2,15 @@
 
 ## 0.4.0
 
+### Patch Changes
+
+- [#27](https://github.com/yuiasn/asuna/pull/27) [`563522a`](https://github.com/yuiasn/asuna/commit/563522a8ddaf8e5dad243774e5754939ec84cfcd) Thanks [@github-actions](https://github.com/apps/github-actions)! - feat(caiyun): 更新 ai 红包
+
+- Updated dependencies [[`b579ce1`](https://github.com/yuiasn/asuna/commit/b579ce187d38e7225bf6a6d4655d09b8ccbea757)]:
+  - @asunajs/push@0.0.5
+
+## 0.4.0
+
 - [AI 红包]未能处理回答时的日志等级由 Error 调整为 Debug
 - [AI 红包]未能处理回答时由退出任务调整为继续下一个问题
 - [AI 红包]忽略长度超过 6 的问题

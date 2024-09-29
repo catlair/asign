@@ -1,5 +1,12 @@
 # @asunajs/quark
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`b579ce1`](https://github.com/yuiasn/asuna/commit/b579ce187d38e7225bf6a6d4655d09b8ccbea757)]:
+  - @asunajs/push@0.0.5
+
 ## 0.2.1
 
 ### Patch Changes
