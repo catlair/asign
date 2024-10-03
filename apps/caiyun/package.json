@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.4.0",
+  "version": "0.4.0-rc2",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
@@ -29,7 +29,9 @@
     "@asunajs/conf": "workspace:^",
     "@asunajs/http": "workspace:^",
     "@asunajs/push": "workspace:^",
-    "defu": "^6.1.4"
+    "citty": "^0.1.6",
+    "defu": "^6.1.4",
+    "pm2": "^5.4.2"
   },
   "devDependencies": {
     "@asign/build": "workspace:^",

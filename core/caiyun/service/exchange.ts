@@ -39,6 +39,10 @@ export async function exchangeApi($: M, prizeId: number, prizeName?: string) {
       $.logger.fail(`本月已经兑换过了`)
       return
     }
+    if (code === 610) {
+      $.logger.warn(`兑换${prizeName}失败，${code}，${msg}，请手动登录 APP 后重试`)
+      return
+    }
     $.logger.fail(`兑换${prizeName}失败，${code}，${msg}`)
   } catch (error) {
     $.logger.error('兑换' + prizeName, error)

@@ -31,11 +31,11 @@ export async function aiRedPackTask($: M) {
 
 async function blindboxJournaling({ api, sleep }: M) {
   const marketName = '&marketName=National_LanternRiddlesal_LanternRiddles'
-  await api.journaling('National_LanternRiddles_client_all', 1008, marketName)
+  await api.journaling('National_LanternRiddles_client_all', '1008', marketName)
   await sleep(200)
-  await api.journaling('National_LanternRiddles_pv', 1008, marketName)
+  await api.journaling('National_LanternRiddles_pv', '1008', marketName)
   await sleep(200)
-  await api.journaling('National_LanternRiddles_client_isApp', 1008, marketName)
+  await api.journaling('National_LanternRiddles_client_isApp', '1008', marketName)
   await sleep(200)
 }
 

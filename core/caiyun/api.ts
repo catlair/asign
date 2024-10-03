@@ -39,6 +39,10 @@ export type Journaling =
   | 'National_LanternRiddles_pv'
   | 'National_LanternRiddles_client_isApp'
   | 'National_LanternRiddles_client_all'
+  | 'newsignin_index_app_client'
+  | 'newsignin_index_pv'
+
+type JournalingId = '1002' | '1010' | '1008'
 
 export function createApi(http: Http) {
   const yun139Url = 'https://yun.139.com'
@@ -77,7 +81,7 @@ export function createApi(http: Http) {
         },
       )
     },
-    getNoteAuthToken: async function getNoteAuthToken(
+    async getNoteAuthToken(
       token: string,
       account: string | number,
     ): Promise<
@@ -462,7 +466,11 @@ export function createApi(http: Http) {
      * 登记
      * @param other 其它参数，& 开头
      */
-    journaling(optkeyword: Journaling, sourceid = 1010, other: `&${string}` | '' = '') {
+    journaling(
+      optkeyword: Journaling,
+      sourceid: JournalingId = '1010',
+      other: `&${string}` | '' = '',
+    ) {
       return http.post<BaseType>(
         `${caiyunUrl}/portal/journaling`,
         `account=&module=uservisit&optkeyword=${optkeyword}&fromId=&flag=&fileId=&fileType=&fileExtname=&fileSize=&sourceid=${sourceid}&linkId=${other}`,
