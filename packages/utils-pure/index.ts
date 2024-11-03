@@ -18,6 +18,19 @@ export function randomNumber(low: number, high = low) {
   return Math.floor(Math.random() * (high - low) + low)
 }
 
+/**
+ * 随机字符串 62 个
+ */
+export function randomString(length: number) {
+  return Array.from({
+    length,
+  })
+    .reduce((str) => {
+      const num = Math.floor(Math.random() * 62)
+      return str + String.fromCharCode(num + (num < 10 ? 48 : num < 36 ? 55 : 61))
+    }, '')
+}
+
 export function getXmlElement(xml: string, tag: string) {
   if (!xml.match) return ''
   const m = xml.match(`<${tag}>(.*)</${tag}>`)
@@ -213,4 +226,23 @@ export function randomRemove<T>(arr: T[]): T | undefined {
  */
 export function isCurrentMonth(time: Date | number | string) {
   return new Date(time).getMonth() === new Date().getMonth()
+}
+
+export function isString(val: any): val is string {
+  return typeof val === 'string'
+}
+
+export function isUndefined(val: any): val is undefined {
+  return typeof val === 'undefined'
+}
+
+export function isNullish(val: any): val is null | undefined {
+  return val === null || val === undefined
+}
+
+/**
+ * 隐藏手机号号中间四位
+ */
+export function hidePhone(phone: string) {
+  return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }

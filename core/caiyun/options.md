@@ -4,6 +4,12 @@
 
 cookie authorization 字段
 
+### `nickname`
+
+- **类型**: `字符串`
+
+昵称，用于获取用户信息
+
 ### `shake`
 
 #### `enable`
@@ -85,41 +91,62 @@ cookie authorization 字段
 
 上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在
 
+### `cloudPhoneRedpack`
+
+#### `enable`
+
+- **类型**: `布尔值`
+- **默认值**: `false`
+
+是否开启该功能
+
+### `printTodayCloud`
+
+- **类型**: `布尔值`
+
+是否打印今日云朵
+
 ### 示例
 
 ```json
 {
   "caiyun": [
     {
-      "auth": "depono",
+      "auth": "qui",
+      "nickname": "crudelis",
       "shake": {
         "enable": true,
-        "num": 7665159296253952,
-        "delay": 5263132331081728
+        "num": 15,
+        "delay": 7045630039949312
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "vulgo",
-          "bibo",
-          "corrumpo"
+          "amplexus",
+          "acidus",
+          "aveho"
         ],
-        "waterFriend": 1160392426389504
+        "waterFriend": 7704702665883648
       },
       "aiRedPack": {
         "enable": true
       },
-      "backupWaitTime": 8656152845877248,
+      "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "summopere",
+        "shareFile": "inventore",
         "skipTasks": [
-          7692440829952000,
-          7060839408336896,
-          2136573531389952,
-          1438186790191104
+          2190046557896704,
+          1406557816356864,
+          6560730260176896,
+          5088171641536512,
+          2824982587506688
         ]
       },
-      "catalog": "00019700101000000001"
+      "catalog": "incidunt",
+      "cloudPhoneRedpack": {
+        "enable": true
+      },
+      "printTodayCloud": false
     }
   ]
 }
@@ -145,6 +172,9 @@ cookie authorization 字段
   "tasks": {
     "skipTasks": []
   },
-  "catalog": "00019700101000000001"
+  "catalog": "00019700101000000001",
+  "cloudPhoneRedpack": {
+    "enable": false
+  }
 }
 ```

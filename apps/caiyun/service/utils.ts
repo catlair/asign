@@ -1,5 +1,6 @@
 import { createApi, createGardenApi, getJwtToken, type M } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
+import { hidePhone } from '@asign/utils-pure'
 import { loadConfig as _lc } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { md5, sleep } from '@asunajs/utils'
@@ -77,7 +78,7 @@ export async function init(
   }
 
   logger.info(`==============`)
-  logger.info(`登录账号【${config.phone}】`)
+  printNickName($)
   jwtToken ||= await getJwtToken($)
 
   return {
@@ -102,4 +103,8 @@ export async function loadConfig(inputPath?: string) {
     message: r.config.message,
     path: r.path,
   }
+}
+
+function printNickName({ config, logger }: M) {
+  logger.info(`登录账号【${config.nickname || hidePhone(config.phone)}】`)
 }

@@ -2,9 +2,11 @@ import { aiCloudTask } from './service/ai-cloud.js'
 import { appTask } from './service/app.js'
 import { backupGiftTask } from './service/backup-gift.js'
 import { blindboxTask } from './service/blind-box.js'
+import { cloudPhoneRedpackTask } from './service/cloud-phone-redpack.js'
 import { gardenTask } from './service/garden.js'
 import { aiRedPackTask } from './service/index.js'
 import { msgPushOnTask } from './service/msg-push.js'
+import { printTodayCloud } from './service/print-today-cloud.js'
 import { shareFindTask } from './service/share.js'
 import { receive, signIn, signInWx, wxDraw } from './service/sign.js'
 import { taskExpansionTask } from './service/task-expansion.js'
@@ -76,6 +78,8 @@ async function hc1Task($: M) {
 }
 
 async function afterTask($: M) {
+  await printTodayCloud($)
+
   $.logger.debug('------【搽屁股】------')
   // 删除文件
   try {
@@ -104,6 +108,7 @@ export const tasks = {
   taskExpansionTask,
   wxDraw,
   gardenTask,
+  cloudPhoneRedpackTask,
   afterTask,
 }
 
@@ -133,6 +138,10 @@ export async function run($: M) {
     if (config.aiRedPack && config.aiRedPack.enable) {
       taskList.push(aiRedPackTask)
       taskList.push(aiCloudTask)
+    }
+
+    if (config.cloudPhoneRedpack && config.cloudPhoneRedpack.enable) {
+      taskList.push(cloudPhoneRedpackTask)
     }
   }
 

@@ -48,6 +48,7 @@ export interface M {
     shareCount?: number
     /** AI  */
     aiSession?: { sessionId: string; dialogueId: string }[]
+    cloudPhoneToken?: string
     [key: string]: any
   }
   localStorage?: Awaited<ReturnType<typeof getStorage>>

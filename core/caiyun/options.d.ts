@@ -7,6 +7,10 @@ export interface Caiyun {
    */
   auth: string
   /**
+   * 昵称，用于获取用户信息
+   */
+  nickname?: string
+  /**
    * 摇一摇配置
    */
   shake?: {
@@ -67,4 +71,17 @@ export interface Caiyun {
    * 上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在
    */
   catalog?: string
+  /**
+   * 云手机红包派对
+   */
+  cloudPhoneRedpack?: {
+    /**
+     * 是否开启该功能
+     */
+    enable?: boolean
+  }
+  /**
+   * 是否打印今日云朵
+   */
+  printTodayCloud?: boolean
 }

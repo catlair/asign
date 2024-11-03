@@ -1,7 +1,7 @@
 import { getAuthInfo, sleepSync } from '@asign/utils-pure'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
-import { createLogger, pushMessage } from '@asunajs/utils'
+import { createLogger, pushMessage, sleep } from '@asunajs/utils'
 import type { Config } from '../types'
 import { init } from './utils.js'
 
@@ -13,7 +13,7 @@ function waitToHour(hour: number = 0, delay = 300) {
   const now = new Date()
   const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, 0, 0, delay)
   const time = nextDay.getTime() - now.getTime()
-  console.info('等待：', time)
+  console.info('等待：', time, 'ms')
   return sleepSync(time)
 }
 
@@ -77,12 +77,22 @@ type MultipleConfig = {
   ids: number[]
 }
 
-export function useMultiExchange(config: MultipleConfig[], message: Record<string, any>) {
-  return Promise.all(config.map(async ({ user, ids }) => {
-    const { exchange } = await useExchange(user, message)
+export async function useMultiExchange(
+  config: MultipleConfig[],
+  message: Record<string, any>,
+  { isAsync, delay }: { isAsync?: boolean; delay?: number },
+) {
+  const tasks = config.map(({ user, ids }) => async () => {
+    const { exchange } = (await useExchange(user, message)) || {}
+    if (!exchange) return
 
     waitToNextHour()
-
     return exchange(ids)
-  }))
+  })
+  if (isAsync) return Promise.all(tasks.map(task => task()))
+
+  for (const task of tasks) {
+    await task()
+    await sleep(delay || 1000)
+  }
 }

@@ -1,0 +1,40 @@
+{
+  "name": "@asunajs/pm2",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./index.ts"
+    }
+  },
+  "scripts": {
+    "prepublish": "copyfiles package.json README.md dist/",
+    "build": "tsup --dts-resolve"
+  },
+  "keywords": [
+    "qinglong"
+  ],
+  "author": "catlair",
+  "license": "MIT",
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "publishConfig": {
+    "directory": "dist",
+    "linkDirectory": false,
+    "exports": {
+      ".": {
+        "import": "./index.js",
+        "require": "./index.cjs"
+      }
+    },
+    "main": "./index.cjs",
+    "module": "index.js",
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "pm2": "^5.4.2"
+  }
+}
