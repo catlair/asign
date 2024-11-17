@@ -6,8 +6,8 @@ export async function getCloudRecord($: M) {
 }
 
 export async function printTodayCloud($: M) {
-  $.logger.start(`------【今日云朵】------`)
   if (!$.config.printTodayCloud) return
+  $.logger.start(`------【今日云朵】------`)
 
   try {
     const res = await getCloudRecord($)

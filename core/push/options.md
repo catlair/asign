@@ -36,11 +36,11 @@
 ```json
 {
   "email": {
-    "pass": "carus",
-    "from": "Wilton43@example.com",
-    "port": 465,
-    "host": "id",
-    "to": "Loraine_Lemke97@example.org"
+    "pass": "vetus",
+    "from": "Ada.Gerlach63@example.net",
+    "port": 1758496125091840,
+    "host": "deripio",
+    "to": "Lilian.Batz@example.org"
   }
 }
 ```
@@ -57,44 +57,44 @@
 
 ## 自定义配置
 
-### `method`
+- **类型**: `数组`
 
-- **类型**: `字符串`
-- **默认值**: `"POST"`
-
-请求方法
-
-### `url`
-
-- **类型**: `字符串`
-
-请求地址
-
-### `headers`
-
-### `body`
-
-### `timeout`
-
-- **类型**: `数字`
-
-超时时间
+自定义配置
 
 ### 示例
 
 ```json
 {
-  "customPost": {
-    "method": "PATCH",
-    "url": "https://royal-suggestion.info",
-    "headers": {
-      "cuppedia": "vestrum"
+  "customPost": [
+    {
+      "method": "PUT",
+      "url": "https://sneaky-quicksand.net",
+      "headers": {
+        "trepide": "molestiae"
+      },
+      "body": {
+        "totus": "adsuesco"
+      },
+      "data": {
+        "architecto": "aliquam"
+      },
+      "timeout": 733054914002944
     },
-    "body": {
-      "strenuus": "tam"
-    },
-    "timeout": 7879751639236608
-  }
+    {
+      "method": "PATCH",
+      "url": "https://humongous-zoot-suit.net/",
+      "headers": {
+        "cresco": "nisi"
+      },
+      "body": {
+        "abscido": "canto"
+      },
+      "data": {
+        "deleniti": "statua"
+      },
+      "timeout": 1562385768775680
+    }
+  ]
 }
 ```
 
@@ -102,11 +102,14 @@
 
 ```json
 {
-  "customPost": {
-    "method": "POST",
-    "headers": {},
-    "body": {}
-  }
+  "customPost": [
+    {
+      "method": "POST",
+      "headers": {},
+      "body": {},
+      "data": {}
+    }
+  ]
 }
 ```
 
@@ -145,9 +148,9 @@
   "workWeixin": {
     "msgtype": "text",
     "touser": "@all",
-    "agentid": 3385496287838208,
-    "corpsecret": "vereor",
-    "corpid": "error"
+    "agentid": 871694338097152,
+    "corpsecret": "cura",
+    "corpid": "vorago"
   }
 }
 ```
@@ -183,7 +186,7 @@
 ```json
 {
   "workWeixinBot": {
-    "url": "https://gleeful-spec.biz",
+    "url": "https://angry-exit.com/",
     "msgtype": "text"
   }
 }
@@ -217,7 +220,7 @@
 ```json
 {
   "bark": {
-    "key": "acquiro",
+    "key": "sumo",
     "level": "passive"
   }
 }
@@ -271,12 +274,12 @@
 ```json
 {
   "twoIm": {
-    "key": "cras",
-    "sid": "comptus",
+    "key": "voluptas",
+    "sid": "summa",
     "query": {
-      "plat": "templum",
-      "group": "deprecator",
-      "icon": 4487967120818176
+      "plat": "titulus",
+      "group": "considero",
+      "icon": "ullus"
     },
     "msgtype": "text"
   }
@@ -305,7 +308,7 @@
 ```json
 {
   "serverChan": {
-    "token": "desidero"
+    "token": "cometes"
   }
 }
 ```
@@ -355,11 +358,11 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "tgBot": {
-    "apiHost": "api.telegram.org",
-    "token": "voluptas",
-    "chat_id": 6476868762992640,
+    "apiHost": "cimentarius",
+    "token": "utpote",
+    "chat_id": 6912273308188672,
     "disable_web_page_preview": true,
-    "proxy": "https://outrageous-balloon.biz"
+    "proxy": "https://finished-hunt.net"
   }
 }
 ```
@@ -386,7 +389,7 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "pushplus": {
-    "token": "ver"
+    "token": "commodo"
   }
 }
 ```

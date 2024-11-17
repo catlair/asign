@@ -10,6 +10,7 @@ export interface ApiData {
   timeout?: number
   url: string
   data?: Record<string, any>
+  body?: Record<string, any>
 }
 
 export interface ApiOptions {

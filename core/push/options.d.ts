@@ -27,7 +27,7 @@ export interface Email {
 /**
  * 自定义配置
  */
-export interface CustomPost {
+export type CustomPost = {
   /**
    * 请求方法
    */
@@ -43,16 +43,22 @@ export interface CustomPost {
     [k: string]: string
   }
   /**
-   * 请求体
+   * data 的别名，二选一使用即可
    */
   body?: {
+    [k: string]: string
+  }
+  /**
+   * 请求体，{title} 占位标题 {text} 占位内容
+   */
+  data?: {
     [k: string]: string
   }
   /**
    * 超时时间
    */
   timeout?: number
-}
+}[]
 
 /**
  * 企业微信 App 配置

@@ -10,6 +10,7 @@ import type { UploadXml } from '../api.js'
 import type { M } from '../types.js'
 
 export * from './ai-redpack.js'
+export * from './cloud-day.js'
 
 type UploadFileOptions = Partial<UploadXml> & { ext?: string }
 

@@ -195,6 +195,9 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
+      es-toolkit:
+        specifier: ^1.27.0
+        version: 1.27.0
       tsconfig:
         specifier: workspace:*
         version: link:../../packages/tsconfig
@@ -620,18 +623,18 @@ importers:
       '@asign/types':
         specifier: workspace:^
         version: link:../../core/types
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
       compare-versions:
         specifier: ^6.1.1
         version: 6.1.1
       consola:
         specifier: ^3.2.3
         version: 3.2.3
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
+      es-toolkit:
+        specifier: ^1.27.0
+        version: 1.27.0
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig
@@ -3146,6 +3149,9 @@ packages:
 
   es-module-lexer@1.5.4:
     resolution: {integrity: sha512-MVNK56NiMrOwitFB7cqDwq0CQutbw+0BvLshJSse0MUNU+y1FC3bUS/AQg7oUng+/wKrrki7JfmwtVHkVfPLlw==}
+
+  es-toolkit@1.27.0:
+    resolution: {integrity: sha512-ETSFA+ZJArcuSCpzD2TjAy6UHpx4E4uqFsoDg9F/nTLogrLmVVZQ+zNxco5h7cWnA1nNak07IXsLcaSMih+ZPQ==}
 
   es5-ext@0.10.64:
     resolution: {integrity: sha512-p2snDhiLaXe6dahss1LddxqEm+SkuDvV8dnIQG0MWjyHpcMNfXKPE+/Cc0y+PhxJX3A4xGNeFCj5oc0BUh6deg==}
@@ -8831,6 +8837,8 @@ snapshots:
   environment@1.1.0: {}
 
   es-module-lexer@1.5.4: {}
+
+  es-toolkit@1.27.0: {}
 
   es5-ext@0.10.64:
     dependencies:

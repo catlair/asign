@@ -32,6 +32,7 @@ export interface M {
     inviter?: string
     platform?: string
     userId?: string
+    expire?: number
   }
   DATA: {
     baseUA: string

@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "utils",
   "type": "module",
   "exports": {
@@ -34,10 +34,10 @@
   },
   "devDependencies": {
     "@asign/types": "workspace:^",
-    "@types/lodash-es": "^4.17.12",
     "compare-versions": "^6.1.1",
     "consola": "^3.2.3",
-    "lodash-es": "^4.17.21",
-    "tsconfig": "workspace:*"
+    "es-toolkit": "^1.27.0",
+    "tsconfig": "workspace:*",
+    "dayjs": "^1.11.13"
   }
 }

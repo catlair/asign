@@ -13,7 +13,9 @@ export function setInJavaScript(
   value: any,
 ): string {
   const mod = parseModule(jsCode)
-  setIn(mod.exports.default, path, value)
+  const $ast = mod.exports.default.$ast
+  const obj = $ast?.name ? mod.exports[$ast.name] : mod.exports.default
+  setIn(obj, path, value)
   return generateCode(mod).code
 }
 

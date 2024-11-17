@@ -9,13 +9,16 @@ export const email = z.strictObject({
   to: z.string().email().optional().describe('收件人邮箱，默认发件人'),
 }).describe('邮箱配置')
 
-export const customPost = z.object({
-  method: z.enum(['POST', 'GET', 'PUT', 'PATCH', 'DELETE']).optional().describe('请求方法').default('POST'),
-  url: z.string().describe('请求地址'),
-  headers: z.record(z.string()).describe('请求头').optional(),
-  body: z.record(z.string()).describe('请求体').optional(),
-  timeout: z.number().optional().describe('超时时间'),
-}).describe('自定义配置')
+export const customPost = z.array(
+  z.object({
+    method: z.enum(['POST', 'GET', 'PUT', 'PATCH', 'DELETE']).optional().describe('请求方法').default('POST'),
+    url: z.string().describe('请求地址'),
+    headers: z.record(z.string()).describe('请求头').optional(),
+    body: z.record(z.string()).describe('data 的别名，二选一使用即可').optional(),
+    data: z.record(z.string()).describe('请求体，{title} 占位标题 {text} 占位内容').optional(),
+    timeout: z.number().optional().describe('超时时间'),
+  }),
+).describe('自定义配置')
 
 export const workWeixin = z.object({
   msgtype: z.enum(['text', 'markdown', 'textcard', 'mpnews']).optional().describe('消息类型').default('text'),

@@ -1,11 +1,15 @@
 import type { LoggerType } from '@asign/types'
 import crypto, { createCipheriv, createDecipheriv } from 'crypto'
+import dayjs from 'dayjs'
+import { delay } from 'es-toolkit/compat'
 import fs from 'fs'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 export { compare } from 'compare-versions'
-export { set as setIn } from 'lodash-es'
+export { set as setIn } from 'es-toolkit/compat'
+
+export type { ConsolaInstance } from 'consola'
 
 export function sleep(time: number) {
   return new Promise<number>((res) => setTimeout(() => res(time), time))
@@ -168,4 +172,17 @@ export function decryptCaiyun(text: string) {
 export function encryptCaiyun(text: string) {
   const iv = crypto.randomBytes(16).toString('hex')
   return Buffer.from(iv + _aesEncrypt(text, '6a43434865714e53624932787262354f', iv), 'hex').toString('base64')
+}
+
+export function formatTime(date: Date | number | string) {
+  return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
+}
+
+export async function waitToNextHour(millisecond = 400) {
+  const time = dayjs().set('hour', dayjs().get('hour') + 1).set('minute', 0).set('second', 0).set(
+    'millisecond',
+    millisecond,
+  ).toDate().getTime()
+
+  await delay(time - Date.now())
 }

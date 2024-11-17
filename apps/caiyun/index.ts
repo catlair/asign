@@ -25,7 +25,7 @@ export async function main(
   return { newAuth }
 }
 
-async function getConfig(inputPath?: string | UserConfig) {
+export async function getConfig(inputPath?: string | UserConfig) {
   if (isUndefined(inputPath) || isString(inputPath)) {
     return await loadConfig(inputPath)
   }

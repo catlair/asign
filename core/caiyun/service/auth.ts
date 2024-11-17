@@ -51,7 +51,9 @@ export async function refreshToken($: M) {
     if (!tokenXml) {
       return $.logger.error(`authTokenRefresh 失败`)
     }
-    return getXmlElement(tokenXml, 'token')
+    const newToken = getXmlElement(tokenXml, 'token')
+    if (newToken) return newToken
+    $.logger.error(tokenXml)
   } catch (error) {
     $.logger.error(`刷新 token 失败`, error)
   }
@@ -119,9 +121,19 @@ export async function createNewAuth($: M) {
   if (!isNeedRefresh(expireTime)) return
 
   logger.info('尝试生成新的 auth')
+
+  return await getNewAuth($)
+}
+
+export function formatAuth(token: string, phone: string, platform: string) {
+  return Buffer.from(`${platform}:${phone}:${token}`).toString('base64')
+}
+
+export async function getNewAuth($: M) {
   const token = await refreshToken($)
   if (token) {
-    return Buffer.from(`${config.platform}:${config.phone}:${token}`).toString('base64')
+    const { config } = $
+    return formatAuth(token, config.phone, config.platform)
   }
-  logger.error('生成新 auth 失败')
+  $.logger.error('生成新 auth 失败')
 }

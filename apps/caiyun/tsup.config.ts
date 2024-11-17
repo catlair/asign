@@ -1,6 +1,6 @@
 import { appDefuConfig, cliDefuConfig, qlDefuConfig, setVersion } from '@asign/build/tsup'
 import { defineConfig } from 'tsup'
-import { dependencies } from './package.json'
+import { dependencies, devDependencies } from './package.json'
 
 export default defineConfig([
   {
@@ -14,6 +14,19 @@ export default defineConfig([
   {
     entry: ['cli.ts'],
     ...cliDefuConfig,
+  },
+  {
+    entry: ['cli2.ts'],
+    ...appDefuConfig,
+    target: 'node18',
+    outExtension() {
+      return {
+        js: '.js',
+      }
+    },
+    format: 'esm',
+    dts: false,
+    external: Object.keys(dependencies),
   },
   {
     ...qlDefuConfig,

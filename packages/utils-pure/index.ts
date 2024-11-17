@@ -109,6 +109,7 @@ export function getAuthInfo(auth: string) {
     token,
     auth: `Basic ${auth}`,
     platform,
+    expire: Number(token.split('|')[3]),
   }
 }
 

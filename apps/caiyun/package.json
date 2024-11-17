@@ -1,11 +1,14 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.4.1",
+  "version": "0.4.3",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
   "types": "./index.d.ts",
-  "bin": "cli.js",
+  "bin": {
+    "caiyun": "./cli.js",
+    "cyc": "./cli2.js"
+  },
   "exports": {
     ".": {
       "import": "./index.ts"
@@ -25,7 +28,6 @@
   "author": "catlair",
   "license": "MIT",
   "dependencies": {
-    "@asign/unstorage": "workspace:^",
     "@asunajs/conf": "workspace:^",
     "@asunajs/http": "workspace:^",
     "@asunajs/push": "workspace:^",
@@ -34,6 +36,7 @@
     "pm2": "^5.4.2"
   },
   "devDependencies": {
+    "@asign/unstorage": "workspace:^",
     "@asign/build": "workspace:^",
     "@asign/caiyun-core": "workspace:^",
     "@asign/types": "workspace:^",
@@ -41,6 +44,7 @@
     "@asunajs/utils": "workspace:^",
     "compare-versions": "^6.1.1",
     "dotenv": "^16.4.5",
+    "es-toolkit": "^1.27.0",
     "tsconfig": "workspace:*"
   },
   "publishConfig": {
@@ -57,7 +61,7 @@
     "types": "./index.d.cts",
     "module": "./index.mjs",
     "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "url": "git+https://github.com/asunajs/asign.git"

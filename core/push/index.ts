@@ -31,7 +31,7 @@ async function _send(
   }
 }
 
-export async function customPost(
+export async function _customPost(
   { logger, http }: ApiOptions,
   apiTemplate: ApiData,
   title: string,
@@ -39,7 +39,7 @@ export async function customPost(
 ) {
   try {
     if (!apiTemplate || !apiTemplate.url) return
-    const { data, timeout, headers } = apiTemplate
+    const { data, body, timeout, headers } = apiTemplate
     const method: Method = (apiTemplate.method.toUpperCase()
       || 'POST') as Method
     const options: any = {
@@ -47,6 +47,7 @@ export async function customPost(
       timeout,
       headers,
       url: '',
+      data: data || body,
     }
     options.url = apiTemplate.url
       .replace('{title}', encodeURIComponent(title))
@@ -60,12 +61,28 @@ export async function customPost(
         .replace(/\r/g, '\\r')
       options.data = JSON.parse(str)
     }
-    await http.fetch(options)
+    const res = await http.fetch(options)
     logger.info(`自定义消息已发送！`)
+    return res
   } catch (error) {
     logger.info(`自定义消息发送失败: ${error.message}`)
     logger.error(error)
   }
+}
+
+export async function customPost(
+  apiOption: ApiOptions,
+  apiTemplate: ApiData | ApiData[],
+  title: string,
+  text: string,
+) {
+  apiTemplate = Array.isArray(apiTemplate) ? apiTemplate : [apiTemplate]
+  const res = []
+  for (const item of apiTemplate) {
+    res.push(await _customPost(apiOption, item, title, text))
+  }
+
+  return res
 }
 
 export async function pushplus(

@@ -3,7 +3,7 @@ import { defuConfig } from '@asign/caiyun-core/options'
 import { hidePhone } from '@asign/utils-pure'
 import { loadConfig as _lc } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
-import { md5, sleep } from '@asunajs/utils'
+import { formatTime, md5, sleep } from '@asunajs/utils'
 import { defu } from 'defu'
 import { uploadTask } from '../service/upload-task.js'
 import type { Config, Option } from '../types.js'
@@ -79,6 +79,7 @@ export async function init(
 
   logger.info(`==============`)
   printNickName($)
+  printExpireTime($, $.config.expire)
   jwtToken ||= await getJwtToken($)
 
   return {
@@ -107,4 +108,8 @@ export async function loadConfig(inputPath?: string) {
 
 function printNickName({ config, logger }: M) {
   logger.info(`登录账号【${config.nickname || hidePhone(config.phone)}】`)
+}
+
+function printExpireTime({ logger }: M, expire: number) {
+  logger.info('登录过期时间', formatTime(expire))
 }
