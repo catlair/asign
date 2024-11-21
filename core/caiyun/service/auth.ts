@@ -108,17 +108,16 @@ export function getTokenExpireTime(token: string) {
  * 获取是否需要刷新
  * @description 有效期 30 天，还有 5 天，需要刷新
  */
-export function isNeedRefresh(expireTime: number) {
-  return expireTime - Date.now() < 432000000
+export function isNeedRefresh(expireTime: number, day: number) {
+  return expireTime - Date.now() < day * 86400000
 }
 
 export async function createNewAuth($: M) {
   const { config, logger } = $
-  const expireTime = getTokenExpireTime(config.token)
   logger.debug('------【检测账号有效期】------')
-  logger.debug(`token 有效期 ${Math.floor((expireTime - Date.now()) / 86400000)} 天`)
+  logger.debug(`token 有效期 ${Math.floor((config.expire - Date.now()) / 86400000)} 天`)
 
-  if (!isNeedRefresh(expireTime)) return
+  if (!isNeedRefresh(config.expire, config.剩余多少天刷新token)) return
 
   logger.info('尝试生成新的 auth')
 

@@ -115,12 +115,14 @@ export async function pushMessage({
     if (message.onlyError && !pushData.some((el) => el.type === 'error')) {
       return
     }
+
     const msg = pushData
       .filter((el) => el.level < 4)
       .map((m) => `[${m.type} ${m.date.toLocaleTimeString()}]${m.msg}`)
       .join('\n')
-    msg
-      && (await sendNotify(
+
+    if (msg) {
+      await sendNotify(
         {
           logger: await createLogger(),
           http: { fetch: (op: any) => createRequest().request(op) },
@@ -128,7 +130,8 @@ export async function pushMessage({
         message,
         message.title || 'asign 运行推送',
         msg,
-      ))
+      )
+    }
   }
 }
 

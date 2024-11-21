@@ -100,6 +100,7 @@ export function setStoreArray(
 
 export function getAuthInfo(auth: string) {
   auth = auth.replace('Basic ', '')
+  auth = padBase64(auth)
 
   const rawToken = Buffer.from(auth, 'base64').toString('utf-8')
   const [platform, phone, token] = rawToken.split(':')
@@ -111,6 +112,14 @@ export function getAuthInfo(auth: string) {
     platform,
     expire: Number(token.split('|')[3]),
   }
+}
+
+/**
+ *  填充 base64
+ * @description 如果 str.length % 4 !== 0，则在末尾补上 '='
+ */
+export function padBase64(str: string) {
+  return str.length % 4 === 0 ? str : str + '='.repeat(4 - str.length % 4)
 }
 
 export function hashCode(str: string) {

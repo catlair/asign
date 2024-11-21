@@ -16,7 +16,7 @@ type TaskExpansion = BaseType<{
 }>
 
 export function createSignInApi(http: Http) {
-  const caiyunUrl = 'https://caiyun.feixin.10086.cn/market/signin/'
+  const caiyunUrl = 'https://mrp.mcloud.139.com/market/signin/'
 
   return {
     getTaskExpansion() {
@@ -29,7 +29,7 @@ export function createSignInApi(http: Http) {
     },
     exchange(prizeId: string | number) {
       return http.get<ExchangeResult>(
-        `${caiyunUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=11.0.1&smsCode=`,
+        `${caiyunUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=11.3.2&smsCode=`,
       )
     },
     receivePrizeDetails(prizeId: string | number) {

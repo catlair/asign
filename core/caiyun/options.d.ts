@@ -83,5 +83,19 @@ export interface Caiyun {
   /**
    * 是否打印今日云朵
    */
-  printTodayCloud?: boolean
+  是否打印今日云朵?: boolean
+  /**
+   * 剩余多少天刷新token
+   */
+  剩余多少天刷新token?: number
+  微信抽奖: {
+    /**
+     * 微信抽奖次数
+     */
+    次数?: number
+    /**
+     * 微信抽奖间隔（毫秒）
+     */
+    间隔?: number
+  }
 }

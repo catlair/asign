@@ -194,16 +194,20 @@ async function interactive() {
       const { jwtToken } = await onceInit(configMap[index], { logger })
       if (!jwtToken) logger.fail('账号无效')
       else logger.success('账号有效')
+      return
     }
     case ACTION.REFRESH: {
       const { $ } = await onceInit(configMap[index], { logger })
       await refreshAuth($, path, index)
+      return
     }
     case ACTION.LOGIN: {
       logger.fail('暂不支持登录')
+      return
     }
     case ACTION.CLOUD_DAY: {
       await cloudDay(configMap[index])
+      return
     }
     default:
       return

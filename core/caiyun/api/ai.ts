@@ -48,7 +48,7 @@ function parseEventStream(eventStreamData: string): ChatEvent {
   }
 }
 
-const clientInfo = '4||1|11.2.2||22041216C|||android 13|||||'
+const clientInfo = '4||1|11.3.2||22041216C|||android 14|||||'
 
 export function createAiApi(http: Http) {
   return {

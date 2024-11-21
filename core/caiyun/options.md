@@ -100,11 +100,35 @@ cookie authorization 字段
 
 是否开启该功能
 
-### `printTodayCloud`
+### `是否打印今日云朵`
 
 - **类型**: `布尔值`
+- **默认值**: `true`
 
 是否打印今日云朵
+
+### `剩余多少天刷新token`
+
+- **类型**: `数字`
+- **默认值**: `10`
+
+剩余多少天刷新token
+
+### `微信抽奖`
+
+#### `次数`
+
+- **类型**: `数字`
+- **默认值**: `1`
+
+微信抽奖次数
+
+#### `间隔`
+
+- **类型**: `数字`
+- **默认值**: `500`
+
+微信抽奖间隔（毫秒）
 
 ### 示例
 
@@ -112,41 +136,42 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "qui",
-      "nickname": "crudelis",
+      "auth": "voluptatem",
+      "nickname": "temperantia",
       "shake": {
         "enable": true,
-        "num": 15,
-        "delay": 7045630039949312
+        "num": 8941587744686080,
+        "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "amplexus",
-          "acidus",
-          "aveho"
+          "et",
+          "civitas"
         ],
-        "waterFriend": 7704702665883648
+        "waterFriend": 2740150379479040
       },
       "aiRedPack": {
         "enable": true
       },
       "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "inventore",
+        "shareFile": "victus",
         "skipTasks": [
-          2190046557896704,
-          1406557816356864,
-          6560730260176896,
-          5088171641536512,
-          2824982587506688
+          6403504830676992,
+          7261369701236736
         ]
       },
-      "catalog": "incidunt",
+      "catalog": "casus",
       "cloudPhoneRedpack": {
         "enable": true
       },
-      "printTodayCloud": false
+      "是否打印今日云朵": true,
+      "剩余多少天刷新token": 10,
+      "微信抽奖": {
+        "次数": 1,
+        "间隔": 500
+      }
     }
   ]
 }
@@ -175,6 +200,12 @@ cookie authorization 字段
   "catalog": "00019700101000000001",
   "cloudPhoneRedpack": {
     "enable": false
+  },
+  "是否打印今日云朵": true,
+  "剩余多少天刷新token": 10,
+  "微信抽奖": {
+    "次数": 1,
+    "间隔": 500
   }
 }
 ```

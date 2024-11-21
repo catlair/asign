@@ -47,7 +47,7 @@ export async function main(index: number, config: Config, option?: { pushData: a
   }
 
   function getHeaders(url: string) {
-    if (getHostname(url) === 'caiyun.feixin.10086.cn') {
+    if (['caiyun.feixin.10086.cn', 'mrp.mcloud.139.com'].includes(getHostname(url))) {
       if (jwtToken) {
         return {
           ...headers,
@@ -86,7 +86,7 @@ export async function main(index: number, config: Config, option?: { pushData: a
     } as any,
     gardenApi: createGardenApi(http),
     store: {},
-    localStorage: {},
+    localStorage: undefined,
     md5,
   }
 
