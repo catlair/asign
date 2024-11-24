@@ -1,4 +1,5 @@
-import { createCipheriv, randomBytes } from 'crypto'
+import { Buffer } from 'node:buffer'
+import { createCipheriv, randomBytes } from 'node:crypto'
 
 function aesEecrypt(textUtf8: string, iv: Buffer): Buffer {
   const decipher = createCipheriv('aes-128-cbc', Buffer.from('xuL97!x7GGxG%8V4', 'utf-8'), iv)

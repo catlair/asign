@@ -1,5 +1,6 @@
 import { type ApiOptions, bark, type Email, pushplus, serverChan, workWeixin, workWeixinBot } from '@asign/push-core'
 import { createLogger } from '@asign/utils-pure'
+import type { Buffer } from 'node:buffer'
 
 export { createCookieJar } from './cookie.js'
 export { createRequest } from './http.js'

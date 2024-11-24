@@ -27,7 +27,7 @@ export function waitToNextHour(delay?: number) {
   return waitToHour(now.getHours() + 1, delay)
 }
 
-export async function useExchange(config: Config, message: Record<string, any>) {
+export async function useExchange(config: Config, message?: Record<string, any>) {
   const pushData = [{ level: 3, type: 'info', date: new Date(), msg: '文档地址：https://as.js.cool' }]
   const logger = await createLogger({ pushData })
 
@@ -44,7 +44,8 @@ export async function useExchange(config: Config, message: Record<string, any>) 
 
     const { exchangeTask, exchangeApi } = await import('@asign/caiyun-core')
 
-    const sendMessage = (msg?: string) => {
+    const sendMessage = async (msg?: string) => {
+      if (!message) return $.logger.debug('未配置推送信息')
       message.title = msg || message.title
       message.onlyError = false
       return pushMessage({

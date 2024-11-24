@@ -1,6 +1,6 @@
 import { setIn } from '@asunajs/utils'
-import { readFileSync, writeFileSync } from 'fs'
 import { generateCode, loadFile, parseModule, writeFile } from 'magicast'
+import { readFileSync, writeFileSync } from 'node:fs'
 
 export async function parseJavaScript<T = any>(path: string): Promise<T> {
   const mod = await import(path)

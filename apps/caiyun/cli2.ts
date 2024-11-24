@@ -7,8 +7,8 @@ import { rewriteConfigSync } from '@asunajs/conf'
 import { type ConsolaInstance, createLogger, formatTime, waitToNextHour } from '@asunajs/utils'
 import { type ArgsDef, defineCommand, type ParsedArgs, runMain } from 'citty'
 import { once } from 'es-toolkit'
-import { dirname, resolve } from 'path'
-import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { getNewAuth } from '../../core/caiyun/service/auth.js'
 import { getConfig } from './index.js'
 import { init } from './service/utils.js'
@@ -16,7 +16,7 @@ import type { Config } from './types.js'
 
 const logger = await createLogger() as ConsolaInstance
 
-const login = async (inputPath: string, index: string) => {
+export const login = async (inputPath: string, index: string) => {
   const { config, path } = await getAuth(inputPath, index)
 
   const { $, jwtToken } = await init(config, { logger })
@@ -132,9 +132,9 @@ async function getAuth(inputPath: string, index: string | number) {
  * 交互模式
  */
 async function interactive() {
-  const inputPath = await logger.prompt('请输入配置文件路径', { type: 'text', placeholder: '留空查看默认路径' })
+  // const inputPath = await logger.prompt('请输入配置文件路径', { type: 'text', placeholder: '留空查看默认路径' })
 
-  const { config, path } = await getConfig(inputPath && resolve(dirname(fileURLToPath(import.meta.url)), inputPath))
+  const { config, path } = await getConfig()
 
   logger.info('查看', path)
   logger.success('成功找到', config.length, '个配置，请选择需要操作的内容')
@@ -194,16 +194,20 @@ async function interactive() {
       const { jwtToken } = await onceInit(configMap[index], { logger })
       if (!jwtToken) logger.fail('账号无效')
       else logger.success('账号有效')
+      return
     }
     case ACTION.REFRESH: {
       const { $ } = await onceInit(configMap[index], { logger })
       await refreshAuth($, path, index)
+      return
     }
     case ACTION.LOGIN: {
       logger.fail('暂不支持登录')
+      return
     }
     case ACTION.CLOUD_DAY: {
       await cloudDay(configMap[index])
+      return
     }
     default:
       return

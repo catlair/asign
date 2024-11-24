@@ -1,6 +1,6 @@
 import { setIn } from '@asunajs/utils'
-import { readFileSync, writeFileSync } from 'fs'
-import { extname } from 'path'
+import { readFileSync, writeFileSync } from 'node:fs'
+import { extname } from 'node:path'
 import { setInJavaScript } from './js'
 import { parseObject, setInObject } from './object'
 

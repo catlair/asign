@@ -3,8 +3,8 @@ import { defu } from 'defu'
 import destr from 'destr'
 import { type ExtendOptions as GotExtendOptions, got, type Options as GotOptions } from 'got'
 import { isPlainObject, merge } from 'lodash-es'
+import { URLSearchParams } from 'node:url'
 import { CookieJar } from 'tough-cookie'
-import { URLSearchParams } from 'url'
 
 export { got }
 

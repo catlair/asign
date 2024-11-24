@@ -4,6 +4,7 @@ import { backupGiftTask } from './service/backup-gift.js'
 import { blindboxTask } from './service/blind-box.js'
 import { cloudPhoneRedpackTask } from './service/cloud-phone-redpack.js'
 import { gardenTask } from './service/garden.js'
+import { hc1Task } from './service/hc1t.js'
 import { aiRedPackTask } from './service/index.js'
 import { msgPushOnTask } from './service/msg-push.js'
 import { printTodayCloud } from './service/print-today-cloud.js'
@@ -53,27 +54,6 @@ async function shakeTask($: M) {
     if (index < num - 1) {
       await $.sleep(delay * 1000)
     }
-  }
-}
-
-async function hc1Task($: M) {
-  $.logger.start('------【合成芝麻】------')
-  try {
-    if ($.config.inviter) {
-      $.logger.info('不支持邀请好友，跳过执行')
-      return
-    }
-    const { info } = await request($, $.api.getHecheng1T, '获取合成芝麻')
-
-    for (let index = 0; index < info.curr; index++) {
-      await request($, $.api.beinviteHecheng1T, '合成芝麻开始')
-      await $.sleep(5000)
-      await request($, $.api.finishHecheng1T, '合成芝麻完成')
-    }
-
-    $.logger.success('完成合成芝麻')
-  } catch (error) {
-    $.logger.error('合成芝麻失败', error)
   }
 }
 

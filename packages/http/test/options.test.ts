@@ -1,5 +1,6 @@
 import { deepEqual, equal } from 'node:assert'
 import { deepStrictEqual } from 'node:assert/strict'
+import { Buffer } from 'node:buffer'
 import { describe, it } from 'node:test'
 import { mergeOptions } from '../index'
 

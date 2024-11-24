@@ -1,4 +1,3 @@
-import { md5 } from '@asunajs/utils'
 import * as api from '../api/cloud-day'
 import type { M } from '../types'
 
@@ -45,7 +44,11 @@ export async function getSmsVerCode({ logger, http }: M, prizeId: number | strin
   }
 }
 
-export async function receiveCloudDayGift({ logger, http }: M, prizeId: number | string, smsCode: number | string) {
+export async function receiveCloudDayGift(
+  { logger, http, md5 }: M,
+  prizeId: number | string,
+  smsCode: number | string,
+) {
   try {
     const { code, msg } = await api.receiveCloudDayGift(http, prizeId, md5(String(smsCode)))
 

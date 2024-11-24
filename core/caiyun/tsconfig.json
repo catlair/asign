@@ -1,3 +1,10 @@
 {
-  "extends": "tsconfig/core.json"
+  "extends": "tsconfig/core.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": [
+      "ESNext"
+    ]
+  }
 }

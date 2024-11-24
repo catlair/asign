@@ -6,6 +6,7 @@ import {
   randomNumber,
   setStoreArray,
 } from '@asign/utils-pure'
+import { Buffer } from 'node:buffer'
 import type { UploadXml } from '../api.js'
 import type { M } from '../types.js'
 

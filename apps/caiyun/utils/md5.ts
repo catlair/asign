@@ -17,6 +17,7 @@
  * Distributed under the BSD License
  * See http://pajhome.org.uk/crypt/md5 for more info.
  */
+import { Buffer } from 'node:buffer'
 
 interface MD5State {
   a: number
@@ -301,7 +302,7 @@ function rstr2hex(input: string): string {
   return output
 }
 
-function md5(s: string) {
+export function md5(s: string) {
   return rstr2hex(rstrMD5(decodeURIComponent(s)))
 }
 

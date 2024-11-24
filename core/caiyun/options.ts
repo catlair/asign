@@ -19,4 +19,15 @@ export const defuConfig = {
   cloudPhoneRedpack: {
     enable: false,
   },
+  是否打印今日云朵: true,
+  剩余多少天刷新token: 10,
+  微信抽奖: {
+    次数: 1,
+    间隔: 500,
+  },
+  云朵大作战: {
+    目标排名: 500,
+    开启兑换: false,
+    邀请用户: [],
+  },
 }

@@ -1,3 +1,5 @@
+import type { Buffer } from 'node:buffer'
+
 export interface WpsResponse {
   /** 获取响应的 HTTP 状态码 */
   status: number

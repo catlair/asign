@@ -22,7 +22,7 @@ export const tsupDefuConfig = defineConfig({
   platform: 'node',
   splitting: true,
   minify: false,
-  target: 'node14',
+  target: 'node18',
   shims: true,
   dts: true,
   minifySyntax: true,
@@ -72,7 +72,7 @@ export const qlDefuConfig = defineConfig({
   splitting: false,
   dts: false,
   clean: true,
-  format: ['cjs', 'esm'],
+  format: ['esm'],
   outExtension({ format }) {
     return {
       js: format === 'esm' ? '.ql.mjs' : '.ql.js',

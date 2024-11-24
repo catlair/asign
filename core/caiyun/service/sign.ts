@@ -63,12 +63,30 @@ export async function wxDraw($: M) {
       return
     }
 
-    if (drawInfo.result.surplusNumber < 50) {
-      $.logger.info(
-        `剩余微信抽奖次数${drawInfo.result.surplusNumber}，跳过执行`,
-      )
+    const { 次数 } = $.config.微信抽奖
+    // 需要抽奖次数 = 预设次数 - 已经抽奖次数
+    let count = 次数 - (50 - drawInfo.result.surplusNumber)
+
+    if (count < 1) {
+      $.logger.info(`剩余微信抽奖次数${drawInfo.result.surplusNumber}，已完成`)
       return
     }
+
+    while ((await drawOnce($), count > 1)) {
+      console.log(`剩余count${count}`)
+      await $.sleep($.config.微信抽奖.间隔)
+      count--
+    }
+  } catch (error) {
+    $.logger.error(`微信抽奖异常`, error)
+  }
+}
+
+/**
+ * 进行一次微信抽奖
+ */
+export async function drawOnce($: M) {
+  try {
     const draw = await $.api.drawInWx()
     if (draw.code !== 0) {
       $.logger.error(`微信抽奖失败，${JSON.stringify(draw)}`)
@@ -76,7 +94,6 @@ export async function wxDraw($: M) {
     }
     $.logger.info(`微信抽奖成功，获得【${draw.result.prizeName}】`)
   } catch (error) {
-    $
     $.logger.error(`微信抽奖异常`, error)
   }
 }

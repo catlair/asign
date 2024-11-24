@@ -6,5 +6,9 @@
     "**/asign.config.*",
     "out",
     "tools"
-  ]
+  ],
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler"
+  }
 }

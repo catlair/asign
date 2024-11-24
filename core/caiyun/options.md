@@ -100,11 +100,57 @@ cookie authorization 字段
 
 是否开启该功能
 
-### `printTodayCloud`
+### `是否打印今日云朵`
 
 - **类型**: `布尔值`
+- **默认值**: `true`
 
 是否打印今日云朵
+
+### `剩余多少天刷新token`
+
+- **类型**: `数字`
+- **默认值**: `10`
+
+剩余多少天刷新token
+
+### `微信抽奖`
+
+#### `次数`
+
+- **类型**: `数字`
+- **默认值**: `1`
+
+微信抽奖次数
+
+#### `间隔`
+
+- **类型**: `数字`
+- **默认值**: `500`
+
+微信抽奖间隔（毫秒）
+
+### `云朵大作战`
+
+#### `目标排名`
+
+- **类型**: `数字`
+- **默认值**: `500`
+
+目标排名
+
+#### `开启兑换`
+
+- **类型**: `布尔值`
+- **默认值**: `false`
+
+是否开启兑换
+
+#### `邀请用户`
+
+- **类型**: `数组`
+
+邀请用户的手机号（你邀请的用户，不是邀请你的）
 
 ### 示例
 
@@ -112,41 +158,53 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "qui",
-      "nickname": "crudelis",
+      "auth": "cum",
+      "nickname": "excepturi",
       "shake": {
-        "enable": true,
+        "enable": false,
         "num": 15,
-        "delay": 7045630039949312
+        "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "amplexus",
-          "acidus",
-          "aveho"
+          "admoneo",
+          "torrens"
         ],
-        "waterFriend": 7704702665883648
+        "waterFriend": 6149566053220352
       },
       "aiRedPack": {
-        "enable": true
+        "enable": false
       },
       "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "inventore",
+        "shareFile": "catena",
         "skipTasks": [
-          2190046557896704,
-          1406557816356864,
-          6560730260176896,
-          5088171641536512,
-          2824982587506688
+          6441838844051456,
+          7900881806688256,
+          8043619403431936,
+          248951649337344,
+          3656006722650112
         ]
       },
-      "catalog": "incidunt",
+      "catalog": "crustulum",
       "cloudPhoneRedpack": {
-        "enable": true
+        "enable": false
       },
-      "printTodayCloud": false
+      "是否打印今日云朵": true,
+      "剩余多少天刷新token": 10,
+      "微信抽奖": {
+        "次数": 7418500974903296,
+        "间隔": 500
+      },
+      "云朵大作战": {
+        "目标排名": 500,
+        "开启兑换": true,
+        "邀请用户": [
+          "cohors",
+          "aspernatur"
+        ]
+      }
     }
   ]
 }
@@ -175,6 +233,17 @@ cookie authorization 字段
   "catalog": "00019700101000000001",
   "cloudPhoneRedpack": {
     "enable": false
+  },
+  "是否打印今日云朵": true,
+  "剩余多少天刷新token": 10,
+  "微信抽奖": {
+    "次数": 1,
+    "间隔": 500
+  },
+  "云朵大作战": {
+    "目标排名": 500,
+    "开启兑换": false,
+    "邀请用户": []
   }
 }
 ```

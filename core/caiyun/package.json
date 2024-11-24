@@ -7,20 +7,6 @@
   "files": [
     "index.js"
   ],
-  "exports": {
-    ".": {
-      "import": "./index.ts"
-    },
-    "./options": {
-      "import": "./options.ts"
-    },
-    "./service": {
-      "import": "./service/index.ts"
-    },
-    "./api": {
-      "import": "./api/index.ts"
-    }
-  },
   "scripts": {
     "schema": "tsx typed.ts"
   },

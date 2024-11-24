@@ -1,3 +1,5 @@
+import { Buffer } from 'node:buffer'
+
 /**
  * @param length 长度
  * @param part 当长度为数组时，填充
@@ -100,6 +102,7 @@ export function setStoreArray(
 
 export function getAuthInfo(auth: string) {
   auth = auth.replace('Basic ', '')
+  auth = padBase64(auth)
 
   const rawToken = Buffer.from(auth, 'base64').toString('utf-8')
   const [platform, phone, token] = rawToken.split(':')
@@ -111,6 +114,14 @@ export function getAuthInfo(auth: string) {
     platform,
     expire: Number(token.split('|')[3]),
   }
+}
+
+/**
+ *  填充 base64
+ * @description 如果 str.length % 4 !== 0，则在末尾补上 '='
+ */
+export function padBase64(str: string) {
+  return str.length % 4 === 0 ? str : str + '='.repeat(4 - str.length % 4)
 }
 
 export function hashCode(str: string) {
@@ -242,8 +253,9 @@ export function isNullish(val: any): val is null | undefined {
 }
 
 /**
- * 隐藏手机号号中间四位
+ * 隐藏手机号中某些位置
+ * @description 12345678901 -> 123*56***01
  */
 export function hidePhone(phone: string) {
-  return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
+  return phone.substring(0, 3) + '*******' + phone.substring(9)
 }

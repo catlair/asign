@@ -45,7 +45,20 @@ export const config = z.object({
     enable: z.boolean().default(false).optional().describe('是否开启该功能'),
   }).optional().describe('云手机红包派对'),
 
-  printTodayCloud: z.boolean().optional().describe('是否打印今日云朵'),
+  是否打印今日云朵: z.boolean().optional().describe('是否打印今日云朵').default(true),
+
+  剩余多少天刷新token: z.number().default(10).optional().describe('剩余多少天刷新token'),
+
+  微信抽奖: z.object({
+    次数: z.number().default(1).optional().describe('微信抽奖次数'),
+    间隔: z.number().default(500).optional().describe('微信抽奖间隔（毫秒）'),
+  }),
+
+  云朵大作战: z.object({
+    目标排名: z.number().default(500).optional().describe('目标排名'),
+    开启兑换: z.boolean().default(false).optional().describe('是否开启兑换'),
+    邀请用户: z.array(z.string()).describe('邀请用户的手机号（你邀请的用户，不是邀请你的）'),
+  }).optional().describe('云朵大作战'),
 }).describe('中国移动云盘配置')
 
 const types = {

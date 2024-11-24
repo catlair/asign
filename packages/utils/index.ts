@@ -1,15 +1,18 @@
 import type { LoggerType } from '@asign/types'
-import crypto, { createCipheriv, createDecipheriv } from 'crypto'
 import dayjs from 'dayjs'
 import { delay } from 'es-toolkit/compat'
-import fs from 'fs'
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
+import { Buffer } from 'node:buffer'
+import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto'
+import fs from 'node:fs'
+import path, { dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 export { compare } from 'compare-versions'
 export { set as setIn } from 'es-toolkit/compat'
 
 export type { ConsolaInstance } from 'consola'
+
+type BinaryLike = string | NodeJS.ArrayBufferView
 
 export function sleep(time: number) {
   return new Promise<number>((res) => setTimeout(() => res(time), time))
@@ -60,16 +63,16 @@ export async function createLogger(options?: { pushData: LoggerPushData[] }): Pr
   })
 }
 
-export function _hash(algorithm: string, input: crypto.BinaryLike) {
-  const hash = crypto.createHash(algorithm).update(input)
+export function _hash(algorithm: string, input: BinaryLike) {
+  const hash = createHash(algorithm).update(input)
   return hash.digest('hex')
 }
 
-export function sha256(input: crypto.BinaryLike) {
+export function sha256(input: BinaryLike) {
   return _hash('sha256', input)
 }
 
-export function md5(input: crypto.BinaryLike) {
+export function md5(input: BinaryLike) {
   return _hash('md5', input)
 }
 
@@ -115,12 +118,14 @@ export async function pushMessage({
     if (message.onlyError && !pushData.some((el) => el.type === 'error')) {
       return
     }
+
     const msg = pushData
       .filter((el) => el.level < 4)
       .map((m) => `[${m.type} ${m.date.toLocaleTimeString()}]${m.msg}`)
       .join('\n')
-    msg
-      && (await sendNotify(
+
+    if (msg) {
+      await sendNotify(
         {
           logger: await createLogger(),
           http: { fetch: (op: any) => createRequest().request(op) },
@@ -128,7 +133,8 @@ export async function pushMessage({
         message,
         message.title || 'asign 运行推送',
         msg,
-      ))
+      )
+    }
   }
 }
 
@@ -170,7 +176,7 @@ export function decryptCaiyun(text: string) {
  * @returns base64
  */
 export function encryptCaiyun(text: string) {
-  const iv = crypto.randomBytes(16).toString('hex')
+  const iv = randomBytes(16).toString('hex')
   return Buffer.from(iv + _aesEncrypt(text, '6a43434865714e53624932787262354f', iv), 'hex').toString('base64')
 }
 

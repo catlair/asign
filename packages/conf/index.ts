@@ -2,9 +2,9 @@ export * from './js.js'
 export * from './object.js'
 export * from './utils.js'
 
-import { existsSync, readFileSync } from 'fs'
-import { dirname, extname, join } from 'path'
-import { fileURLToPath } from 'url'
+import { existsSync, readFileSync } from 'node:fs'
+import { dirname, extname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { parseJavaScript } from './js.js'
 import { parseObject } from './object.js'
 

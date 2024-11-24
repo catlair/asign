@@ -3,13 +3,11 @@ import type { LoggerType } from '@asign/types'
 import { getStorage } from '@asign/unstorage'
 import { getAuthInfo, isString, isUndefined } from '@asign/utils-pure'
 import { loadConfig as _lc, rewriteConfigSync } from '@asunajs/conf'
-import { createRequest } from '@asunajs/http'
-import { sendNotify } from '@asunajs/push'
-import { createLogger, type LoggerPushData, pushMessage, sleep } from '@asunajs/utils'
-import { init, loadConfig } from './service/utils.js'
+import { createLogger, type LoggerPushData, sleep } from '@asunajs/utils'
+import { init, loadConfig, pushMessage } from './service/utils.js'
 import type { Config, Option, UserConfig } from './types.js'
 
-export { sleep }
+export { createLogger, sleep }
 export * from './service/index.js'
 
 export async function main(
@@ -55,17 +53,35 @@ export async function run(inputPath?: string | UserConfig) {
 
   if (!config || !config.length) return logger.error('未找到配置文件/变量')
 
-  await _run(config, logger, path)
+  const { expiredAuth } = await _run(config, logger, path)
+
+  await pushExpiredAuth(expiredAuth, message)
 
   await pushMessage({
     pushData,
     message,
-    sendNotify,
-    createRequest,
   })
 }
 
-async function _run(config: Config[], logger: LoggerType, path: string) {
+export async function pushExpiredAuth(expiredAuth: string[], message: Record<string, any>) {
+  if (expiredAuth.length) {
+    await pushMessage({
+      pushData: [
+        { level: 0, type: 'error', date: new Date(), msg: `存在账号过期，请重新登录` },
+        ...expiredAuth.map(i => ({ level: 3, type: 'info', date: new Date(), msg: i })),
+      ],
+      message: {
+        ...message,
+        title: '账号过期推送',
+      },
+    })
+  }
+}
+
+export async function _run(config: Config[], logger: LoggerType, path: string) {
+  // 过期 auth 列表
+  const expiredAuth: string[] = []
+
   for (let index = 0; index < config.length; index++) {
     const c = config[index]
     if (!c.auth) {
@@ -75,7 +91,7 @@ async function _run(config: Config[], logger: LoggerType, path: string) {
     try {
       const authInfo = getAuthInfo(c.auth)
 
-      const { newAuth } = await main(
+      const result = await main(
         {
           ...c,
           ...authInfo,
@@ -83,11 +99,20 @@ async function _run(config: Config[], logger: LoggerType, path: string) {
         { logger, localStorage: await getStorage('caiyun-' + authInfo.phone) },
       )
 
-      if (newAuth) {
-        rewriteConfigSync(path, ['caiyun', index, 'auth'], newAuth)
+      if (!result) {
+        expiredAuth.push(c.phone)
+        continue
+      }
+
+      if (result.newAuth) {
+        rewriteConfigSync(path, ['caiyun', index, 'auth'], result.newAuth)
       }
     } catch (error) {
       logger.error(error)
     }
+  }
+
+  return {
+    expiredAuth,
   }
 }

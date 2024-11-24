@@ -1,8 +1,10 @@
 import type { Http } from '@asign/types'
 import { hashCode } from '@asign/utils-pure'
+import type { Buffer } from 'node:buffer'
 import { createAiRedPackApi } from './api/ai-redpack.js'
 import { createAiApi } from './api/ai.js'
 import { createBackupGiftApi } from './api/backup-gift.js'
+import { createHc1tApi } from './api/hc1t.js'
 import { createMailChatApi } from './api/mail-chat.js'
 import { createMsgPushApi } from './api/msg-push.js'
 import { createSignInApi } from './api/signin.js'
@@ -17,7 +19,6 @@ import type {
   DiskResult,
   DrawInfoInWx,
   DrawInWx,
-  Hecheng1T,
   NoteBooks,
   OpenBlindbox,
   Orchestration,
@@ -47,6 +48,7 @@ type JournalingId = '1002' | '1010' | '1008'
 export function createApi(http: Http) {
   const yun139Url = 'https://yun.139.com'
   const caiyunUrl = 'https://caiyun.feixin.10086.cn'
+  const mrpUrl = 'https://mrp.mcloud.139.com'
   const mnoteUrl = 'https://mnote.caiyun.feixin.10086.cn'
 
   return {
@@ -318,16 +320,16 @@ export function createApi(http: Http) {
     },
     clickTask(id: number, key = 'task') {
       return http.get<{ code: number; msg: string; result?: { msg: string } }>(
-        `${caiyunUrl}/market/signin/task/click?key=${key}&id=${id}`,
+        `${mrpUrl}/market/signin/task/click?key=${key}&id=${id}`,
       )
     },
     getTaskList(marketname: 'sign_in_3' | 'newsign_139mail' = 'sign_in_3') {
       return http.get<TaskList>(
-        `${caiyunUrl}/market/signin/task/taskList?marketname=${marketname}&clientVersion=`,
+        `${mrpUrl}/market/signin/task/taskList?marketname=${marketname}&clientVersion=`,
       )
     },
     receive() {
-      return http.get(`${caiyunUrl}/market/signin/page/receive`)
+      return http.get(`${mrpUrl}/market/signin/page/receive`)
     },
     receiveTask(taskId: number | string) {
       return http.get(`${caiyunUrl}/market/signin/page/receiveTask?taskId=${taskId}`)
@@ -336,15 +338,6 @@ export function createApi(http: Http) {
       return http.post<Shake>(
         `${caiyunUrl}/market/shake-server/shake/shakeIt?flag=1`,
       )
-    },
-    beinviteHecheng1T() {
-      return http.get(`${caiyunUrl}/market/signin/hecheng1T/beinvite`)
-    },
-    finishHecheng1T() {
-      return http.get(`${caiyunUrl}/market/signin/hecheng1T/finish?flag=true`)
-    },
-    getHecheng1T() {
-      return http.get<Hecheng1T>(`${caiyunUrl}/market/signin/hecheng1T/info`)
     },
     getOutLink(account: string, coIDLst: string[], dedicatedName: string) {
       return http.post<OutLink>(
@@ -388,7 +381,7 @@ export function createApi(http: Http) {
     },
     getBlindboxTask() {
       return http.post<BlindboxInfo>(
-        `${caiyunUrl}/market/task-service/task/api/blindBox/queryTaskInfo`,
+        `${mrpUrl}/market/task-service/task/api/blindBox/queryTaskInfo`,
         {
           marketName: 'National_BlindBox',
           clientType: 1,
@@ -402,7 +395,7 @@ export function createApi(http: Http) {
     },
     registerBlindboxTask(taskId: number) {
       return http.post(
-        `${caiyunUrl}/market/task-service/task/api/blindBox/register`,
+        `${mrpUrl}/market/task-service/task/api/blindBox/register`,
         {
           marketName: 'National_BlindBox',
           taskId,
@@ -416,7 +409,7 @@ export function createApi(http: Http) {
     },
     blindboxUser() {
       return http.post<BlindboxUser>(
-        `${caiyunUrl}/ycloud/blindbox/user/info`,
+        `${mrpUrl}/ycloud/blindbox/user/info`,
         { from: 'main' },
         {
           headers: {
@@ -427,7 +420,7 @@ export function createApi(http: Http) {
     },
     openBlindbox() {
       return http.post<OpenBlindbox>(
-        `${caiyunUrl}/ycloud/blindbox/draw/openBox?from=main`,
+        `${mrpUrl}/ycloud/blindbox/draw/openBox?from=main`,
         { from: 'main' },
         {
           headers: {
@@ -472,7 +465,7 @@ export function createApi(http: Http) {
       other: `&${string}` | '' = '',
     ) {
       return http.post<BaseType>(
-        `${caiyunUrl}/portal/journaling`,
+        `${mrpUrl}/portal/journaling`,
         `account=&module=uservisit&optkeyword=${optkeyword}&fromId=&flag=&fileId=&fileType=&fileExtname=&fileSize=&sourceid=${sourceid}&linkId=${other}`,
         {
           headers: {
@@ -483,7 +476,7 @@ export function createApi(http: Http) {
     },
     getCloudRecord(pn = 1, ps = 50, type = 1) {
       return http.get<CloudRecord>(
-        `${caiyunUrl}/market/signin/public/cloudRecord?type=${type}&pageNumber=${pn}&pageSize=${ps}`,
+        `${mrpUrl}/market/signin/public/cloudRecord?type=${type}&pageNumber=${pn}&pageSize=${ps}`,
       )
     },
     loginMail(token: string) {
@@ -504,6 +497,7 @@ export function createApi(http: Http) {
     ...createAiRedPackApi(http),
     ...createMailChatApi(http),
     ...createAiApi(http),
+    ...createHc1tApi(http),
   }
 }
 
