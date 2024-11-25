@@ -4,25 +4,24 @@ import type { Hecheng1T } from '../types/hc1t'
 import { request } from '../utils'
 
 export async function hc1Task($: M) {
-  $.logger.start('------【云朵大作战】------')
+  const { logger, config, sleep, api } = $
+  logger.start('------【云朵大作战】------')
   try {
-    if ($.config.云朵大作战 && $.config.云朵大作战.邀请用户) {
-      $.logger.info('不支持邀请好友，跳过执行')
-      return
-    }
-    const data = await request($, $.api.getHecheng1T, '获取云朵大作战')
+    const data = await request($, api.getHecheng1T, '获取云朵大作战')
 
-    printHc1t($.logger, data)
+    printHc1t(logger, data)
+
+    if (config.云朵大作战?.邀请用户?.length) return logger.info('不支持邀请好友，跳过执行')
 
     for (let index = 0; index < data.info.curr; index++) {
-      await request($, $.api.beinviteHecheng1T, '云朵大作战开始')
-      await $.sleep(5000)
-      await request($, $.api.finishHecheng1T, '云朵大作战完成')
+      await request($, api.beinviteHecheng1T, '云朵大作战开始')
+      await sleep(5000)
+      await request($, api.finishHecheng1T, '云朵大作战完成')
     }
 
-    $.logger.success('完成云朵大作战')
+    logger.success('完成云朵大作战')
   } catch (error) {
-    $.logger.error('云朵大作战失败', error)
+    logger.error('云朵大作战失败', error)
   }
 }
 
