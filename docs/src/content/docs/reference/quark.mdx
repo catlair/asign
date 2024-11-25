@@ -8,7 +8,7 @@ sidebar:
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 :::caution[特别说明]
-网页版抓包时，请使用匿名/隐私窗口登录并抓包，正常使用的网页进行抓包，后续 Cookie 可能会**较快失效**。
+抓包需要手机 APP 或者 PC 客户端，请勿使用网页端
 :::
 
 ## Node.js 依赖名
@@ -30,9 +30,15 @@ import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 ## 签到 URL 获取
 
-- 通过手机抓包签到过程
+### 手机抓包
+
 - 活动界面找到类似，注意后面 query 需要完整 `https://drive-m.quark.cn/1/clouddrive/capacity/growth/info?__t=1720880459186&sign_cyclic=true&kps=xxxxxxxxxxxxxxx`，（可以在浏览器中访问链接，有效的会返回签到信息，没用的返回 401 错误）从链接中提取出 `vcode`、`kps` 和 `sign`
 - 当然也可以直接查看 headers 中的 `x-u-kps-wg`（对应 kps）、`x-u-sign-wg`（对应 sign）和 `x-u-vcode`（对应 vcode）
+
+### 电脑抓包
+
+- 安装夸克云盘客户端
+- 在抓包内容中搜索 vcode，找打的连接复制到下面的自动提取中，如果能正确解析 ok
 
 ### 自动提取
 
@@ -40,24 +46,21 @@ import { Tabs, TabItem } from "@astrojs/starlight/components";
 将完整的 URL 粘贴到下方即可自动提取
 :::
 
-import { QuarkUrl } from '../../../components/solid/QuarkUrl.tsx';
+import { QuarkUrl } from "../../../components/solid/QuarkUrl.tsx";
 
 <QuarkUrl name="haha" client:only="solid-js"></QuarkUrl>
 
 ## 在 WPS 中使用
-
 
 wps 脚本获取地址，以下三个链接内容是一致的，看哪个能访问
 
 <Tabs>
 
 <TabItem label="jsdelivr">
-https://cdn.jsdelivr.net/npm/@asunajs/dist/quark.wps.js
+  https://cdn.jsdelivr.net/npm/@asunajs/dist/quark.wps.js
 </TabItem>
 
-<TabItem label="unpkg">
-https://unpkg.com/@asunajs/dist/quark.wps.js
-</TabItem>
+<TabItem label="unpkg">https://unpkg.com/@asunajs/dist/quark.wps.js</TabItem>
 
 <TabItem label="onmicrosoft">
 https://npm.onmicrosoft.cn/@asunajs/dist/quark.wps.js
@@ -68,12 +71,11 @@ https://npm.onmicrosoft.cn/@asunajs/dist/quark.wps.js
 
 单元格配置如下：
 
-| A|B|C|D|E|
-| --- |----|----|----|----|
-|kps|sign|vcode||||
-|kps|sign|vcode||||
-|kps|sign|vcode||||
-|||||||
-|||||||
-|||||||
-
+| A   | B    | C     | D   | E   |
+| --- | ---- | ----- | --- | --- | --- |
+| kps | sign | vcode |     |     |     |
+| kps | sign | vcode |     |     |     |
+| kps | sign | vcode |     |     |     |
+|     |      |       |     |     |     |
+|     |      |       |     |     |     |
+|     |      |       |     |     |     |
