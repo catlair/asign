@@ -25,9 +25,15 @@ WPS 版被 Github 上某个项目引用，但并未注明出处，无所谓了
 不开源，本程序发布于 npm 实际上代码所有人都能获取到，开不开源无所谓，本人倾向于开源，最开始也确实如此。但是某些人的行为属实令人作呕，即使骂它做了死全家他也要去做，做了也没收益的事，可能它就是想要死全家。上天有好生之德而俺也一样，我生怕它们全家都死翘翘了，这严重破坏地球生态严重影响生物多样性。出于一个地球人的觉悟，为了爱与和平，我选择了闭源本程序。（阻挡潜在的贡献者？那是不存在的，我他妈就没见过有人想给我 PR）
 :::
 
+:::danger[注意]
+caiyun 不再使用 npm 分发。npm 上的 `@aunajs/caiyun` 与本页并非完全同一内容，如若不知其具体内容，请勿使用。
+:::
+
 ## Node.js 依赖名
 
-[`@asunajs/caiyun`](https://www.npmjs.com/package/@asunajs/caiyun)
+{/* [`@asunajs/caiyun`](https://www.npmjs.com/package/@asunajs/caiyun) */}
+
+**不通过 npm 分发**
 
 ## WPS 表名
 
@@ -105,28 +111,14 @@ WPS 版被 Github 上某个项目引用，但并未注明出处，无所谓了
 文档在建设中，精力有限，欢迎 PR
 :::
 
-安装
-
-```bash
-npm install @asunajs/caiyun
-```
+核心文件 `caiyun.mjs` 获取方式，略。
 
 **注意：** `run` 可选参数，配置文件路径
 
-使用 cjs
+使用 esm（不支持 cjs）
 
 ```js
-const { run } = require("@asunajs/caiyun");
-
-(async () => {
-  await run();
-})();
-```
-
-使用 esm
-
-```js
-import { run } from "@asunajs/caiyun";
+import { run } from "./caiyun.mjs";
 
 await run();
 ```
@@ -134,9 +126,8 @@ await run();
 在阿里云函数中使用，其他环境请自行摸索
 
 ```js
-const { run } = require("@asunajs/caiyun");
-
 exports.handler = async function (event, context, callback) {
+  const { run } = await import("./caiyun.mjs");
   callback(null, await run());
 };
 ```
@@ -175,64 +166,29 @@ exports.handler = async function (event, context, callback) {
 
 此脚本可设置在 23:59 之后 24 点之前运行，`waitTo24Hour` 函数会等待到 24 点。
 
-<Tabs>
-
-<TabItem label="esm">
-    
 ```js
-import { loadConfig, useExchange } from '@asunajs/caiyun';
+import { loadConfig, useExchange } from "./caiyun.mjs";
 
-const { config, message } = await loadConfig()
+const { config, message } = await loadConfig();
 
 // 使用配置中的第一个账号
-const { exchange, waitTo24Hour, sendMessage } = await useExchange(config[0], message)
+const { exchange, waitTo24Hour, sendMessage } = await useExchange(
+  config[0],
+  message
+);
 
 // 等待到 24 点（最大等待 2 分钟）
-waitTo24Hour()
+waitTo24Hour();
 
 // 用网易云举例，此处为 id 数组（可多个）
-await exchange([231228018])
+await exchange([231228018]);
 
 // 快速兑换，如果需要自定义逻辑，可以使用这个 api，在兑换前不会有校验, 注意导入 exchangeQuickly
 // await exchangeQuickly(231228018, '这是网易云')
 
 // 发送推送，如果兑换成功默认发送一次
 // await sendMessage()
-
 ```
-
-</TabItem>
-
-<TabItem label="cjs">
-
-```js
-const { loadConfig, useExchange } = require('@asunajs/caiyun');
-
-(async () => {
-  const { config, message } = await loadConfig()
-
-  /** 使用配置中的第一个账号 */
-  const { exchange, waitTo24Hour, sendMessage } = await useExchange(config[0], message)
-
-  // 等待到 24 点（最大等待 2 分钟）
-  waitTo24Hour()
-
-  // 用网易云举例，此处为 id 数组（可多个）
-  await exchange([231228018])
-
-  // 快速兑换，如果需要自定义逻辑，可以使用这个 api，在兑换前不会有校验, 注意导入 exchangeQuickly
-  // await exchangeQuickly(231228018, '这是网易云')
-
-  // 发送推送，如果兑换成功默认发送一次
-  // await sendMessage()
-
-})();
-
-```
-
-  </TabItem>
-
-</Tabs>
 
 ### 兑换名称与 ID
 
