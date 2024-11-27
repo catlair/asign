@@ -1,4 +1,4 @@
-import type { M } from '@asign/caiyun-core'
+import type { Caiyun, M } from '@asign/caiyun-core'
 import { printHc1t } from '@asign/caiyun-core/service/hc1t'
 import type { Hecheng1T } from '@asign/caiyun-core/types/hc1t'
 import { getStorage } from '@asign/unstorage'
@@ -120,7 +120,7 @@ async function hc1tTask($: M) {
   await _run()
 }
 
-export async function runHc1t(config: M['config'], pushData?: LoggerPushData[]) {
+export async function runHc1t(config: Caiyun, pushData?: LoggerPushData[]) {
   const logger = await createLogger({ pushData })
   const { $ } = await init(config, { logger })
 

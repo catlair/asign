@@ -1,6 +1,7 @@
-import { createApi, createGardenApi, getJwtToken, type M } from '@asign/caiyun-core'
+import { Caiyun, createApi, createGardenApi, getJwtToken, type M } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
-import { hidePhone } from '@asign/utils-pure'
+import { getStorage } from '@asign/unstorage'
+import { getAuthInfo, hidePhone } from '@asign/utils-pure'
 import { loadConfig as _lc } from '@asunajs/conf'
 import { createRequest } from '@asunajs/http'
 import { sendNotify } from '@asunajs/push'
@@ -12,17 +13,17 @@ import { encryptAiUserId } from '../utils/ai-userid-aes.js'
 import { myMD5 } from '../utils/md5.js'
 
 export async function init(
-  config: Config,
+  userConfig: Caiyun,
   { logger, localStorage, jwtToken }: Option,
 ) {
-  config = defu(config, defuConfig)
+  const config = initConfig(userConfig)
   if (!config.phone) {
     logger.error(`auth 格式解析错误，请查看是否填写正确的 auth`)
-    return
+    return {}
   }
   if (config.phone.length !== 11 || !config.phone.startsWith('1')) {
     logger.info(`auth 格式解析错误，请查看是否填写正确的 auth`)
-    return
+    return {}
   }
 
   const baseUA =
@@ -74,7 +75,7 @@ export async function init(
     },
     md5,
     store: {},
-    localStorage,
+    localStorage: localStorage || await getStorage('caiyun-' + config.phone),
     http,
   }
 
@@ -87,6 +88,15 @@ export async function init(
     $,
     logger,
     jwtToken,
+  }
+}
+
+export function initConfig(userConfig: Caiyun): Config {
+  const config = defu(userConfig, defuConfig)
+
+  return {
+    ...config,
+    ...getAuthInfo(config.auth),
   }
 }
 

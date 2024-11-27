@@ -1,26 +1,25 @@
-import { createNewAuth, run as runCore } from '@asign/caiyun-core'
+import { Caiyun, createNewAuth, run as runCore } from '@asign/caiyun-core'
 import type { LoggerType } from '@asign/types'
-import { getStorage } from '@asign/unstorage'
-import { getAuthInfo, isString, isUndefined } from '@asign/utils-pure'
+import { isString, isUndefined } from '@asign/utils-pure'
 import { loadConfig as _lc, rewriteConfigSync } from '@asunajs/conf'
 import { createLogger, type LoggerPushData, sleep } from '@asunajs/utils'
 import { init, loadConfig, pushMessage } from './service/utils.js'
-import type { Config, Option, UserConfig } from './types.js'
+import type { Option, UserConfig } from './types.js'
 
 export { createLogger, sleep }
 export * from './service/index.js'
 
 export async function main(
-  config: Config,
+  userConfig: Caiyun,
   option?: Option,
 ) {
-  const { $, logger, jwtToken } = await init(config, option)
-  if (!jwtToken) return
+  const { $, logger, jwtToken } = await init(userConfig, option)
+  if (!jwtToken) return { $, isNoLogin: true }
 
   await runCore($)
   const newAuth = await createNewAuth($)
   logger.info(`==============\n\n`)
-  return { newAuth }
+  return { newAuth, $ }
 }
 
 export async function getConfig(inputPath?: string | UserConfig) {
@@ -78,34 +77,26 @@ export async function pushExpiredAuth(expiredAuth: string[], message: Record<str
   }
 }
 
-export async function _run(config: Config[], logger: LoggerType, path: string) {
+export async function _run(config: Caiyun[], logger: LoggerType, path: string) {
   // 过期 auth 列表
   const expiredAuth: string[] = []
 
   for (let index = 0; index < config.length; index++) {
-    const c = config[index]
-    if (!c.auth) {
+    const userConfig = config[index]
+    if (!userConfig.auth) {
       logger.error('该配置中不存在 auth')
       continue
     }
     try {
-      const authInfo = getAuthInfo(c.auth)
+      const { newAuth, $, isNoLogin } = await main(userConfig, { logger })
 
-      const result = await main(
-        {
-          ...c,
-          ...authInfo,
-        },
-        { logger, localStorage: await getStorage('caiyun-' + authInfo.phone) },
-      )
-
-      if (!result) {
-        expiredAuth.push(c.phone)
+      if (isNoLogin) {
+        expiredAuth.push($?.config?.phone)
         continue
       }
 
-      if (result.newAuth) {
-        rewriteConfigSync(path, ['caiyun', index, 'auth'], result.newAuth)
+      if (newAuth) {
+        rewriteConfigSync(path, ['caiyun', index, 'auth'], newAuth)
       }
     } catch (error) {
       logger.error(error)
