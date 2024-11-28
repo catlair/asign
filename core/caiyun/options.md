@@ -158,51 +158,52 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "cum",
-      "nickname": "excepturi",
+      "auth": "vallum",
+      "nickname": "voco",
       "shake": {
-        "enable": false,
-        "num": 15,
+        "enable": true,
+        "num": 1713725711056896,
         "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "admoneo",
-          "torrens"
+          "aestas",
+          "patrocinor",
+          "conforto",
+          "careo",
+          "usque"
         ],
-        "waterFriend": 6149566053220352
+        "waterFriend": 6209628905930752
       },
       "aiRedPack": {
         "enable": false
       },
-      "backupWaitTime": 20,
+      "backupWaitTime": 8770993692606464,
       "tasks": {
-        "shareFile": "catena",
+        "shareFile": "alienus",
         "skipTasks": [
-          6441838844051456,
-          7900881806688256,
-          8043619403431936,
-          248951649337344,
-          3656006722650112
+          7015914698440704,
+          7622083058073600
         ]
       },
-      "catalog": "crustulum",
+      "catalog": "corroboro",
       "cloudPhoneRedpack": {
         "enable": false
       },
       "是否打印今日云朵": true,
       "剩余多少天刷新token": 10,
       "微信抽奖": {
-        "次数": 7418500974903296,
+        "次数": 6101103984771072,
         "间隔": 500
       },
       "云朵大作战": {
         "目标排名": 500,
-        "开启兑换": true,
+        "开启兑换": false,
         "邀请用户": [
-          "cohors",
-          "aspernatur"
+          "conculco",
+          "cultura",
+          "cometes"
         ]
       }
     }

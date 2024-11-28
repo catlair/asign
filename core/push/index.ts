@@ -1,4 +1,4 @@
-import type { ApiData, ApiOptions, Bark, Method, TgBot, TwoIm, WorkWeixin, WorkWeixinBot } from './types.js'
+import type { ApiData, ApiOptions, Bark, DingTalk, Method, TgBot, TwoIm, WorkWeixin, WorkWeixinBot } from './types.js'
 
 export * from './types.js'
 
@@ -264,6 +264,40 @@ export async function twoIm(
   })
 }
 
+/**
+ * 钉钉
+ */
+export async function dingTalk(
+  apiOption: ApiOptions,
+  { token, secret, ...option }: DingTalk,
+  title: string,
+  text: string,
+) {
+  let query = ''
+  if (secret) {
+    const { createHmac } = await import('node:crypto')
+    const timestamp = Date.now()
+    const sign = createHmac('sha256', secret)
+      .update(timestamp.toString() + '\n' + secret)
+      .digest('base64')
+
+    query = `&timestamp=${timestamp}&sign=${encodeURIComponent(sign)}`
+  }
+  return _send(apiOption, '钉钉推送', {
+    url: `https://oapi.dingtalk.com/robot/send?access_token=${token}${query}`,
+    data: {
+      msgtype: 'text',
+      text: {
+        content: ` ${title}\n\n${text}`,
+      },
+      ...option,
+    },
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+}
+
 export function getAllPush() {
   return {
     pushplus,
@@ -274,5 +308,6 @@ export function getAllPush() {
     bark,
     twoIm,
     customPost,
+    dingTalk,
   }
 }

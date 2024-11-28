@@ -75,7 +75,7 @@ export async function init(
     },
     md5,
     store: {},
-    localStorage: localStorage || await getStorage('caiyun-' + config.phone),
+    localStorage: localStorage || getStorage('caiyun-' + config.phone),
     http,
   }
 

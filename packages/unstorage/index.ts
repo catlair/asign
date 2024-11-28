@@ -1,13 +1,15 @@
 import { unlinkSync, writeFileSync } from 'node:fs'
-import { createStorage, prefixStorage } from 'unstorage'
+import { createStorage, prefixStorage, type Storage } from 'unstorage'
 import fsDriver from 'unstorage/drivers/fs-lite'
 import memoryDriver from 'unstorage/drivers/memory'
-export async function getStorage(prefix: string) {
+export function getStorage(prefix: string): Storage {
   const storage = createStorage({
     driver: canWrite() ? fsDriver({ base: './.temp/asign' }) : memoryDriver(),
   })
   return prefixStorage(storage, prefix)
 }
+
+export type { Storage }
 
 /**
  * 判断当前是否拥有写入文件的权限

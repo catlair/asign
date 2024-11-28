@@ -52,7 +52,7 @@ export const config = z.object({
   微信抽奖: z.object({
     次数: z.number().default(1).optional().describe('微信抽奖次数'),
     间隔: z.number().default(500).optional().describe('微信抽奖间隔（毫秒）'),
-  }),
+  }).optional().describe('微信抽奖配置'),
 
   云朵大作战: z.object({
     目标排名: z.number().default(500).optional().describe('目标排名'),

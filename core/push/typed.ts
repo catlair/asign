@@ -70,6 +70,11 @@ export const pushplus = z.object({
   token: z.string(),
 }).passthrough().describe('PushPlus 配置')
 
+export const dingTalk = z.object({
+  token: z.string(),
+  secret: z.string().optional().describe('密钥'),
+}).passthrough().describe('钉钉机器人配置')
+
 const types = {
   email,
   customPost,
@@ -80,6 +85,7 @@ const types = {
   serverChan,
   tgBot,
   pushplus,
+  dingTalk,
 }
 
 export const push = z.object(types)

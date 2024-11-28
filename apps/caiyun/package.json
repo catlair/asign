@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.5.1",
+  "version": "0.5.5",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
@@ -36,16 +36,17 @@
     "pm2": "^5.4.2"
   },
   "devDependencies": {
-    "@asign/unstorage": "workspace:^",
     "@asign/build": "workspace:^",
     "@asign/caiyun-core": "workspace:^",
     "@asign/types": "workspace:^",
+    "@asign/unstorage": "workspace:^",
     "@asign/utils-pure": "workspace:^",
     "@asunajs/utils": "workspace:^",
     "compare-versions": "^6.1.1",
     "dotenv": "^16.4.5",
     "es-toolkit": "^1.27.0",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "tsup": "^8.2.3"
   },
   "publishConfig": {
     "directory": "dist",

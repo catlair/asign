@@ -1,5 +1,5 @@
 import type { Http, LoggerType } from '@asign/types'
-import type { getStorage } from '@asign/unstorage'
+import type { Storage } from '@asign/unstorage'
 import type { ApiType } from './api.js'
 import type { GardenApiType } from './api/garden.js'
 import { Caiyun } from './options.d.js'
@@ -51,7 +51,7 @@ export interface M {
     cloudPhoneToken?: string
     [key: string]: any
   }
-  localStorage?: Awaited<ReturnType<typeof getStorage>>
+  localStorage?: Storage
   node?: {
     uploadTask: ($: M, progressNum: number) => Promise<void>
     myMD5: (s: string) => string

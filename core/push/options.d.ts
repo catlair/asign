@@ -160,3 +160,15 @@ export interface Pushplus {
   token: string
   [k: string]: unknown
 }
+
+/**
+ * 钉钉机器人配置
+ */
+export interface DingTalk {
+  token: string
+  /**
+   * 密钥
+   */
+  secret?: string
+  [k: string]: unknown
+}

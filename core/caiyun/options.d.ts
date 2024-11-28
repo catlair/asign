@@ -88,7 +88,10 @@ export interface Caiyun {
    * 剩余多少天刷新token
    */
   剩余多少天刷新token?: number
-  微信抽奖: {
+  /**
+   * 微信抽奖配置
+   */
+  微信抽奖?: {
     /**
      * 微信抽奖次数
      */

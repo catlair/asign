@@ -2,7 +2,7 @@ import type { Http } from '@asign/types'
 import { getTimestamp } from '@asign/utils-pure'
 import { aiUrl } from '../constant'
 
-interface ChatEvent {
+export interface ChatEvent {
   success: boolean
   code: string
   message: string

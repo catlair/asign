@@ -36,11 +36,11 @@
 ```json
 {
   "email": {
-    "pass": "vetus",
-    "from": "Ada.Gerlach63@example.net",
-    "port": 1758496125091840,
-    "host": "deripio",
-    "to": "Lilian.Batz@example.org"
+    "pass": "tantillus",
+    "from": "Hannah86@example.com",
+    "port": 5300073804070912,
+    "host": "ascit",
+    "to": "Vince_Rau@example.net"
   }
 }
 ```
@@ -68,31 +68,73 @@
   "customPost": [
     {
       "method": "PUT",
-      "url": "https://sneaky-quicksand.net",
+      "url": "https://well-informed-hundred.biz/",
       "headers": {
-        "trepide": "molestiae"
+        "strenuus": "voco"
       },
       "body": {
-        "totus": "adsuesco"
+        "voluptatum": "stabilis"
       },
       "data": {
-        "architecto": "aliquam"
+        "theca": "vis"
       },
-      "timeout": 733054914002944
+      "timeout": 3635838120361984
+    },
+    {
+      "method": "DELETE",
+      "url": "https://naughty-disclosure.com",
+      "headers": {
+        "aeternus": "tabesco"
+      },
+      "body": {
+        "optio": "velut"
+      },
+      "data": {
+        "cur": "comedo"
+      },
+      "timeout": 3861069948780544
     },
     {
       "method": "PATCH",
-      "url": "https://humongous-zoot-suit.net/",
+      "url": "https://limited-printing.biz",
       "headers": {
-        "cresco": "nisi"
+        "spiculum": "tertius"
       },
       "body": {
-        "abscido": "canto"
+        "suggero": "deficio"
       },
       "data": {
-        "deleniti": "statua"
+        "cenaculum": "collum"
       },
-      "timeout": 1562385768775680
+      "timeout": 6145053537861632
+    },
+    {
+      "method": "GET",
+      "url": "https://mortified-affair.net",
+      "headers": {
+        "adnuo": "ait"
+      },
+      "body": {
+        "communis": "sol"
+      },
+      "data": {
+        "super": "celer"
+      },
+      "timeout": 3101206083796992
+    },
+    {
+      "method": "POST",
+      "url": "https://lazy-pollutant.net/",
+      "headers": {
+        "denuncio": "depopulo"
+      },
+      "body": {
+        "praesentium": "barba"
+      },
+      "data": {
+        "vestigium": "usus"
+      },
+      "timeout": 8193704263155712
     }
   ]
 }
@@ -148,9 +190,9 @@
   "workWeixin": {
     "msgtype": "text",
     "touser": "@all",
-    "agentid": 871694338097152,
-    "corpsecret": "cura",
-    "corpid": "vorago"
+    "agentid": 6493744169746432,
+    "corpsecret": "comparo",
+    "corpid": "maiores"
   }
 }
 ```
@@ -186,8 +228,8 @@
 ```json
 {
   "workWeixinBot": {
-    "url": "https://angry-exit.com/",
-    "msgtype": "text"
+    "url": "https://treasured-strike.com",
+    "msgtype": "markdown"
   }
 }
 ```
@@ -220,7 +262,7 @@
 ```json
 {
   "bark": {
-    "key": "sumo",
+    "key": "socius",
     "level": "passive"
   }
 }
@@ -274,12 +316,12 @@
 ```json
 {
   "twoIm": {
-    "key": "voluptas",
-    "sid": "summa",
+    "key": "tibi",
+    "sid": "tardus",
     "query": {
-      "plat": "titulus",
-      "group": "considero",
-      "icon": "ullus"
+      "plat": "velociter",
+      "group": "voco",
+      "icon": 7954002337595392
     },
     "msgtype": "text"
   }
@@ -308,7 +350,7 @@
 ```json
 {
   "serverChan": {
-    "token": "cometes"
+    "token": "coruscus"
   }
 }
 ```
@@ -358,11 +400,11 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "tgBot": {
-    "apiHost": "cimentarius",
-    "token": "utpote",
-    "chat_id": 6912273308188672,
+    "apiHost": "numquam",
+    "token": "patria",
+    "chat_id": "calcar",
     "disable_web_page_preview": true,
-    "proxy": "https://finished-hunt.net"
+    "proxy": "https://substantial-thermometer.name/"
   }
 }
 ```
@@ -389,7 +431,7 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "pushplus": {
-    "token": "commodo"
+    "token": "spero"
   }
 }
 ```
@@ -399,5 +441,36 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "pushplus": {}
+}
+```
+
+## 钉钉机器人配置
+
+### `token`
+
+- **类型**: `字符串`
+
+### `secret`
+
+- **类型**: `字符串`
+
+密钥
+
+### 示例
+
+```json
+{
+  "dingTalk": {
+    "token": "amita",
+    "secret": "amicitia"
+  }
+}
+```
+
+### 默认值
+
+```json
+{
+  "dingTalk": {}
 }
 ```

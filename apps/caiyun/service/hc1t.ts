@@ -7,7 +7,7 @@ import { createLogger, LoggerPushData } from '@asunajs/utils'
 import { randomInt } from 'node:crypto'
 import { init } from './utils'
 
-const storage = await getStorage('caiyun-hc1t')
+const storage = getStorage('caiyun-hc1t')
 
 const DB_KEY = 'invite'
 
