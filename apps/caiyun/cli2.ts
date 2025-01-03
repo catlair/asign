@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 
 import type { M } from '@asign/caiyun-core'
-import { getCloudDayList, getSmsVerCode, receiveCloudDayGift, verifyCloudDay } from '@asign/caiyun-core/service'
+import { getCloudDayList, receiveCloudDayGift, verifyCloudDay } from '@asign/caiyun-core/service'
+import {
+  checkExchange,
+  exchangeApi,
+  getExchangeList,
+  getReceivePrizeDetails,
+  getSmsVerCode,
+} from '@asign/caiyun-core/service/exchange.js'
 import { getAuthInfo, hidePhone } from '@asign/utils-pure'
 import { rewriteConfigSync } from '@asunajs/conf'
 import { type ConsolaInstance, createLogger, formatTime, waitToNextHour } from '@asunajs/utils'
@@ -169,6 +176,7 @@ async function interactive() {
     REFRESH: 'refresh',
     LOGIN: 'login',
     CLOUD_DAY: 'cloudday',
+    EXCHANGE: 'exchange',
   }
 
   const action = await logger.prompt('请选择你的操作', {
@@ -185,6 +193,10 @@ async function interactive() {
       {
         label: '移动云盘会员日宠爱礼',
         value: ACTION.CLOUD_DAY,
+      },
+      {
+        label: '云朵兑换奖励',
+        value: ACTION.EXCHANGE,
       },
     ],
   }) as unknown as typeof ACTION[keyof typeof ACTION]
@@ -207,6 +219,10 @@ async function interactive() {
     }
     case ACTION.CLOUD_DAY: {
       await cloudDay(configMap[index])
+      return
+    }
+    case ACTION.EXCHANGE: {
+      await exchange(configMap[index])
       return
     }
     default:
@@ -251,4 +267,58 @@ async function cloudDay(config: Config) {
   }
 
   await receiveCloudDayGift($, prizeId, smsCode)
+}
+
+async function exchange(config: Config) {
+  const { $ } = await onceInit(config, { logger })
+
+  const list = await getExchangeList($)
+
+  const prizeId = +(await logger.prompt('请选择需要兑换的商品', {
+    type: 'select',
+    options: list.map((gift) => {
+      return {
+        label: gift.prizeId + `【${gift.prizeName}(${gift.pOrder})】` + `(${gift.dailyRemainderCount})`
+          + `(${gift.count})`,
+        value: String(gift.prizeId),
+      }
+    }),
+  }) as unknown as string)
+
+  const prize = list.find(g => g.prizeId === prizeId)!
+
+  logger.info('选择了', prize.prizeId, prize.prizeName)
+  logger.info('今日剩余：', prize.dailyRemainderCount, '/', prize.dailyCount)
+  logger.info('本年度剩余：', prize.count, '/', prize.totalCount)
+
+  const details = await getReceivePrizeDetails($, prize.prizeId)
+
+  let smsCode: string
+
+  if (details.verifycode === 0) {
+    $.logger.info('需要短信验证')
+
+    const isVerify = checkExchange($, prize)
+
+    if (!isVerify) return
+
+    if (!await logger.prompt('是否发送短信验证码', { type: 'confirm' })) {
+      logger.info('不发送验证码')
+      return
+    }
+
+    if (!await getSmsVerCode($, prizeId)) {
+      logger.fatal('获取验证码失败')
+      return
+    }
+
+    smsCode = await logger.prompt('请输入短信验证码', { type: 'text' })
+  }
+
+  if (await logger.prompt('是否等待', { type: 'confirm' })) {
+    logger.info('等待到下一个小时')
+    await waitToNextHour()
+  }
+
+  await exchangeApi($, prizeId, prize.prizeName, smsCode)
 }

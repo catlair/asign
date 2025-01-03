@@ -1,14 +1,19 @@
+- **类型**: `对象`
+
 ### `kps`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `sign`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `vcode`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### 示例
 
@@ -16,9 +21,9 @@
 {
   "quark": [
     {
-      "kps": "comptus",
-      "sign": "vicissitudo",
-      "vcode": "synagoga"
+      "kps": "coruscus",
+      "sign": "amor",
+      "vcode": "stella"
     }
   ]
 }

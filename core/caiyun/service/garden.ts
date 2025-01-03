@@ -319,6 +319,7 @@ async function backupFriend($: M) {
  */
 async function backupFriendNew($: M) {
   try {
+    if ($.config.garden.开启果园助力) return
     await setInviteCode($)
     const inviteCodes = await getInviteCodes($)
     if (inviteCodes.length === 0) return

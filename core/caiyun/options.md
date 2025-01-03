@@ -1,6 +1,9 @@
+- **类型**: `对象`
+
 ### `auth`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 cookie authorization 字段
 
@@ -11,6 +14,8 @@ cookie authorization 字段
 昵称，用于获取用户信息
 
 ### `shake`
+
+- **类型**: `对象`
 
 #### `enable`
 
@@ -35,6 +40,8 @@ cookie authorization 字段
 
 ### `garden`
 
+- **类型**: `对象`
+
 #### `enable`
 
 - **类型**: `布尔值`
@@ -54,7 +61,16 @@ cookie authorization 字段
 
 需要给哪个好友浇水，好友 uid(果园输出的昵称后面的数字就是 uid). 浇水会消耗自己的水滴, 所有用来干嘛, 你懂的
 
+#### `开启果园助力`
+
+- **类型**: `布尔值`
+- **默认值**: `false`
+
+是否开启果园助力功能，可能即将废弃
+
 ### `aiRedPack`
+
+- **类型**: `对象`
 
 #### `enable`
 
@@ -71,6 +87,8 @@ cookie authorization 字段
 备份等待时间（秒）
 
 ### `tasks`
+
+- **类型**: `对象`
 
 #### `shareFile`
 
@@ -92,6 +110,8 @@ cookie authorization 字段
 上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在
 
 ### `cloudPhoneRedpack`
+
+- **类型**: `对象`
 
 #### `enable`
 
@@ -116,6 +136,8 @@ cookie authorization 字段
 
 ### `微信抽奖`
 
+- **类型**: `对象`
+
 #### `次数`
 
 - **类型**: `数字`
@@ -131,6 +153,8 @@ cookie authorization 字段
 微信抽奖间隔（毫秒）
 
 ### `云朵大作战`
+
+- **类型**: `对象`
 
 #### `目标排名`
 
@@ -149,6 +173,7 @@ cookie authorization 字段
 #### `邀请用户`
 
 - **类型**: `数组`
+- **必填**: 是
 
 邀请用户的手机号（你邀请的用户，不是邀请你的）
 
@@ -158,52 +183,54 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "vallum",
-      "nickname": "voco",
+      "auth": "omnis",
+      "nickname": "vito",
       "shake": {
         "enable": true,
-        "num": 1713725711056896,
+        "num": 15,
         "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "aestas",
-          "patrocinor",
-          "conforto",
-          "careo",
-          "usque"
+          "terminatio"
         ],
-        "waterFriend": 6209628905930752
+        "waterFriend": 4314127365308416,
+        "开启果园助力": false
       },
       "aiRedPack": {
         "enable": false
       },
-      "backupWaitTime": 8770993692606464,
+      "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "alienus",
+        "shareFile": "alius",
         "skipTasks": [
-          7015914698440704,
-          7622083058073600
+          6943163713323008,
+          6654392742707200,
+          385507758440448,
+          7426084968595456,
+          7394600635334656
         ]
       },
-      "catalog": "corroboro",
+      "catalog": "00019700101000000001",
       "cloudPhoneRedpack": {
         "enable": false
       },
       "是否打印今日云朵": true,
-      "剩余多少天刷新token": 10,
+      "剩余多少天刷新token": 4911700841070592,
       "微信抽奖": {
-        "次数": 6101103984771072,
-        "间隔": 500
+        "次数": 1,
+        "间隔": 2762154790879232
       },
       "云朵大作战": {
         "目标排名": 500,
-        "开启兑换": false,
+        "开启兑换": true,
         "邀请用户": [
-          "conculco",
-          "cultura",
-          "cometes"
+          "pariatur",
+          "accedo",
+          "caput",
+          "spargo",
+          "numquam"
         ]
       }
     }
@@ -222,7 +249,8 @@ cookie authorization 字段
   },
   "garden": {
     "enable": true,
-    "inviteCodes": []
+    "inviteCodes": [],
+    "开启果园助力": false
   },
   "aiRedPack": {
     "enable": true

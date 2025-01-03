@@ -1,15 +1,16 @@
 export * from 'zod'
 import { generateMock } from '@anatine/zod-mock'
+import { createFromBuffer } from '@dprint/formatter'
+import { getPath } from '@dprint/markdown'
 import defaults from 'json-schema-defaults'
 import { compile } from 'json-schema-to-typescript'
+import { readFileSync } from 'node:fs'
 import { pascalCase } from 'scule'
 import { type ZodType } from 'zod'
 import { zodToJsonSchema } from 'zod-to-json-schema'
-export { zodToJsonSchema } from 'zod-to-json-schema'
-import { createFromBuffer } from '@dprint/formatter'
-import { getPath } from '@dprint/markdown'
-import { readFileSync } from 'node:fs'
 import { generateMarkdown as _gMarkdown, type Schema } from './json2md.js'
+
+export { zodToJsonSchema }
 
 export function getDefulat(schema: ZodType<any>) {
   return defaults(zodToJsonSchema(schema))

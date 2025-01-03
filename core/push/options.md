@@ -1,14 +1,18 @@
 ## 邮箱配置
 
+- **类型**: `对象`
+
 ### `pass`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 邮箱密码/授权码
 
 ### `from`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 发件人邮箱
 
@@ -22,6 +26,7 @@
 ### `host`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 邮箱服务器
 
@@ -36,11 +41,11 @@
 ```json
 {
   "email": {
-    "pass": "tantillus",
-    "from": "Hannah86@example.com",
-    "port": 5300073804070912,
-    "host": "ascit",
-    "to": "Vince_Rau@example.net"
+    "pass": "spargo",
+    "from": "Rebeca99@example.org",
+    "port": 1525529081544704,
+    "host": "tabula",
+    "to": "Melvina.Shanahan61@example.net"
   }
 }
 ```
@@ -67,74 +72,74 @@
 {
   "customPost": [
     {
-      "method": "PUT",
-      "url": "https://well-informed-hundred.biz/",
+      "method": "POST",
+      "url": "https://meek-offence.name",
       "headers": {
-        "strenuus": "voco"
+        "velum": "desparatus"
       },
       "body": {
-        "voluptatum": "stabilis"
+        "arceo": "adipisci"
       },
       "data": {
-        "theca": "vis"
+        "decet": "vaco"
       },
-      "timeout": 3635838120361984
-    },
-    {
-      "method": "DELETE",
-      "url": "https://naughty-disclosure.com",
-      "headers": {
-        "aeternus": "tabesco"
-      },
-      "body": {
-        "optio": "velut"
-      },
-      "data": {
-        "cur": "comedo"
-      },
-      "timeout": 3861069948780544
-    },
-    {
-      "method": "PATCH",
-      "url": "https://limited-printing.biz",
-      "headers": {
-        "spiculum": "tertius"
-      },
-      "body": {
-        "suggero": "deficio"
-      },
-      "data": {
-        "cenaculum": "collum"
-      },
-      "timeout": 6145053537861632
+      "timeout": 4948029649977344
     },
     {
       "method": "GET",
-      "url": "https://mortified-affair.net",
+      "url": "https://unsung-expectancy.com/",
       "headers": {
-        "adnuo": "ait"
+        "desolo": "summa"
       },
       "body": {
-        "communis": "sol"
+        "cogito": "sub"
       },
       "data": {
-        "super": "celer"
+        "infit": "cumque"
       },
-      "timeout": 3101206083796992
+      "timeout": 1655758766735360
     },
     {
       "method": "POST",
-      "url": "https://lazy-pollutant.net/",
+      "url": "https://muddy-cover.info/",
       "headers": {
-        "denuncio": "depopulo"
+        "adflicto": "voluptatibus"
       },
       "body": {
-        "praesentium": "barba"
+        "contra": "sodalitas"
       },
       "data": {
-        "vestigium": "usus"
+        "cubitum": "natus"
       },
-      "timeout": 8193704263155712
+      "timeout": 8625412554883072
+    },
+    {
+      "method": "POST",
+      "url": "https://little-poetry.net/",
+      "headers": {
+        "administratio": "accommodo"
+      },
+      "body": {
+        "voluntarius": "degenero"
+      },
+      "data": {
+        "comminor": "bellicus"
+      },
+      "timeout": 4834873262997504
+    },
+    {
+      "method": "POST",
+      "url": "https://linear-existence.net/",
+      "headers": {
+        "vinculum": "aspernatur"
+      },
+      "body": {
+        "trans": "demum"
+      },
+      "data": {
+        "necessitatibus": "creta"
+      },
+      "timeout": 8669997064781824
     }
   ]
 }
@@ -156,6 +161,8 @@
 ```
 
 ## 企业微信 App 配置
+
+- **类型**: `对象`
 
 ### `msgtype`
 
@@ -188,11 +195,11 @@
 ```json
 {
   "workWeixin": {
-    "msgtype": "text",
+    "msgtype": "mpnews",
     "touser": "@all",
-    "agentid": 6493744169746432,
-    "corpsecret": "comparo",
-    "corpid": "maiores"
+    "agentid": 4120646571261952,
+    "corpsecret": "totidem",
+    "corpid": "distinctio"
   }
 }
 ```
@@ -210,9 +217,12 @@
 
 ## 企业微信机器人配置
 
+- **类型**: `对象`
+
 ### `url`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 机器人 webhook
 
@@ -228,8 +238,8 @@
 ```json
 {
   "workWeixinBot": {
-    "url": "https://treasured-strike.com",
-    "msgtype": "markdown"
+    "url": "https://honorable-armchair.info",
+    "msgtype": "text"
   }
 }
 ```
@@ -246,9 +256,12 @@
 
 ## Bark 配置
 
+- **类型**: `对象`
+
 ### `key`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `level`
 
@@ -262,7 +275,7 @@
 ```json
 {
   "bark": {
-    "key": "socius",
+    "key": "viriliter",
     "level": "passive"
   }
 }
@@ -280,15 +293,22 @@
 
 ## 回逍配置
 
+- **类型**: `对象`
+
 ### `key`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `sid`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `query`
+
+- **类型**: `对象`
+- **必填**: 是
 
 #### `plat`
 
@@ -316,12 +336,12 @@
 ```json
 {
   "twoIm": {
-    "key": "tibi",
-    "sid": "tardus",
+    "key": "stipes",
+    "sid": "speciosus",
     "query": {
-      "plat": "velociter",
-      "group": "voco",
-      "icon": 7954002337595392
+      "plat": "adfero",
+      "group": "totam",
+      "icon": "celo"
     },
     "msgtype": "text"
   }
@@ -341,16 +361,19 @@
 
 ## ServerChan 配置
 
+- **类型**: `对象`
+
 ### `token`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### 示例
 
 ```json
 {
   "serverChan": {
-    "token": "coruscus"
+    "token": "talus"
   }
 }
 ```
@@ -365,6 +388,8 @@
 
 ## Telegram 配置
 
+- **类型**: `对象`
+
 ### `apiHost`
 
 - **类型**: `字符串`
@@ -375,10 +400,12 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ### `token`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `chat_id`
 
 - **类型**: `string,number`
+- **必填**: 是
 
 ### `disable_web_page_preview`
 
@@ -400,11 +427,11 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "tgBot": {
-    "apiHost": "numquam",
-    "token": "patria",
-    "chat_id": "calcar",
-    "disable_web_page_preview": true,
-    "proxy": "https://substantial-thermometer.name/"
+    "apiHost": "crastinus",
+    "token": "vigilo",
+    "chat_id": "ulterius",
+    "disable_web_page_preview": false,
+    "proxy": "https://unusual-shoat.net"
   }
 }
 ```
@@ -422,16 +449,19 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 
 ## PushPlus 配置
 
+- **类型**: `对象`
+
 ### `token`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### 示例
 
 ```json
 {
   "pushplus": {
-    "token": "spero"
+    "token": "uter"
   }
 }
 ```
@@ -446,9 +476,12 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 
 ## 钉钉机器人配置
 
+- **类型**: `对象`
+
 ### `token`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 ### `secret`
 
@@ -461,8 +494,8 @@ api 地址，默认官方地址，如果你有镜像 api 可以在此配置
 ```json
 {
   "dingTalk": {
-    "token": "amita",
-    "secret": "amicitia"
+    "token": "eos",
+    "secret": "auctor"
   }
 }
 ```

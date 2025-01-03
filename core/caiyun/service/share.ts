@@ -1,5 +1,4 @@
 import { randomHex } from '@asign/utils-pure'
-import { Buffer } from 'node:buffer'
 import { DB_KEYS } from '../constant'
 import type { LocalStorage, M } from '../types'
 import { request } from '../utils'

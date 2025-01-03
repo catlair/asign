@@ -22,6 +22,7 @@ export const config = z.object({
     waterFriend: z.number().optional().describe(
       '需要给哪个好友浇水，好友 uid(果园输出的昵称后面的数字就是 uid). 浇水会消耗自己的水滴, 所有用来干嘛, 你懂的',
     ),
+    开启果园助力: z.boolean().default(false).optional().describe('是否开启果园助力功能，可能即将废弃'),
   }).optional().describe('果园配置'),
 
   aiRedPack: z.object({

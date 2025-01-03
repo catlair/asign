@@ -67,14 +67,23 @@ export function verifyCloudDay(http: Http, prizeId: number | string) {
   )
 }
 
+export type SmsVerCodeParams = {
+  marketName?: 'National_MCloudDay' | 'sign_in_3_ex'
+  templateId?: '2084' | '800'
+}
+
 // { code: 0, msg: 'success' }
-export function getSmsVerCode(http: Http, prizeId: number | string) {
+export function getSmsVerCode(
+  http: Http,
+  prizeId: number | string,
+  { marketName, templateId }: SmsVerCodeParams = {},
+) {
   return http.post<BaseType>(
     caiyunUrl + '/ycloud/api/smsVerCode/getVerCode',
     {
       prizeId,
-      marketName: 'National_MCloudDay',
-      templateId: '2084',
+      marketName: marketName || 'National_MCloudDay',
+      templateId: templateId || '2084',
     },
   )
 }

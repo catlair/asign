@@ -7,6 +7,7 @@ export const defuConfig = {
   garden: {
     enable: true,
     inviteCodes: [],
+    开启果园助力: false,
   },
   aiRedPack: {
     enable: true,

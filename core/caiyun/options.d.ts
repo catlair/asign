@@ -43,6 +43,10 @@ export interface Caiyun {
      * 需要给哪个好友浇水，好友 uid(果园输出的昵称后面的数字就是 uid). 浇水会消耗自己的水滴, 所有用来干嘛, 你懂的
      */
     waterFriend?: number
+    /**
+     * 是否开启果园助力功能，可能即将废弃
+     */
+    开启果园助力?: boolean
   }
   /**
    * AI 红包

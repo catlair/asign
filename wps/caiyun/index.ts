@@ -82,6 +82,17 @@ export async function main(index: number, config: Config, option?: { pushData: a
         delay: 2,
       },
       catalog: '00019700101000000001',
+      是否打印今日云朵: true,
+      剩余多少天刷新token: 10,
+      微信抽奖: {
+        次数: 1,
+        间隔: 500,
+      },
+      云朵大作战: {
+        目标排名: 500,
+        开启兑换: false,
+        邀请用户: [],
+      },
       ...config,
     } as any,
     gardenApi: createGardenApi(http),
@@ -130,11 +141,7 @@ function runMain(i: number, cell: { Text: string }) {
     )
     if (newAuth) {
       console.log(`更新 auth 成功`)
-      if (cell.Text.length === 11) {
-        BColumn.Rows(i).Value = newAuth
-      } else {
-        AColumn.Rows(i).Value = newAuth
-      }
+      ;(cell.Text.length === 11 ? BColumn.Rows(i) : AColumn.Rows(i))['Value'] = newAuth
     }
   } catch (error) {
     console.log(error.message)

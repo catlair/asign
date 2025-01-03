@@ -15,30 +15,38 @@ type TaskExpansion = BaseType<{
   acceptDate: string
 }>
 
-export function createSignInApi(http: Http) {
-  const caiyunUrl = 'https://mrp.mcloud.139.com/market/signin/'
+export function createMarketApi(http: Http) {
+  const caiyunUrl = 'https://mrp.mcloud.139.com/market/'
+  const signInUrl = caiyunUrl + 'signin/'
 
   return {
     getTaskExpansion() {
-      return http.get<TaskExpansion>(`${caiyunUrl}page/taskExpansion`)
+      return http.get<TaskExpansion>(`${signInUrl}page/taskExpansion`)
     },
     receiveTaskExpansion(acceptDate: string) {
       return http.get<ReceiveTaskExpansion>(
-        `${caiyunUrl}page/receiveTaskExpansion?acceptDate=${acceptDate}`,
+        `${signInUrl}page/receiveTaskExpansion?acceptDate=${acceptDate}`,
       )
     },
-    exchange(prizeId: string | number) {
+    exchange(prizeId: string | number, smsCode = '') {
       return http.get<ExchangeResult>(
-        `${caiyunUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=11.3.2&smsCode=`,
+        `${signInUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=11.3.2&smsCode=${smsCode}`,
       )
     },
     receivePrizeDetails(prizeId: string | number) {
       return http.get<ReceivePrize>(
-        `${caiyunUrl}page/receivePrizeDetails?prizeId=${prizeId}&marketId=sign_in_3_ex`,
+        `${signInUrl}page/receivePrizeDetails?prizeId=${prizeId}&marketId=sign_in_3_ex`,
       )
     },
     exchangeList() {
-      return http.get<ExchangeList>(`${caiyunUrl}page/exchangeList`)
+      return http.get<ExchangeList>(`${signInUrl}page/exchangeList`)
+    },
+    getVerCode(prizeId: string | number) {
+      return http.post<BaseType>(`${caiyunUrl}api/smsVerCode/getVerCode`, {
+        prizeId,
+        marketName: 'sign_in_3_ex',
+        templateId: '800',
+      })
     },
   }
 }

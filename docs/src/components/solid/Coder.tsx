@@ -1,12 +1,12 @@
-import type { JSX } from 'solid-js';
-type Component<P = { code: string }> = (props: P) => JSX.Element;
+import type { JSX } from 'solid-js'
+type Component<P = { code: string }> = (props: P) => JSX.Element
 
 const Coder: Component = (props) => {
   return (
-    <div class="expressive-code">
-      <figure class="frame not-content">
-        <figcaption class="header"></figcaption>
-        <pre tabindex="0" dir="ltr">
+    <div class='expressive-code'>
+      <figure class='frame not-content'>
+        <figcaption class='header'></figcaption>
+        <pre tabindex='0' dir='ltr'>
           <code>
             <div class="ec-line">
               <div class="code">
@@ -15,10 +15,10 @@ const Coder: Component = (props) => {
             </div>
           </code>
         </pre>
-        <div class="copy">
+        <div class='copy'>
           <button
-            title="Copy to clipboard"
-            data-copied="Copied!"
+            title='Copy to clipboard'
+            data-copied='Copied!'
             data-code={props.code}
           >
             <div></div>
@@ -26,7 +26,7 @@ const Coder: Component = (props) => {
         </div>
       </figure>
     </div>
-  );
-};
+  )
+}
 
-export default Coder;
+export default Coder

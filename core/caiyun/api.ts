@@ -7,7 +7,7 @@ import { createBackupGiftApi } from './api/backup-gift.js'
 import { createHc1tApi } from './api/hc1t.js'
 import { createMailChatApi } from './api/mail-chat.js'
 import { createMsgPushApi } from './api/msg-push.js'
-import { createSignInApi } from './api/signin.js'
+import { createMarketApi } from './api/signin.js'
 import type { TaskList } from './task-type.js'
 import type {
   BaseType,
@@ -491,7 +491,7 @@ export function createApi(http: Http) {
       </object>`,
       )
     },
-    ...createSignInApi(http),
+    ...createMarketApi(http),
     ...createMsgPushApi(http),
     ...createBackupGiftApi(http),
     ...createAiRedPackApi(http),

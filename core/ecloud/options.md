@@ -1,12 +1,16 @@
+- **类型**: `对象`
+
 ### `username`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 手机号
 
 ### `password`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 密码
 
@@ -16,8 +20,8 @@
 {
   "ecloud": [
     {
-      "username": "curatio",
-      "password": "I6R9JfznobCGEVI"
+      "username": "vigor",
+      "password": "O_gDQ2YNXZSw97_"
     }
   ]
 }

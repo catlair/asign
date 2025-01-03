@@ -1,6 +1,9 @@
+- **类型**: `对象`
+
 ### `token`
 
 - **类型**: `字符串`
+- **必填**: 是
 
 refresh_token
 
@@ -16,7 +19,7 @@ refresh_token
 {
   "alipan": [
     {
-      "token": "socius",
+      "token": "peior",
       "skipUpload": true
     }
   ]

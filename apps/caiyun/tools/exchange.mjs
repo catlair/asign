@@ -1,11 +1,11 @@
 // 注意自己设置运行时间为 兑换时间的前一分钟，如 16 点的就是 15:59
 import { loadConfig, useExchange } from './caiyun.mjs'
 
-const { config, message } = await loadConfig()
+const { config, message } = await loadConfig('../asign.config.js')
 
 // 使用配置中的第一个账号
 const { exchange, waitToNextHour, sendMessage } = await useExchange(
-  config[2],
+  config[1],
   message,
 )
 

@@ -26,7 +26,7 @@ export function _generateMarkdown(
   schema: Schema,
   title: string,
   level: string,
-  { ignoreTitle = false } = {},
+  { ignoreTitle = false, required = false } = {},
 ) {
   const lines: string[] = []
   const typeTitle = {
@@ -43,18 +43,27 @@ export function _generateMarkdown(
 
   ignoreTitle || lines.push(`${level} ${title || schema.description}`)
 
+  lines.push(
+    `- **类型**: \`${typeTitle[schema.type] || schema.type}\``,
+  )
+
+  if (required) {
+    lines.push(`- **必填**: 是`)
+  }
+
   if (schema.type === 'object') {
     for (const key in schema.properties) {
       const val = schema.properties[key] as Schema
-      lines.push('', ..._generateMarkdown(val, `\`${key}\``, level + '#'))
+      lines.push(
+        '',
+        ..._generateMarkdown(val, `\`${key}\``, level + '#', {
+          required: schema.required?.includes(key),
+        }),
+      )
     }
     return lines
   }
 
-  // Type and default
-  lines.push(
-    `- **类型**: \`${typeTitle[schema.type] || schema.type}\``,
-  )
   if ('default' in schema) {
     lines.push(`- **默认值**: \`${JSON.stringify(schema.default)}\``)
   }

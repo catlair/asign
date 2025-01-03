@@ -1,4 +1,5 @@
 import * as api from '../api/cloud-day'
+import { type SmsVerCodeParams } from '../api/cloud-day'
 import type { M } from '../types'
 
 export async function getCloudDayList({ logger, http }: M) {
@@ -29,9 +30,9 @@ export async function verifyCloudDay({ logger, http }: M, prizeId: number | stri
   }
 }
 
-export async function getSmsVerCode({ logger, http }: M, prizeId: number | string) {
+export async function getSmsVerCode({ logger, http }: M, prizeId: number | string, options?: SmsVerCodeParams) {
   try {
-    const { code, msg } = await api.getSmsVerCode(http, prizeId)
+    const { code, msg } = await api.getSmsVerCode(http, prizeId, options)
 
     if (code === 0) {
       logger.success('验证码发送成功！')
