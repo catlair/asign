@@ -275,13 +275,13 @@ export async function dingTalk(
 ) {
   let query = ''
   if (secret) {
-    // const { createHmac } = await import('node:crypto')
-    // const timestamp = Date.now()
-    // const sign = createHmac('sha256', secret)
-    //   .update(timestamp.toString() + '\n' + secret)
-    //   .digest('base64')
+    const { createHmac } = await import('node:crypto')
+    const timestamp = Date.now()
+    const sign = createHmac('sha256', secret)
+      .update(timestamp.toString() + '\n' + secret)
+      .digest('base64')
 
-    // query = `&timestamp=${timestamp}&sign=${encodeURIComponent(sign)}`
+    query = `&timestamp=${timestamp}&sign=${encodeURIComponent(sign)}`
   }
   return _send(apiOption, '钉钉推送', {
     url: `https://oapi.dingtalk.com/robot/send?access_token=${token}${query}`,

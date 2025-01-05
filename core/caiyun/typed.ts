@@ -13,8 +13,8 @@ export const config = z.object({
   }).optional().describe('摇一摇配置'),
 
   garden: z.object({
-    enable: z.boolean().default(true).optional().describe(
-      '是否开启该功能，需要注意的是果园需要自己去 APP 手动激活一下，否则等待你的全是报错',
+    enable: z.boolean().default(false).optional().describe(
+      '活动下线',
     ),
     inviteCodes: z.array(z.string()).optional().describe(
       '邀请码，如果不知道是啥就不管，也没用. 配置后默认助力功能失效',

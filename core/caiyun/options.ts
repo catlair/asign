@@ -5,7 +5,7 @@ export const defuConfig = {
     delay: 2,
   },
   garden: {
-    enable: true,
+    enable: false,
     inviteCodes: [],
     开启果园助力: false,
   },

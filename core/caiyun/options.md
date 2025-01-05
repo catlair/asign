@@ -45,9 +45,9 @@ cookie authorization 字段
 #### `enable`
 
 - **类型**: `布尔值`
-- **默认值**: `true`
+- **默认值**: `false`
 
-是否开启该功能，需要注意的是果园需要自己去 APP 手动激活一下，否则等待你的全是报错
+活动下线
 
 #### `inviteCodes`
 
@@ -183,54 +183,53 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "omnis",
-      "nickname": "vito",
+      "auth": "fuga",
+      "nickname": "dolorum",
       "shake": {
         "enable": true,
         "num": 15,
-        "delay": 2
+        "delay": 1792400257187840
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "terminatio"
+          "cresco",
+          "thorax"
         ],
-        "waterFriend": 4314127365308416,
+        "waterFriend": 8813443249340416,
         "开启果园助力": false
       },
       "aiRedPack": {
-        "enable": false
+        "enable": true
       },
-      "backupWaitTime": 20,
+      "backupWaitTime": 7771834881671168,
       "tasks": {
-        "shareFile": "alius",
+        "shareFile": "spiculum",
         "skipTasks": [
-          6943163713323008,
-          6654392742707200,
-          385507758440448,
-          7426084968595456,
-          7394600635334656
+          5686806272016384,
+          8153135612690432,
+          1525148110815232,
+          8015810784133120
         ]
       },
-      "catalog": "00019700101000000001",
+      "catalog": "ciminatio",
       "cloudPhoneRedpack": {
-        "enable": false
+        "enable": true
       },
       "是否打印今日云朵": true,
-      "剩余多少天刷新token": 4911700841070592,
+      "剩余多少天刷新token": 3611190542467072,
       "微信抽奖": {
-        "次数": 1,
-        "间隔": 2762154790879232
+        "次数": 2924812445941760,
+        "间隔": 500
       },
       "云朵大作战": {
         "目标排名": 500,
-        "开启兑换": true,
+        "开启兑换": false,
         "邀请用户": [
-          "pariatur",
-          "accedo",
-          "caput",
-          "spargo",
-          "numquam"
+          "teres",
+          "molestias",
+          "tredecim",
+          "sordeo"
         ]
       }
     }
@@ -248,7 +247,7 @@ cookie authorization 字段
     "delay": 2
   },
   "garden": {
-    "enable": true,
+    "enable": false,
     "inviteCodes": [],
     "开启果园助力": false
   },

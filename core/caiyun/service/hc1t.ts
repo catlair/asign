@@ -11,7 +11,9 @@ export async function hc1Task($: M) {
 
     printHc1t(logger, data)
 
-    if (config.云朵大作战?.邀请用户?.length) return logger.info('不支持邀请好友，跳过执行')
+    if (config.云朵大作战?.邀请用户?.length) {
+      return logger.info('不支持邀请好友，跳过执行（因为你配置了邀请好友，默认你单独运行云朵大作战）')
+    }
 
     for (let index = 0; index < data.info.curr; index++) {
       await request($, api.beinviteHecheng1T, '云朵大作战开始')
@@ -38,5 +40,5 @@ export function printHc1t(logger: LoggerType, { info, history }: Hecheng1T['resu
   logger.debug('今日剩余次数', curr)
   logger.debug('今日可兑换次数', exchange)
   logger.debug('今日可被邀请次数', invite)
-  logger.debug('最后成功时间', lastSucc)
+  logger.debug('最后成功时间', lastSucc || '无记录')
 }

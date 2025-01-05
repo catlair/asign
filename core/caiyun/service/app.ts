@@ -54,7 +54,7 @@ async function _switchAppTask($: M, task: TaskItem, doingList: number[]) {
 }
 
 function getShareCount(str: string) {
-  return +str.replace(`分享文件有好礼<span id='share_title'>`, '').replace('/7</span>', '')
+  return +str.replace(`分享文件得云朵<span id='share_title'>`, '').replace('/7</span>', '')
 }
 
 function printShareCount($: M, name: string) {
@@ -246,7 +246,7 @@ async function shareTime($: M) {
   try {
     const shareFile = await getShareFile($)
     if (!shareFile) {
-      $.logger.debug(`未获取到文件列表，跳过分享任务`)
+      $.logger.debug(`本次没有上传任务，跳过分享任务`)
       return
     }
     $.logger.debug('分享', shareFile)
@@ -256,7 +256,7 @@ async function shareTime($: M) {
       '',
     )
     if (code === '0') {
-      $.logger.success(`分享文件成功`, message)
+      $.logger.success(`分享文件成功（分享成功不等于任务完成）`, message)
       try {
         await delShareFile($, [data.getOutLinkRes.getOutLinkResSet[0].linkID])
       } catch {}
