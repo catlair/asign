@@ -1,6 +1,6 @@
 import type { LoggerType } from '@asign/types'
 import dayjs from 'dayjs'
-import { delay } from 'es-toolkit/compat'
+import { delay } from 'es-toolkit'
 import { Buffer } from 'node:buffer'
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto'
 import fs from 'node:fs'
@@ -190,5 +190,5 @@ export async function waitToNextHour(millisecond = 400) {
     millisecond,
   ).toDate().getTime()
 
-  await delay(time - Date.now())
+  delay(time - Date.now())
 }

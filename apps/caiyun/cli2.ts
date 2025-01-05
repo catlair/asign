@@ -83,8 +83,6 @@ const vipDay = defineCommand({
   },
   async run({ args }) {
     logger.debug('vipDay', args)
-
-    const { $ } = await setup(args)
   },
 })
 

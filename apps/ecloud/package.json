@@ -30,8 +30,8 @@
     "@asunajs/utils": "workspace:^",
     "@types/lodash-es": "^4.17.12",
     "@types/tough-cookie": "^4.0.5",
-    "dotenv": "^16.4.5",
-    "got": "^14.4.1",
+    "dotenv": "^16.4.7",
+    "got": "^14.4.5",
     "lodash-es": "^4.17.21",
     "tsconfig": "workspace:*"
   },

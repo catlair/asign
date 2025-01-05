@@ -20,17 +20,17 @@
   "license": "MIT",
   "dependencies": {
     "@asunajs/conf": "workspace:^",
-    "@asunajs/push": "workspace:^",
     "@asunajs/http": "workspace:^",
-    "secp256k1": "^5.0.0"
+    "@asunajs/push": "workspace:^",
+    "secp256k1": "^5.0.1"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*",
     "@asign/alipan-core": "workspace:^",
     "@asign/build": "workspace:^",
     "@asign/utils-pure": "workspace:^",
     "@asunajs/utils": "workspace:^",
-    "@types/secp256k1": "^4.0.6"
+    "@types/secp256k1": "^4.0.6",
+    "tsconfig": "workspace:*"
   },
   "publishConfig": {
     "directory": "dist",

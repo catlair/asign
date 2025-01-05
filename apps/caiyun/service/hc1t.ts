@@ -137,7 +137,7 @@ type Used = { time: string; value: string[] }
 export async function saveInviter(inviter: string, phone: string) {
   if (!inviter) return
 
-  const used: Record<string, Used> = await storage.getItem(DB_KEY) || {}
+  const used = await storage.getItem(DB_KEY) || {}
 
   const today = new Date().toLocaleDateString('zh-CN')
 
@@ -154,7 +154,7 @@ export async function saveInviter(inviter: string, phone: string) {
 }
 
 export async function getSavedInviter(phone: string) {
-  let used: Record<string, Used> = await storage.getItem(DB_KEY) || {}
+  let used = await storage.getItem(DB_KEY) || {}
 
   const time = new Date().toLocaleDateString('zh-CN')
 

@@ -22,7 +22,7 @@
     "@types/tough-cookie": "^4.0.5",
     "defu": "^6.1.4",
     "destr": "^2.0.3",
-    "got": "^14.4.1",
+    "got": "^14.4.5",
     "lodash-es": "^4.17.21",
     "tough-cookie": "^4.1.4",
     "tsconfig": "workspace:*"

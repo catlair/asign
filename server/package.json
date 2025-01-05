@@ -1,0 +1,26 @@
+{
+  "name": "@mr/server",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./lib": "./src/lib.ts"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@hono/zod-validator": "^0.4.2",
+    "destr": "^2.0.3",
+    "hono": "^4.6.15",
+    "i18next": "^24.2.0",
+    "zod": "^3.24.1",
+    "zod-i18n-map": "^2.27.0",
+    "zod-validation-error": "^3.4.0"
+  },
+  "devDependencies": {
+    "@hono/swagger-ui": "^0.5.0",
+    "@types/node": "^20.17.11",
+    "tsx": "^4.19.2"
+  }
+}

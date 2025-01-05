@@ -33,7 +33,7 @@
     "@asunajs/push": "workspace:^",
     "citty": "^0.1.6",
     "defu": "^6.1.4",
-    "pm2": "^5.4.2"
+    "pm2": "^5.4.3"
   },
   "devDependencies": {
     "@asign/build": "workspace:^",
@@ -43,10 +43,10 @@
     "@asign/utils-pure": "workspace:^",
     "@asunajs/utils": "workspace:^",
     "compare-versions": "^6.1.1",
-    "dotenv": "^16.4.5",
-    "es-toolkit": "^1.27.0",
+    "dotenv": "^16.4.7",
+    "es-toolkit": "^1.31.0",
     "tsconfig": "workspace:*",
-    "tsup": "^8.2.3"
+    "tsup": "^8.3.5"
   },
   "publishConfig": {
     "directory": "dist",

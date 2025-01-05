@@ -35,9 +35,9 @@
   "devDependencies": {
     "@asign/types": "workspace:^",
     "compare-versions": "^6.1.1",
-    "consola": "^3.2.3",
-    "es-toolkit": "^1.27.0",
-    "tsconfig": "workspace:*",
-    "dayjs": "^1.11.13"
+    "consola": "^3.3.3",
+    "dayjs": "^1.11.13",
+    "es-toolkit": "^1.31.0",
+    "tsconfig": "workspace:*"
   }
 }
