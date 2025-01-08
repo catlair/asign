@@ -1,5 +1,5 @@
 {
-  "name": "@mr/server",
+  "name": "@asign/server",
   "type": "module",
   "exports": {
     ".": "./src/index.ts",

@@ -1,6 +1,6 @@
 import { appDefuConfig, cliDefuConfig, qlDefuConfig, setVersion } from '@asign/build/tsup'
 import { defineConfig } from 'tsup'
-import { dependencies, devDependencies } from './package.json'
+import { dependencies } from './package.json'
 
 export default defineConfig([
   {
