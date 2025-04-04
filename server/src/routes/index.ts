@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import caiyun from './caiyun'
 import test from './test'
 import user from './user'
 
@@ -14,5 +15,6 @@ const app = new Hono()
   })
   .route('/user', user)
   .route('/test', test)
+  .route('/caiyun', caiyun)
 
 export default app

@@ -34,5 +34,6 @@ export function rewriteConfigSync(filepath: string, path: any[], value: any) {
     }
   } catch (error) {
     console.error(error)
+    return error
   }
 }
