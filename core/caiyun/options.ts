@@ -15,6 +15,7 @@ export const defuConfig = {
   backupWaitTime: 20,
   tasks: {
     skipTasks: [],
+    每月上传任务单日数量: 5,
   },
   catalog: '00019700101000000001',
   cloudPhoneRedpack: {

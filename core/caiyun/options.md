@@ -102,6 +102,13 @@ cookie authorization 字段
 
 跳过的任务 id，可抓包获取，也可查看日志输出（任务日志会在任务名后面拼接上数字 id 的）。切记，配置优先级最高，配置无论任务是否能够自动完成都将跳过。
 
+#### `每月上传任务单日数量`
+
+- **类型**: `数字`
+- **默认值**: `5`
+
+每月上传任务单日上传数量，不包括每日任务的数量，如果直接设置为 99 则在一次内完成
+
 ### `catalog`
 
 - **类型**: `字符串`
@@ -132,7 +139,7 @@ cookie authorization 字段
 - **类型**: `数字`
 - **默认值**: `10`
 
-剩余多少天刷新token
+剩余多少天刷新 token
 
 ### `微信抽奖`
 
@@ -183,54 +190,48 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "fuga",
-      "nickname": "dolorum",
+      "auth": "depereo",
+      "nickname": "harum",
       "shake": {
         "enable": true,
         "num": 15,
-        "delay": 1792400257187840
+        "delay": 2
       },
       "garden": {
         "enable": true,
         "inviteCodes": [
-          "cresco",
-          "thorax"
+          "reiciendis",
+          "summisse",
+          "cena",
+          "admiratio",
+          "statua"
         ],
-        "waterFriend": 8813443249340416,
+        "waterFriend": 1338473369829376,
         "开启果园助力": false
       },
       "aiRedPack": {
-        "enable": true
+        "enable": false
       },
-      "backupWaitTime": 7771834881671168,
+      "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "spiculum",
-        "skipTasks": [
-          5686806272016384,
-          8153135612690432,
-          1525148110815232,
-          8015810784133120
-        ]
+        "shareFile": "atqui",
+        "skipTasks": [2053005815840768],
+        "每月上传任务单日数量": 4529723468152832
       },
-      "catalog": "ciminatio",
+      "catalog": "virga",
       "cloudPhoneRedpack": {
-        "enable": true
+        "enable": false
       },
       "是否打印今日云朵": true,
-      "剩余多少天刷新token": 3611190542467072,
+      "剩余多少天刷新token": 10,
       "微信抽奖": {
-        "次数": 2924812445941760,
-        "间隔": 500
+        "次数": 1,
+        "间隔": 4892340971896832
       },
       "云朵大作战": {
-        "目标排名": 500,
+        "目标排名": 819982820704256,
         "开启兑换": false,
-        "邀请用户": [
-          "teres",
-          "molestias",
-          "tredecim",
-          "sordeo"
-        ]
+        "邀请用户": ["cinis", "admiratio", "facilis", "illo", "deserunt"]
       }
     }
   ]
@@ -256,7 +257,8 @@ cookie authorization 字段
   },
   "backupWaitTime": 20,
   "tasks": {
-    "skipTasks": []
+    "skipTasks": [],
+    "每月上传任务单日数量": 5
   },
   "catalog": "00019700101000000001",
   "cloudPhoneRedpack": {

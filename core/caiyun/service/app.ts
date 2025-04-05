@@ -94,6 +94,10 @@ export async function appTask($: M) {
     if (task.id === 481 && task.currstep === 2) {
       await clickTask($, 481, 'randomCloudTask')
     }
+    // 高价值用户专属福利
+    if (task.id === 478 && task.state !== 'FINISH') {
+      await clickTask($, 478, 'randomCloudTask')
+    }
     const printFail = (msg: string) =>
       $.logger.fail(
         msg,
@@ -105,6 +109,12 @@ export async function appTask($: M) {
         $.logger.success('成功', task.name)
         continue
       }
+      if (task.id === 522) {
+        if (task.process === 0) printFail('失败')
+        else $.logger.info(task.name, '本月已经完成', task.process, '次')
+        continue
+      }
+
       printFail('失败')
       continue
     }
@@ -121,6 +131,7 @@ async function _handleAppTask($: M, task: TaskItem) {
 
   switch (task.id) {
     case 110:
+    case 522:
       return await taskRunner[task.id]?.($, task.process)
     default:
       return await taskRunner[task.id]?.($, task)
@@ -132,12 +143,13 @@ function getTaskRunner($: M) {
     113: async ($: M) => {
       await refreshToken($)
       sleepSync(1000)
-      await uploadRandomFile($)
+      await uploadRandomFile($, { channelSrc: '10200153' })
     },
-    106: ($: M) => uploadRandomFile($),
+    106: ($: M) => uploadRandomFile($, { uploadSrc: '1' }),
     107: createNoteDaily,
     434: shareTime,
     110: $.node && $.node.uploadTask,
+    522: update100,
     1021: emailNotice,
   }
 }
@@ -161,6 +173,15 @@ async function emailNotice($: M, task: TaskItem) {
     out.day && $.logger.debug(`邮箱通知已经开启`, out.day, '天')
   } catch (error) {
     $.logger.error(`邮件通知异常`, error)
+  }
+}
+
+async function update100($: M, progressNum: number) {
+  $.logger.info(`开始执行每月100次上传任务`)
+  for (let i = 0; i < $.config.tasks.每月上传任务单日数量; i++) {
+    if (progressNum >= 100) break
+    await uploadRandomFile($, { uploadSrc: '1' })
+    await $.sleep(500)
   }
 }
 

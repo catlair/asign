@@ -36,6 +36,9 @@ export const config = z.object({
     skipTasks: z.array(z.number()).optional().describe(
       '跳过的任务 id，可抓包获取，也可查看日志输出（任务日志会在任务名后面拼接上数字 id 的）。切记，配置优先级最高，配置无论任务是否能够自动完成都将跳过。',
     ),
+    每月上传任务单日数量: z.number().default(5).optional().describe(
+      '每月上传任务单日上传数量，不包括每日任务的数量，如果直接设置为 99 则在一次内完成',
+    ),
   }).optional(),
 
   catalog: z.string().optional().describe(

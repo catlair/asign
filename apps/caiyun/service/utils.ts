@@ -1,5 +1,6 @@
 import { Caiyun, createApi, createGardenApi, getJwtToken, type M } from '@asign/caiyun-core'
 import { defuConfig } from '@asign/caiyun-core/options'
+import { CAIYUN_APP_VERSION, CAIYUN_BASE_UA, CAIYUN_CLIENT, CAIYUN_NET_TYPE } from '@asign/constant'
 import { getStorage } from '@asign/unstorage'
 import { getAuthInfo, hidePhone } from '@asign/utils-pure'
 import { loadConfig as _lc } from '@asunajs/conf'
@@ -26,12 +27,9 @@ export async function init(
     return {}
   }
 
-  const baseUA =
-    'Mozilla/5.0 (Linux; Android 14; 22041216C Build/TP1A.220624.014; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/128.0.6613.88 Mobile Safari/537.36'
-
   const DATA: M['DATA'] = {
-    baseUA,
-    mailUaEnd: '(139PE_WebView_Android_11.3.2_mcloud139)',
+    baseUA: CAIYUN_BASE_UA,
+    mailUaEnd: `(139PE_WebView_Android_${CAIYUN_APP_VERSION}_mcloud139)`,
     mailRequested: 'cn.cj.pe',
     mcloudRequested: 'com.chinamobile.mcloud',
   }
@@ -54,6 +52,9 @@ export async function init(
       'x-requested-with': DATA.mcloudRequested,
       'charset': 'utf-8',
       'content-type': 'application/json;charset=UTF-8',
+      'x-yun-client-info': CAIYUN_CLIENT,
+      'x-DeviceInfo': CAIYUN_CLIENT,
+      'x-NetType': CAIYUN_NET_TYPE,
     },
     retry: {
       limit: 3,

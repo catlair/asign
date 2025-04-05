@@ -1,3 +1,4 @@
+import { CAIYUN_CLIENT } from '@asign/constant'
 import type { Http } from '@asign/types'
 import { hashCode } from '@asign/utils-pure'
 import type { Buffer } from 'node:buffer'
@@ -264,9 +265,11 @@ export function createApi(http: Http) {
         {
           headers: {
             // 'hcy-cool-flag': '1',
+            'x-yun-app-channel': options.channelSrc,
             'x-huawei-uploadSrc': options.uploadSrc || '2',
-            'x-huawei-channelSrc': options.channelSrc || '10200153',
+            'x-huawei-channelSrc': options.channelSrc || '10000023',
             'Content-Type': 'text/xml; charset=UTF-8',
+            'x-DeviceInfo': CAIYUN_CLIENT,
           },
         },
       )
@@ -278,7 +281,7 @@ export function createApi(http: Http) {
           'x-huawei-uploadSrc': '1',
           'Content-Type': 'application/octet-stream',
           'x-huawei-channelSrc': '10000023',
-          'User-Agent': 'okhttp/3.11.0',
+          'User-Agent': 'okhttp/4.12.0',
           'contentSize': size.toString(),
           'Range': `bytes=0-${(size - 1).toString()}`,
         },
@@ -518,7 +521,7 @@ export interface UploadXml {
    * 10000034 web
    * 10230043 web ？
    */
-  channelSrc?: '10000023' | '10200153' | '10200153' | '10000034' | '10230043'
+  channelSrc?: '10000023' | '10200153' | '10000034' | '10230043'
 }
 function getUploadXml({
   phone,

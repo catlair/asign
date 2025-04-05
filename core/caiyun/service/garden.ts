@@ -134,7 +134,7 @@ async function doTask(
   const taskMap = {
     '2002': async () => {
       if (
-        await uploadRandomFile($, { channelSrc: '10000023' })
+        await uploadRandomFile($)
       ) {
         await $.sleep(6000)
         return true
@@ -142,7 +142,7 @@ async function doTask(
     },
     '2003': async () => {
       if (
-        await uploadRandomFile($, { ext: '.mp4', channelSrc: '10000023' })
+        await uploadRandomFile($, { ext: '.mp4' })
       ) {
         await $.sleep(6000)
         return true

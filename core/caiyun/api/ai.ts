@@ -1,3 +1,4 @@
+import { CAIYUN_CLIENT } from '@asign/constant'
 import type { Http } from '@asign/types'
 import { getTimestamp } from '@asign/utils-pure'
 import { aiUrl } from '../constant'
@@ -48,8 +49,6 @@ function parseEventStream(eventStreamData: string): ChatEvent {
   }
 }
 
-const clientInfo = '4||1|11.3.2||22041216C|||android 14|||||'
-
 export function createAiApi(http: Http) {
   return {
     async addChat(dialogue: string, userId: string) {
@@ -75,7 +74,7 @@ export function createAiApi(http: Http) {
         },
         {
           headers: {
-            'x-yun-client-info': clientInfo,
+            'x-yun-client-info': CAIYUN_CLIENT,
             'Content-Type': 'application/json',
             'accept': 'text/event-stream',
             'x-yun-api-version': 'v4',
@@ -92,7 +91,7 @@ export function createAiApi(http: Http) {
         headers: {
           'x-yun-api-version': 'v1',
           'x-yun-app-channel': '101',
-          'x-yun-client-info': clientInfo,
+          'x-yun-client-info': CAIYUN_CLIENT,
         },
       })
     },

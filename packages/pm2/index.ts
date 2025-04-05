@@ -1,20 +1,32 @@
-import {} from 'pm2'
-import { exec } from 'node:child_process'
+import pm2 from 'pm2'
+import { $ } from 'zx'
 
-function startPm2() {
-  return new Promise((resolve, reject) => {
-    exec('npx pm2 ls', (error, stdout, stderr) => {
-      if (error) {
-        console.log(`error: ${error.message}`)
-        reject(error)
-        return
-      }
-      if (stderr) {
-        console.log(`stderr: ${stderr}`)
-        reject(stderr)
-        return
-      }
-      resolve(stdout)
-    })
+export async function ls() {
+  return await $`pm2 ls`
+}
+
+/**
+ * pm2 定时
+ */
+export async function schedule() {
+  return pm2.start({
+    autostart: false,
+    script: './schedule.mjs',
+    cron: '49 12 * * *',
+    autorestart: false,
+  }, (err) => {
+    if (err) {
+      console.error(err)
+    } else {
+      console.log('定时任务启动成功')
+      pm2.list((err, list) => {
+        if (err) {
+          console.error(err)
+        } else {
+          console.log('当前进程列表：')
+          console.talogble(list)
+        }
+      })
+    }
   })
 }

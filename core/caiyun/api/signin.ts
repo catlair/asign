@@ -1,3 +1,4 @@
+import { CAIYUN_APP_VERSION } from '@asign/constant'
 import type { Http } from '@asign/types'
 import type { BaseType } from '../types.js'
 import type { ExchangeList, ExchangeResult, ReceivePrize } from '../types/exchange.js'
@@ -30,7 +31,7 @@ export function createMarketApi(http: Http) {
     },
     exchange(prizeId: string | number, smsCode = '') {
       return http.get<ExchangeResult>(
-        `${signInUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=11.3.2&smsCode=${smsCode}`,
+        `${signInUrl}page/exchange?prizeId=${prizeId}&client=app&clientVersion=${CAIYUN_APP_VERSION}&smsCode=${smsCode}`,
       )
     },
     receivePrizeDetails(prizeId: string | number) {

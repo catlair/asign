@@ -5,7 +5,7 @@ import starlight from '@astrojs/starlight'
 import { defineConfig } from 'astro/config'
 import starlightImageZoom from 'starlight-image-zoom'
 
-import tailwind from '@astrojs/tailwind'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://astro.build/config
 export default defineConfig({
@@ -63,11 +63,16 @@ export default defineConfig({
     solidJs({
       include: ['src/**/solid/*'],
     }),
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    // tailwind({
+    //   applyBaseStyles: false,
+    // }),
   ],
+
   markdown: {
     remarkPlugins: [includeMarkdown],
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
   },
 })

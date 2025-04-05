@@ -74,7 +74,6 @@ export async function uploadFile(
       manualRename,
       contentName,
       createTime,
-      channelSrc: '10000023',
     }, true)
     if (!redirectionUrl || !randomBuffer) {
       return Boolean(contentID)
@@ -99,7 +98,7 @@ async function uploadFileApi(url: string, id: string, randomBuffer: Buffer) {
       'x-huawei-uploadSrc': '1',
       'Content-Type': 'application/octet-stream',
       'x-huawei-channelSrc': '10000023',
-      'User-Agent': 'okhttp/3.11.0',
+      'User-Agent': 'okhttp/4.12.0',
       'contentSize': size.toString(),
       'Range': `bytes=0-${(size - 1).toString()}`,
     },
