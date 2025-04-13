@@ -184,55 +184,57 @@ cookie authorization 字段
 
 邀请用户的手机号（你邀请的用户，不是邀请你的）
 
+### `文件获取方式`
+
+- **类型**: `数字`
+- **默认值**: `1`
+
+文件获取方式，1 或 2
+
 ### 示例
 
 ```json
 {
   "caiyun": [
     {
-      "auth": "depereo",
-      "nickname": "harum",
+      "auth": "tolero",
+      "nickname": "ascisco",
       "shake": {
         "enable": true,
         "num": 15,
-        "delay": 2
+        "delay": 2328161987592192
       },
       "garden": {
         "enable": true,
-        "inviteCodes": [
-          "reiciendis",
-          "summisse",
-          "cena",
-          "admiratio",
-          "statua"
-        ],
-        "waterFriend": 1338473369829376,
+        "inviteCodes": ["carpo"],
+        "waterFriend": 903968817414144,
         "开启果园助力": false
       },
       "aiRedPack": {
         "enable": false
       },
-      "backupWaitTime": 20,
+      "backupWaitTime": 6092764018114560,
       "tasks": {
-        "shareFile": "atqui",
-        "skipTasks": [2053005815840768],
-        "每月上传任务单日数量": 4529723468152832
+        "shareFile": "tristis",
+        "skipTasks": [4577707123802112, 5156227772317696],
+        "每月上传任务单日数量": 5376920940183552
       },
-      "catalog": "virga",
+      "catalog": "conscendo",
       "cloudPhoneRedpack": {
         "enable": false
       },
       "是否打印今日云朵": true,
       "剩余多少天刷新token": 10,
       "微信抽奖": {
-        "次数": 1,
-        "间隔": 4892340971896832
+        "次数": 5559557434638336,
+        "间隔": 500
       },
       "云朵大作战": {
-        "目标排名": 819982820704256,
+        "目标排名": 500,
         "开启兑换": false,
-        "邀请用户": ["cinis", "admiratio", "facilis", "illo", "deserunt"]
-      }
+        "邀请用户": ["sui"]
+      },
+      "文件获取方式": 6332449369882624
     }
   ]
 }
@@ -274,6 +276,7 @@ cookie authorization 字段
     "目标排名": 500,
     "开启兑换": false,
     "邀请用户": []
-  }
+  },
+  "文件获取方式": 1
 }
 ```

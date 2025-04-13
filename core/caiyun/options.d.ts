@@ -126,4 +126,8 @@ export interface Caiyun {
      */
     邀请用户: string[]
   }
+  /**
+   * 文件获取方式，1 或 2
+   */
+  文件获取方式?: number
 }

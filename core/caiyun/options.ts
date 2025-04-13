@@ -32,4 +32,5 @@ export const defuConfig = {
     开启兑换: false,
     邀请用户: [],
   },
+  文件获取方式: 1,
 }

@@ -63,6 +63,8 @@ export const config = z.object({
     开启兑换: z.boolean().default(false).optional().describe('是否开启兑换'),
     邀请用户: z.array(z.string()).describe('邀请用户的手机号（你邀请的用户，不是邀请你的）'),
   }).optional().describe('云朵大作战'),
+
+  文件获取方式: z.number().default(1).optional().describe('文件获取方式，1 或 2'),
 }).describe('中国移动云盘配置')
 
 const types = {

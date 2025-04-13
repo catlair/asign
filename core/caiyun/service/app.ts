@@ -1,5 +1,5 @@
-import { randomHex, sleepSync } from '@asign/utils-pure'
-import { getFileList } from '../api/file.js'
+import { randomHex, randomNumber, sleepSync } from '@asign/utils-pure'
+import { getDisk, getFileList } from '../api/file.js'
 import { SKIP_TASK_LIST, TASK_LIST } from '../constant/task-list.js'
 import { uploadRandomFile } from '../service/index.js'
 import type { TaskList } from '../task-type.js'
@@ -232,7 +232,29 @@ async function _getFileList($: M) {
     const { message, code, data, success } = await getFileList($.http)
     if (success) {
       $.logger.debug(`测试 file/list`)
-      return data.items.filter(item => item.type === 'file')
+      const list = data.items.filter(item => item.type === 'file')
+      return list.map(item => ({
+        name: item.name,
+        id: item.fileId,
+      }))
+    }
+    if (code === '04510001') return false
+    $.logger.fail(`获取文件列表失败`, code, message)
+  } catch (error) {
+    $.logger.error(`获取文件列表异常`, error)
+  }
+}
+
+async function _getFileList2($: M) {
+  try {
+    const { message, code, data, success } = await getDisk($.http, $.config.phone, $.config.catalog)
+    if (success) {
+      $.logger.debug(`测试 file/list`)
+      const list = data.getDiskResult?.contentList
+      return list.map(item => ({
+        name: item.contentName,
+        id: item.contentID,
+      }))
     }
     if (code === '04510001') return false
     $.logger.fail(`获取文件列表失败`, code, message)
@@ -242,19 +264,32 @@ async function _getFileList($: M) {
 }
 
 async function getShareFile($: M) {
-  const files = await _getFileList($)
+  const files = $.config.文件获取方式 === 1 ? await _getFileList($) : await _getFileList2($)
   if (files) {
-    const file = files.find(item => item.name === '中国移动云盘产品手册.pdf') || files[0]
-    return file && file.fileId
+    const file = files.find(item =>
+      item.name === '中国移动云盘产品手册.pdf' || item.name === '欢迎使用彩云.pdf' || item.name.startsWith('asign-')
+    )
+      || files[randomNumber(0, files.length - 1)]
+
+    if (!file) {
+      return { id: undefined }
+    }
+
+    return {
+      id: file.id,
+      name: file.name,
+    }
   }
-  return $.config.tasks.shareFile || $.store.files?.[0]
+  return {
+    id: $.config.tasks.shareFile || $.store.files?.[0],
+  }
 }
 
 async function delShareFile($: M, linkIDs: string[]) {
   try {
     const { code, message, data } = await $.api.delOutLink($.config.phone, linkIDs)
     if (code === '0') {
-      $.logger.debug(`删除分享成功`, message)
+      $.logger.debug(`删除分享成功`, linkIDs, message)
       return true
     }
     $.logger.debug(`分享文件失败`, code, message, data.result)
@@ -265,15 +300,15 @@ async function delShareFile($: M, linkIDs: string[]) {
 
 async function shareTime($: M) {
   try {
-    const shareFile = await getShareFile($)
-    if (!shareFile) {
+    const { id, name } = await getShareFile($)
+    if (!id) {
       $.logger.debug(`本次没有上传任务，跳过分享任务`)
       return
     }
-    $.logger.debug('分享', shareFile)
+    $.logger.debug('分享', id, name || '')
     const { code, message, data } = await $.api.getOutLink(
       $.config.phone,
-      [shareFile],
+      [id],
       '',
     )
     if (code === '0') {
@@ -283,11 +318,37 @@ async function shareTime($: M) {
       } catch {}
       return true
     }
-    $.logger.fail(`分享文件失败`, code, message, data.result)
+    $.logger.fail(`分享文件失败`, code, message, data && data.result)
   } catch (error) {
     $.logger.error(`分享文件异常`, error)
   }
 }
+
+// async function shareTime($: M) {
+//   try {
+//     const shareFile = await getShareFile($)
+//     if (!shareFile) {
+//       $.logger.debug(`本次没有上传任务，跳过分享任务`)
+//       return
+//     }
+//     $.logger.debug('分享', shareFile)
+//     const xml = await getIOutLink(
+//       $.http,
+//       $.config.phone,
+//       shareFile,
+//     )
+//     if (xml.includes('getOutLinkRes') && xml.includes('linkID')) {
+//       $.logger.success(`分享文件成功（分享成功不等于任务完成）`)
+//       try {
+//         await delShareFile($, [getXmlElement(xml, 'linkID')])
+//       } catch {}
+//       return true
+//     }
+//     $.logger.fail(`分享文件失败`, xml)
+//   } catch (error) {
+//     $.logger.error(`分享文件异常`, error)
+//   }
+// }
 
 async function clickTask($: M, id: number, taskStr?: string) {
   try {

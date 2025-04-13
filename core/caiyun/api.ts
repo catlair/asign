@@ -17,7 +17,6 @@ import type {
   BlindboxUser,
   CloudRecord,
   CreateBatchOprTask,
-  DiskResult,
   DrawInfoInWx,
   DrawInWx,
   NoteBooks,
@@ -229,22 +228,6 @@ export function createApi(http: Http) {
         `${caiyunUrl}/market/playoffic/followSignInfo?isWx=true`,
       )
     },
-    getDisk(account: string | number, catalogID: string) {
-      return http.post<DiskResult>(
-        `${yun139Url}/orchestration/personalCloud/catalog/v1.0/getDisk`,
-        {
-          commonAccountInfo: { account: String(account) },
-          catalogID,
-          catalogType: -1,
-          sortDirection: 1,
-          catalogSortType: 0,
-          contentSortType: 0,
-          filterType: 0,
-          startNumber: 1,
-          endNumber: 100,
-        },
-      )
-    },
     queryBatchList: function queryBatchList() {
       return http.post<BatchList>(
         `https://grdt.middle.yun.139.com/openapi/pDynamicInfo/queryBatchList`,
@@ -366,8 +349,26 @@ export function createApi(http: Http) {
             },
           },
         },
+        {
+          headers: {
+            'caller': 'web',
+            'cms-device': 'default',
+            'mcloud-channel': '1000101',
+            'mcloud-version': '7.14.4',
+            'x-deviceinfo': '||9|7.14.4|edge||||linux unknow||zh-CN|||',
+            'x-huawei-channelsrc': '10000034',
+            'x-svctype': '1',
+            'x-yun-api-version': 'v1',
+            'x-yun-app-channel': '10000034',
+            'x-yun-channel-source': '10000034',
+            'x-yun-client-info': '||9|7.14.4|edge||||linux unknow||zh-CN|||||',
+            'x-yun-module-type': '100',
+            'x-yun-svc-type': '1',
+          },
+        },
       )
     },
+
     delOutLink(account: string, linkIDs: string[]) {
       return http.post<Orchestration<{ getOutLinkRes: any }>>(
         `${yun139Url}/orchestration/personalCloud-rebuild/outlink/v1.0/delOutLink`,

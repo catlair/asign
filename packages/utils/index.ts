@@ -142,6 +142,8 @@ function getAlgorithm(keyHex: string) {
   switch (Buffer.from(keyHex, 'hex').length) {
     case 16:
       return 'aes-128-cbc'
+    case 24:
+      return 'aes-192-cbc'
     case 32:
       return 'aes-256-cbc'
     default:
@@ -166,7 +168,7 @@ function _aesEncrypt(text: string, key: string, iv: string) {
  */
 export function decryptCaiyun(text: string) {
   const hexText = Buffer.from(text, 'base64').toString('hex')
-  return _aesDecrypt(hexText.slice(32), '6a43434865714e53624932787262354f', hexText.slice(0, 32))
+  return _aesDecrypt(hexText.slice(32), '73634235495062495331515373756c734e7253306c673d3d', hexText.slice(0, 32))
 }
 
 /**
@@ -177,7 +179,9 @@ export function decryptCaiyun(text: string) {
  */
 export function encryptCaiyun(text: string) {
   const iv = randomBytes(16).toString('hex')
-  return Buffer.from(iv + _aesEncrypt(text, '6a43434865714e53624932787262354f', iv), 'hex').toString('base64')
+  return Buffer.from(iv + _aesEncrypt(text, '73634235495062495331515373756c734e7253306c673d3d', iv), 'hex').toString(
+    'base64',
+  )
 }
 
 export function formatTime(date: Date | number | string) {

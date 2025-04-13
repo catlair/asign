@@ -226,10 +226,67 @@ export interface DiskResult {
         extProp5?: any
         ETagOprType: number
       }[]
-      contentList?: any
+      contentList?: ContentList[]
       isCompleted: number
     }
   }
+}
+
+interface ExtInfo {
+  uploader: string
+}
+
+interface Exif {
+  createTime: string
+  longitude?: any
+  latitude?: any
+  localSaveTime?: any
+}
+
+interface ContentList {
+  contentID: string
+  contentName: string
+  contentSuffix: string
+  contentSize: number
+  contentDesc: string
+  contentType: number
+  contentOrigin: number
+  updateTime: string
+  commentCount: number
+  thumbnailURL: string
+  bigthumbnailURL: string
+  presentURL: string
+  presentLURL: string
+  presentHURL: string
+  contentTAGList?: any
+  shareDoneeCount: number
+  safestate: number
+  transferstate: number
+  isFocusContent: number
+  updateShareTime?: any
+  uploadTime: string
+  openType: number
+  auditResult: number
+  parentCatalogId: string
+  channel: string
+  geoLocFlag: string
+  digest: string
+  version: string
+  fileEtag: string
+  fileVersion: string
+  tombstoned: number
+  proxyID: string
+  moved: number
+  midthumbnailURL: string
+  owner: string
+  modifier: string
+  shareType: number
+  extInfo: ExtInfo
+  exif: Exif
+  collectionFlag?: any
+  treeInfo?: any
+  isShared: boolean
+  eTagOprType: number
 }
 
 export interface BatchList {

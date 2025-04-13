@@ -24,7 +24,7 @@ export async function schedule() {
           console.error(err)
         } else {
           console.log('当前进程列表：')
-          console.talogble(list)
+          console.table(list)
         }
       })
     }
