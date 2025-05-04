@@ -42,8 +42,21 @@ export type Journaling =
   | 'National_LanternRiddles_client_all'
   | 'newsignin_index_app_client'
   | 'newsignin_index_pv'
+  | 'synthesisonet_game_tap'
+  | 'synthesisonet_inviterUserPlayGame'
+  | 'synthesisonet_playGame'
+  | 'synthesisonet_playGame_isOts'
+  | 'synthesisonet_finish_gameSuc'
+  | 'synthesisonet_pv'
+  | 'synthesisonet_cookie'
+  | 'synthesisonet_cookie_notApp'
 
-type JournalingId = '1002' | '1010' | '1008'
+type JournalingId =
+  | '1002'
+  | '1010'
+  | '1008'
+  /**云朵大作战 */
+  | '1005'
 
 export function createApi(http: Http) {
   const yun139Url = 'https://yun.139.com'

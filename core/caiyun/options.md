@@ -139,7 +139,7 @@ cookie authorization 字段
 - **类型**: `数字`
 - **默认值**: `10`
 
-剩余多少天刷新 token
+剩余多少天刷新token
 
 ### `微信抽奖`
 
@@ -184,6 +184,13 @@ cookie authorization 字段
 
 邀请用户的手机号（你邀请的用户，不是邀请你的）
 
+#### `游戏时间`
+
+- **类型**: `数字`
+- **默认值**: `300`
+
+游戏时间（秒），默认 300+20 秒
+
 ### `文件获取方式`
 
 - **类型**: `数字`
@@ -197,44 +204,55 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "tolero",
-      "nickname": "ascisco",
+      "auth": "cenaculum",
+      "nickname": "varietas",
       "shake": {
         "enable": true,
         "num": 15,
-        "delay": 2328161987592192
+        "delay": 3329085918937088
       },
       "garden": {
-        "enable": true,
-        "inviteCodes": ["carpo"],
-        "waterFriend": 903968817414144,
+        "enable": false,
+        "inviteCodes": [
+          "toties",
+          "callide",
+          "bos",
+          "debeo"
+        ],
+        "waterFriend": 1977195834638336,
         "开启果园助力": false
       },
       "aiRedPack": {
-        "enable": false
+        "enable": true
       },
-      "backupWaitTime": 6092764018114560,
+      "backupWaitTime": 1508826656276480,
       "tasks": {
-        "shareFile": "tristis",
-        "skipTasks": [4577707123802112, 5156227772317696],
-        "每月上传任务单日数量": 5376920940183552
+        "shareFile": "creber",
+        "skipTasks": [
+          4256968160051200
+        ],
+        "每月上传任务单日数量": 1262230370779136
       },
-      "catalog": "conscendo",
+      "catalog": "00019700101000000001",
       "cloudPhoneRedpack": {
         "enable": false
       },
-      "是否打印今日云朵": true,
-      "剩余多少天刷新token": 10,
+      "是否打印今日云朵": false,
+      "剩余多少天刷新token": 1829635434217472,
       "微信抽奖": {
-        "次数": 5559557434638336,
+        "次数": 2834721830600704,
         "间隔": 500
       },
       "云朵大作战": {
         "目标排名": 500,
         "开启兑换": false,
-        "邀请用户": ["sui"]
+        "邀请用户": [
+          "dicta",
+          "sperno"
+        ],
+        "游戏时间": 300
       },
-      "文件获取方式": 6332449369882624
+      "文件获取方式": 1
     }
   ]
 }
@@ -275,7 +293,8 @@ cookie authorization 字段
   "云朵大作战": {
     "目标排名": 500,
     "开启兑换": false,
-    "邀请用户": []
+    "邀请用户": [],
+    "游戏时间": 300
   },
   "文件获取方式": 1
 }

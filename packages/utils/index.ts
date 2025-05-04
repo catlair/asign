@@ -2,7 +2,7 @@ import type { LoggerType } from '@asign/types'
 import dayjs from 'dayjs'
 import { delay } from 'es-toolkit'
 import { Buffer } from 'node:buffer'
-import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'node:crypto'
+import { createCipheriv, createDecipheriv, createHash, randomBytes, randomUUID } from 'node:crypto'
 import fs from 'node:fs'
 import path, { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -195,4 +195,27 @@ export async function waitToNextHour(millisecond = 400) {
   ).toDate().getTime()
 
   delay(time - Date.now())
+}
+
+// 生成签名
+export function generateSignature(
+  id: string,
+  timestamp: string | number,
+  nonce: string,
+  saltKey: number,
+  other = '',
+) {
+  const salt = saltKey === 1 ? 'seed' + 'MdYY' + 'LIZfbCxg' : 'seka' + 'MdYYLI' + 'ZfbCfm'
+  return md5(salt + id + timestamp + nonce + other + salt)
+}
+
+export function getSignHeader(timestamp?: number | string, saltKey = 1, other?: string) {
+  const id = randomUUID()
+  const nonce = randomUUID()
+  return {
+    'x-request-id': id,
+    'x-timestamp': timestamp.toString(),
+    'x-nonce': nonce,
+    'x-signature': generateSignature(id, timestamp, nonce, saltKey, other),
+  }
 }

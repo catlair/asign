@@ -32,7 +32,7 @@ async function _taskExpansion($: M, timer = 1) {
   if (curMonthBackup === false) {
     if (timer > 0) {
       await backFile($)
-      $.logger.debug(`等待一段时间后重试`)
+      $.logger.debug(`等待一段时间后重试备份`)
       await $.sleep($.config.backupWaitTime * 1000)
       return _taskExpansion($, --timer)
     } else {

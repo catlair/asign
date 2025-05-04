@@ -28,6 +28,7 @@
     "tsconfig": "workspace:*"
   },
   "dependencies": {
-    "@asign/constant": "workspace:^"
+    "@asign/constant": "workspace:^",
+    "@asunajs/utils": "workspace:^"
   }
 }

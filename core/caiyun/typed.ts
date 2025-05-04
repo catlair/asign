@@ -62,6 +62,7 @@ export const config = z.object({
     目标排名: z.number().default(500).optional().describe('目标排名'),
     开启兑换: z.boolean().default(false).optional().describe('是否开启兑换'),
     邀请用户: z.array(z.string()).describe('邀请用户的手机号（你邀请的用户，不是邀请你的）'),
+    游戏时间: z.number().default(300).optional().describe('游戏时间（秒），默认 300+20 秒'),
   }).optional().describe('云朵大作战'),
 
   文件获取方式: z.number().default(1).optional().describe('文件获取方式，1 或 2'),

@@ -1,6 +1,6 @@
 {
   "name": "@asunajs/caiyun",
-  "version": "0.5.8",
+  "version": "0.5.11-rc.2",
   "description": "移动云盘签到",
   "main": "./index.ts",
   "type": "module",
@@ -15,8 +15,9 @@
     }
   },
   "scripts": {
-    "prepublish": "copyfiles package.json README.md dist/",
-    "build": "tsup"
+    "prepublish": "copyfiles package.json README.md utils/check-env.mjs dist/",
+    "build": "tsup",
+    "preinstall": "node utils/check-env.mjs"
   },
   "keywords": [
     "sign",
@@ -28,7 +29,6 @@
   "author": "catlair",
   "license": "MIT",
   "dependencies": {
-    "@asign/constant": "workspace:^",
     "@asunajs/conf": "workspace:^",
     "@asunajs/http": "workspace:^",
     "@asunajs/push": "workspace:^",
@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@asign/build": "workspace:^",
+    "@asign/constant": "workspace:^",
     "@asign/caiyun-core": "workspace:^",
     "@asign/types": "workspace:^",
     "@asign/unstorage": "workspace:^",
@@ -74,6 +75,5 @@
   "engines": {
     "node": ">= 14.12.1"
   },
-  "homepage": "https://as.js.cool",
-  "private": true
+  "homepage": "https://as.js.cool"
 }

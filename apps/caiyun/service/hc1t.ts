@@ -1,8 +1,8 @@
 import type { Caiyun, M } from '@asign/caiyun-core'
-import { printHc1t } from '@asign/caiyun-core/service/hc1t'
+import { getSignTimestamp, hc1tHandler, printHc1t } from '@asign/caiyun-core/service/hc1t'
 import type { Hecheng1T } from '@asign/caiyun-core/types/hc1t'
 import { getStorage } from '@asign/unstorage'
-import { hidePhone } from '@asign/utils-pure'
+import { hidePhone, randomNumber } from '@asign/utils-pure'
 import { createLogger, LoggerPushData } from '@asunajs/utils'
 import { randomInt } from 'node:crypto'
 import { init } from './utils'
@@ -73,14 +73,14 @@ export async function getHc1t($: M) {
   }
 }
 
-async function hc1t($: M, invite: string) {
-  $.logger.start('开始云朵大作战，', invite ? '邀请' + hidePhone(invite) : '无邀请对象')
+async function hc1t($: M, inviter: string) {
+  $.logger.start('开始云朵大作战，', inviter ? '接受' + hidePhone(inviter) + '邀请' : '未获取到可用配置或已使用完')
   try {
-    await $.api.beinviteHecheng1T(b64ToStr(invite))
-    await $.sleep(5000)
-    await $.api.finishHecheng1T()
-    $.logger.success('完成云朵大作战')
-    await saveInviter(invite, $.config.phone)
+    const 游戏时间 = $.config.云朵大作战.游戏时间
+
+    await hc1tHandler($, 游戏时间, inviter)
+
+    await saveInviter(inviter, $.config.phone)
   } catch (error) {
     $.logger.error('云朵大作战失败', error)
   }
@@ -88,6 +88,7 @@ async function hc1t($: M, invite: string) {
 
 async function _do($: M, inviter: string) {
   await $.sleep(5000)
+  $.logger.start('开始云朵大作战，', inviter ? '接受' + hidePhone(inviter) + '邀请' : '未获取到可用配置或已使用完')
   await hc1t($, inviter)
   await $.sleep(7000)
   return await getHc1t($)
@@ -137,7 +138,7 @@ type Used = { time: string; value: string[] }
 export async function saveInviter(inviter: string, phone: string) {
   if (!inviter) return
 
-  const used = await storage.getItem(DB_KEY) || {}
+  const used = (await storage.getItem(DB_KEY) || {}) as Record<string, Used>
 
   const today = new Date().toLocaleDateString('zh-CN')
 
@@ -154,7 +155,7 @@ export async function saveInviter(inviter: string, phone: string) {
 }
 
 export async function getSavedInviter(phone: string) {
-  let used = await storage.getItem(DB_KEY) || {}
+  let used = (await storage.getItem(DB_KEY) || {}) as Record<string, Used>
 
   const time = new Date().toLocaleDateString('zh-CN')
 
@@ -169,11 +170,7 @@ export async function getInviter(inviters: string[], phone: string) {
   const savedInviters = await getSavedInviter(phone)
 
   // 从 inviters 中排除 savedInviters，再随机取一个
-  const _inviters = inviters.filter(i => {
-    // @TODO: 兼容旧的 base64 配置
-    const iStr = b64ToStr(i)
-    return !savedInviters.includes(iStr) && b64ToStr(iStr) !== phone
-  })
+  const _inviters = inviters.filter(iStr => !savedInviters.includes(iStr) && iStr !== phone)
   if (_inviters.length === 0) return ''
 
   return _inviters[randomInt(0, _inviters.length)]

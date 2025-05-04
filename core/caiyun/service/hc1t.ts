@@ -1,4 +1,8 @@
 import type { LoggerType } from '@asign/types'
+import { randomNumber } from '@asign/utils-pure'
+import type { Journaling } from '../api'
+import { encryptDataLogin } from '../api/auth'
+import { reqAction } from '../api/tools'
 import type { M } from '../types'
 import type { Hecheng1T } from '../types/hc1t'
 import { request } from '../utils'
@@ -15,16 +19,65 @@ export async function hc1Task($: M) {
       return logger.info('不支持邀请好友，跳过执行（因为你配置了邀请好友，默认你单独运行云朵大作战）')
     }
 
+    const 游戏时间 = $.config.云朵大作战.游戏时间
+
     for (let index = 0; index < data.info.curr; index++) {
-      await request($, api.beinviteHecheng1T, '云朵大作战开始')
-      await sleep(5000)
-      await request($, api.finishHecheng1T, '云朵大作战完成')
+      await hc1tHandler($, 游戏时间)
     }
 
     logger.success('完成云朵大作战')
   } catch (error) {
     logger.error('云朵大作战失败', error)
   }
+}
+
+async function callJournaling($: M, optkeyword: Journaling) {
+  try {
+    await $.api.journaling(optkeyword, '1005')
+    await $.sleep(randomNumber(50, 200))
+  } catch (error) {
+    $.logger.debug('调用journaling失败', optkeyword, error)
+  }
+}
+
+export async function hc1tHandler($: M, 游戏时间: number, inviter?: string) {
+  await encryptDataLogin($.http)
+
+  await callJournaling($, 'synthesisonet_pv')
+  await callJournaling($, 'synthesisonet_cookie')
+  await callJournaling($, 'synthesisonet_cookie_notApp')
+
+  await callJournaling($, 'synthesisonet_inviterUserPlayGame')
+  await callJournaling($, 'synthesisonet_playGame')
+  await callJournaling($, 'synthesisonet_playGame_isOts')
+
+  await request($, $.api.beinviteHecheng1T, '开始游戏', await getSignTimestamp($), inviter)
+  $.logger.debug('云朵大作战游戏开始，等待游戏结束中', 游戏时间)
+
+  const count = Math.ceil(游戏时间 / 3)
+  for (let index = 0; index < count; index++) {
+    await tap()
+  }
+  await callJournaling($, 'synthesisonet_finish_gameSuc')
+
+  await request($, $.api.finishHecheng1T, '游戏结束', await getSignTimestamp($))
+  $.logger.debug('云朵大作战游戏结束')
+
+  async function tap() {
+    await callJournaling($, 'synthesisonet_game_tap')
+    await $.sleep(3 * randomNumber(990, 1010))
+  }
+}
+
+export async function getSignTimestamp({ logger, http }: M) {
+  try {
+    const { msg, result, code } = await reqAction(http, 'currentTimeMillis')
+    if (result) return result
+    logger.debug('获取时间戳失败', code, msg)
+  } catch (error) {
+    logger.debug('获取时间戳异常', error)
+  }
+  return new Date().getTime()
 }
 
 export function printHc1t(logger: LoggerType, { info, history }: Hecheng1T['result']) {
@@ -40,5 +93,8 @@ export function printHc1t(logger: LoggerType, { info, history }: Hecheng1T['resu
   logger.debug('今日剩余次数', curr)
   logger.debug('今日可兑换次数', exchange)
   logger.debug('今日可被邀请次数', invite)
-  logger.debug('最后成功时间', lastSucc || '无记录')
+  logger.debug(
+    '最后成功时间',
+    lastSucc ? new Date(lastSucc).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' }) : '无记录',
+  )
 }
