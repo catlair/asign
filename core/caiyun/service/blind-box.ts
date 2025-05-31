@@ -1,3 +1,5 @@
+import { createRequest } from '@asunajs/http'
+import { getSignHeader } from '@asunajs/utils'
 import type { M } from '../types'
 import { request } from '../utils/index.js'
 async function openBlindbox($: M) {
@@ -70,8 +72,50 @@ async function blindboxJournaling({ api, sleep }: M) {
   await sleep(200)
 }
 
-export async function blindboxTask($: M) {
-  $.logger.start('------【开盲盒】------')
+async function loginBlindBox($: M) {
+  const http = createRequest()
+
+  const specToken = await $.http.post('https://user-njs.yun.139.com/user/querySpecToken', {
+    toSourceId: '001005',
+  })
+
+  const { var: { rmkey, sid } } = await $.api.loginMail(specToken.data.token)
+
+  const artifact = await http.post(
+    `https://smsrebuild1.mail.10086.cn/setting/s?func=umc:getArtifact&sid=${sid}&cguid=${new Date().getTime()}`,
+    '',
+    {
+      headers: {
+        COOKIE: `RMKEY=${rmkey}`,
+      },
+    },
+  )
+
+  const loginInfo = await http.get(
+    `https://caiyun.feixin.10086.cn/portal/auth/v2/tyrzLogin.action?ssoToken=${artifact.var.artifact}&openAccount=0&channel=&marketName=National_BlindBox&sourceId=1005`,
+    {
+      headers: getSignHeader(
+        new Date().getTime(),
+        2,
+        `ssoToken=${artifact.var.artifact}&openAccount=0&channel=&marketName=National_BlindBox&sourceId=1005`,
+      ),
+    },
+  )
+
+  http.setHeader('jwttoken', loginInfo.result.token)
+
+  return { ...$, http }
+}
+
+export async function blindboxTask(_$: M) {
+  _$.logger.start('------【开盲盒】------')
+  let $: M
+  try {
+    $ = await loginBlindBox(_$)
+  } catch (error) {
+    $.logger.error('登录异常', error)
+    return
+  }
   try {
     await blindboxJournaling($)
     const r1 = await request($, $.api.blindboxUser, '获取盲盒用户信息')

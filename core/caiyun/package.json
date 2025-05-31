@@ -20,15 +20,16 @@
   "author": "catlair",
   "license": "MIT",
   "devDependencies": {
+    "@asign/constant": "workspace:^",
     "@asign/typed": "workspace:^",
     "@asign/types": "workspace:^",
     "@asign/unstorage": "workspace:^",
     "@asign/utils-pure": "workspace:^",
     "@types/tough-cookie": "^4.0.5",
-    "@asign/constant": "workspace:^",
     "tsconfig": "workspace:*"
   },
   "dependencies": {
+    "@asunajs/http": "workspace:^",
     "@asunajs/utils": "workspace:^"
   }
 }

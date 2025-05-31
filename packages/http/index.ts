@@ -52,16 +52,13 @@ export function mergeOptions(options: MyOptions, globalOptions: GotExtendOptions
   }
 
   const handleBody = () => {
-    if (!(options.body && options.headers['content-type'])) {
-      return
-    }
-
-    if (options.headers['content-type'].includes('form-urlencoded')) {
+    const contentType = options.headers['content-type']
+    if (contentType && contentType.includes('form-urlencoded')) {
       options.body = new URLSearchParams(options.body as any).toString()
       return
     }
 
-    if (options.headers['content-type'].includes('octet-stream')) {
+    if (contentType && contentType.includes('octet-stream')) {
       return
     }
 
