@@ -32,6 +32,7 @@
     "@asunajs/conf": "workspace:^",
     "@asunajs/http": "workspace:^",
     "@asunajs/push": "workspace:^",
+    "chromium-bidi": "^5.3.1",
     "citty": "^0.1.6",
     "defu": "^6.1.4",
     "pm2": "^6.0.5"

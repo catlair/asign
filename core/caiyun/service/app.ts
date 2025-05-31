@@ -145,7 +145,7 @@ function getTaskRunner($: M) {
       sleepSync(1000)
       await uploadRandomFile($, { channelSrc: '10200153' })
     },
-    106: ($: M) => uploadRandomFile($, { uploadSrc: '1' }),
+    106: ($: M) => uploadRandomFile($),
     107: createNoteDaily,
     434: shareTime,
     110: $.node && $.node.uploadTask,
@@ -180,7 +180,7 @@ async function update100($: M, progressNum: number) {
   $.logger.info(`开始执行每月100次上传任务`)
   for (let i = 0; i < $.config.tasks.每月上传任务单日数量; i++) {
     if (progressNum >= 100) break
-    await uploadRandomFile($, { uploadSrc: '1' })
+    await uploadRandomFile($)
     await $.sleep(500)
   }
 }

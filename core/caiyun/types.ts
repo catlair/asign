@@ -445,12 +445,6 @@ export type OutLink = Orchestration<{
   }
 }>
 
-export type CreateBatchOprTask = Orchestration<{
-  createBatchOprTaskRes: {
-    taskID: string
-  }
-}>
-
 /**
  * code 0 为成功
  * code 200106 成功，但未中

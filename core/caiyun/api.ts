@@ -1,7 +1,5 @@
-import { CAIYUN_CLIENT } from '@asign/constant'
 import type { Http } from '@asign/types'
 import { hashCode } from '@asign/utils-pure'
-import type { Buffer } from 'node:buffer'
 import { createAiRedPackApi } from './api/ai-redpack.js'
 import { createAiApi } from './api/ai.js'
 import { createBackupGiftApi } from './api/backup-gift.js'
@@ -12,11 +10,9 @@ import { createMarketApi } from './api/signin.js'
 import type { TaskList } from './task-type.js'
 import type {
   BaseType,
-  BatchList,
   BlindboxInfo,
   BlindboxUser,
   CloudRecord,
-  CreateBatchOprTask,
   DrawInfoInWx,
   DrawInWx,
   NoteBooks,
@@ -241,82 +237,7 @@ export function createApi(http: Http) {
         `${caiyunUrl}/market/playoffic/followSignInfo?isWx=true`,
       )
     },
-    queryBatchList: function queryBatchList() {
-      return http.post<BatchList>(
-        `https://grdt.middle.yun.139.com/openapi/pDynamicInfo/queryBatchList`,
-        {
-          encodeData: 'WBvKN8KKSLovAM=',
-          encodeType: 2,
-          pageSize: 3,
-          dynamicType: 2,
-        },
-      )
-    },
-    uploadFileRequest(
-      options: UploadXml,
-    ) {
-      return http.post<string>(
-        `https://ose.caiyun.feixin.10086.cn/richlifeApp/devapp/IUploadAndDownload`,
-        getUploadXml(options),
-        {
-          headers: {
-            // 'hcy-cool-flag': '1',
-            'x-yun-app-channel': options.channelSrc,
-            'x-huawei-uploadSrc': options.uploadSrc || '2',
-            'x-huawei-channelSrc': options.channelSrc || '10000023',
-            'Content-Type': 'text/xml; charset=UTF-8',
-            'x-DeviceInfo': CAIYUN_CLIENT,
-          },
-        },
-      )
-    },
-    uploadFile(url: string, id: string, file: Buffer | string, size: number) {
-      return http.post(url, file, {
-        headers: {
-          'UploadtaskID': id + '-',
-          'x-huawei-uploadSrc': '1',
-          'Content-Type': 'application/octet-stream',
-          'x-huawei-channelSrc': '10000023',
-          'User-Agent': 'okhttp/4.12.0',
-          'contentSize': size.toString(),
-          'Range': `bytes=0-${(size - 1).toString()}`,
-        },
-      })
-    },
-    createBatchOprTask(account: string, contentIds: string[]) {
-      return http.post<CreateBatchOprTask>(
-        `${yun139Url}/orchestration/personalCloud/batchOprTask/v1.0/createBatchOprTask`,
-        {
-          createBatchOprTaskReq: {
-            taskType: 2,
-            actionType: 201,
-            taskInfo: {
-              contentInfoList: contentIds,
-              catalogInfoList: [],
-              newCatalogID: '',
-            },
-            commonAccountInfo: {
-              account,
-              accountType: 1,
-            },
-          },
-        },
-      )
-    },
-    queryBatchOprTaskDetail(account: string, taskID: string) {
-      return http.post<Orchestration>(
-        `${yun139Url}/orchestration/personalCloud/batchOprTask/v1.0/queryBatchOprTaskDetail`,
-        {
-          queryBatchOprTaskDetailReq: {
-            taskID,
-            commonAccountInfo: {
-              account,
-              accountType: 1,
-            },
-          },
-        },
-      )
-    },
+
     clickTask(id: number, key = 'task') {
       return http.get<{ code: number; msg: string; result?: { msg: string } }>(
         `${mrpUrl}/market/signin/task/click?key=${key}&id=${id}`,

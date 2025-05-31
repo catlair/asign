@@ -15,6 +15,8 @@ type MyOptions =
       native?: boolean
       data?: any
       timeout?: number | GotOptions['timeout']
+      // 清理 headers
+      clearHeaders?: boolean
     },
     'body'
   >
@@ -23,7 +25,8 @@ type MyOptions =
   }
 
 export function mergeOptions(options: MyOptions, globalOptions: GotExtendOptions) {
-  options.headers = toLowerCaseHeaders(options.headers)
+  const headers = toLowerCaseHeaders(options.headers)
+  options.headers = headers
 
   // 新版本 timeout 不是 number 类型
   if (typeof options.timeout === 'number') {
@@ -37,19 +40,37 @@ export function mergeOptions(options: MyOptions, globalOptions: GotExtendOptions
    */
   options = defu(options, globalOptions) as MyOptions
 
+  if (options.clearHeaders) {
+    options.headers = headers
+    delete options.clearHeaders
+  }
+
   // 兼容之前的配置，后续删除
   if (options.data) {
     options.body = options.data
     delete options.data
   }
 
-  if (
-    options.body && options.headers['content-type'] && options.headers['content-type'].includes('form-urlencoded')
-  ) {
-    options.body = new URLSearchParams(options.body as any).toString()
-  } else if (isPlainObject(options.body)) {
-    options.body = JSON.stringify(options.body)
+  const handleBody = () => {
+    if (!(options.body && options.headers['content-type'])) {
+      return
+    }
+
+    if (options.headers['content-type'].includes('form-urlencoded')) {
+      options.body = new URLSearchParams(options.body as any).toString()
+      return
+    }
+
+    if (options.headers['content-type'].includes('octet-stream')) {
+      return
+    }
+
+    if (isPlainObject(options.body)) {
+      options.body = JSON.stringify(options.body)
+    }
   }
+
+  handleBody()
 
   return options
 }
@@ -65,7 +86,7 @@ export function createRequest(options: GotExtendOptions = {}) {
     globalOptions.cookieJar = new CookieJar()
   }
 
-  const api = got.extend(globalOptions)
+  const api = got.extend()
 
   async function request<T = any>(options: MyOptions): Promise<T> {
     options = mergeOptions(options, globalOptions)
@@ -87,10 +108,15 @@ export function createRequest(options: GotExtendOptions = {}) {
     return request<T>({ url, method: 'post', body, ...options })
   }
 
+  function put<T = any>(url: string, body: MyOptions['body'], options?: MyOptions) {
+    return request<T>({ url, method: 'put', body, ...options })
+  }
+
   const http = {
     request,
     get,
     post,
+    put,
     setOptions(options: GotExtendOptions) {
       options.headers = toLowerCaseHeaders(options.headers)
       merge(globalOptions, options)

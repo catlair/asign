@@ -25,10 +25,10 @@
     "@asign/unstorage": "workspace:^",
     "@asign/utils-pure": "workspace:^",
     "@types/tough-cookie": "^4.0.5",
+    "@asign/constant": "workspace:^",
     "tsconfig": "workspace:*"
   },
   "dependencies": {
-    "@asign/constant": "workspace:^",
     "@asunajs/utils": "workspace:^"
   }
 }

@@ -112,7 +112,7 @@ cookie authorization 字段
 ### `catalog`
 
 - **类型**: `字符串`
-- **默认值**: `"00019700101000000001"`
+- **默认值**: `"/"`
 
 上传文件使用目录的 id，默认根目录，可按需更改，但请确认 id 有效，文件夹真实存在
 
@@ -163,6 +163,13 @@ cookie authorization 字段
 
 - **类型**: `对象`
 
+#### `开启`
+
+- **类型**: `布尔值`
+- **默认值**: `false`
+
+是否开启云朵大作战
+
 #### `目标排名`
 
 - **类型**: `数字`
@@ -191,6 +198,17 @@ cookie authorization 字段
 
 游戏时间（秒），默认 300+20 秒
 
+### `盲盒`
+
+- **类型**: `对象`
+
+#### `开启`
+
+- **类型**: `布尔值`
+- **默认值**: `true`
+
+是否开启盲盒
+
 ### `文件获取方式`
 
 - **类型**: `数字`
@@ -204,53 +222,60 @@ cookie authorization 字段
 {
   "caiyun": [
     {
-      "auth": "cenaculum",
-      "nickname": "varietas",
+      "auth": "defetiscor",
+      "nickname": "averto",
       "shake": {
         "enable": true,
         "num": 15,
-        "delay": 3329085918937088
+        "delay": 4396619325767680
       },
       "garden": {
         "enable": false,
         "inviteCodes": [
-          "toties",
-          "callide",
-          "bos",
-          "debeo"
+          "suadeo",
+          "amiculum",
+          "alius"
         ],
-        "waterFriend": 1977195834638336,
+        "waterFriend": 2117364927692800,
         "开启果园助力": false
       },
       "aiRedPack": {
         "enable": true
       },
-      "backupWaitTime": 1508826656276480,
+      "backupWaitTime": 20,
       "tasks": {
-        "shareFile": "creber",
+        "shareFile": "calco",
         "skipTasks": [
-          4256968160051200
+          6479401407479808,
+          2747339462672384,
+          8046479277031424,
+          2910872347344896,
+          445883271348224
         ],
-        "每月上传任务单日数量": 1262230370779136
+        "每月上传任务单日数量": 1913573555044352
       },
-      "catalog": "00019700101000000001",
+      "catalog": "ver",
       "cloudPhoneRedpack": {
         "enable": false
       },
-      "是否打印今日云朵": false,
-      "剩余多少天刷新token": 1829635434217472,
+      "是否打印今日云朵": true,
+      "剩余多少天刷新token": 10,
       "微信抽奖": {
-        "次数": 2834721830600704,
+        "次数": 201482404102144,
         "间隔": 500
       },
       "云朵大作战": {
-        "目标排名": 500,
+        "开启": false,
+        "目标排名": 1291336510603264,
         "开启兑换": false,
         "邀请用户": [
-          "dicta",
-          "sperno"
+          "aut",
+          "tutamen"
         ],
-        "游戏时间": 300
+        "游戏时间": 8117152716423168
+      },
+      "盲盒": {
+        "开启": true
       },
       "文件获取方式": 1
     }
@@ -280,7 +305,7 @@ cookie authorization 字段
     "skipTasks": [],
     "每月上传任务单日数量": 5
   },
-  "catalog": "00019700101000000001",
+  "catalog": "/",
   "cloudPhoneRedpack": {
     "enable": false
   },
@@ -291,10 +316,14 @@ cookie authorization 字段
     "间隔": 500
   },
   "云朵大作战": {
+    "开启": false,
     "目标排名": 500,
     "开启兑换": false,
     "邀请用户": [],
     "游戏时间": 300
+  },
+  "盲盒": {
+    "开启": true
   },
   "文件获取方式": 1
 }

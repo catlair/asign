@@ -1,3 +1,4 @@
+// eslint-disable no-unused-vars
 import type { M } from '@asign/caiyun-core'
 import { uploadFileRequest } from '@asign/caiyun-core/service'
 import { createTime as _createTime, isWps, randomHex, randomNumber, setStoreArray } from '@asign/utils-pure'
@@ -51,7 +52,6 @@ export async function uploadTask($: M, progressNum: number) {
     }
   }
 }
-
 export async function uploadFile(
   $: M,
   parentCatalogID: string,
@@ -66,24 +66,7 @@ export async function uploadFile(
   randomBuffer: Buffer,
 ) {
   try {
-    $.logger.debug('开始上传文件', digest)
-    const { redirectionUrl, uploadTaskID, contentID } = await uploadFileRequest($, parentCatalogID, {
-      ext,
-      digest,
-      contentSize,
-      manualRename,
-      contentName,
-      createTime,
-    }, true)
-    if (!redirectionUrl || !randomBuffer) {
-      return Boolean(contentID)
-    }
-    $.logger.debug('别着急，文件上传中。。。', contentID)
-    const ok = await uploadFileApi(redirectionUrl.replace(/&amp;/g, '&'), uploadTaskID, randomBuffer)
-    if (ok) {
-      contentID && setStoreArray($.store, 'files', [contentID])
-    }
-    return ok
+    $.logger.warn('未实现功能')
   } catch (error) {
     $.logger.error(`上传文件异常`, error)
   }

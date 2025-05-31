@@ -14,3 +14,9 @@ export const DB_KEYS = {
   /** 分享视频 */
   SHARE_FIND: 'share_find',
 }
+
+export const CHANNEL_SRC = {
+  web: '10000034',
+  pc: '10200153',
+  android: '10000023',
+} as const

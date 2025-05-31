@@ -10,8 +10,7 @@ export async function taskExpansionTask($: M) {
 async function backFile($: M) {
   try {
     const buffer = randomHex(32)
-    const digest = $.md5(buffer)
-    const success = await uploadFile($, getBackParentCatalogID(), { manualRename: 5, digest }, buffer)
+    const success = await uploadFile($, { opType: 'backup', parentFileId: getBackParentCatalogID() }, buffer)
     if (success) {
       $.logger.debug(`文件备份成功`)
     } else {

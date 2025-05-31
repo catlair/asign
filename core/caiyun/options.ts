@@ -17,7 +17,7 @@ export const defuConfig = {
     skipTasks: [],
     每月上传任务单日数量: 5,
   },
-  catalog: '00019700101000000001',
+  catalog: '/',
   cloudPhoneRedpack: {
     enable: false,
   },
@@ -28,10 +28,14 @@ export const defuConfig = {
     间隔: 500,
   },
   云朵大作战: {
+    开启: false,
     目标排名: 500,
     开启兑换: false,
     邀请用户: [],
     游戏时间: 300,
+  },
+  盲盒: {
+    开启: true,
   },
   文件获取方式: 1,
 }

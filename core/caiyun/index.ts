@@ -1,3 +1,4 @@
+import { batchTrash } from './api/file.js'
 import { aiCloudTask } from './service/ai-cloud.js'
 import { appTask } from './service/app.js'
 import { backupGiftTask } from './service/backup-gift.js'
@@ -22,13 +23,12 @@ export type * from './types.js'
 export async function deleteFiles($: M, ids: string[]) {
   try {
     $.logger.debug(`删除文件${ids.join(',')}`)
-    const {
-      data: {
-        createBatchOprTaskRes: { taskID },
-      },
-    } = await $.api.createBatchOprTask($.config.phone, ids)
-
-    await $.api.queryBatchOprTaskDetail($.config.phone, taskID)
+    const { message, code, success } = await batchTrash($.http, ids)
+    if (success) {
+      $.logger.success(`删除文件成功`)
+      return true
+    }
+    $.logger.error(`删除文件失败`, code, message)
   } catch (error) {
     $.logger.error(`删除文件失败`, error)
   }
@@ -102,8 +102,6 @@ export async function run($: M) {
     wxDraw,
     appTask,
     shareFindTask,
-    blindboxTask,
-    hc1Task,
     shakeTask,
     receive,
     msgPushOnTask,
@@ -118,6 +116,14 @@ export async function run($: M) {
     if (config.aiRedPack && config.aiRedPack.enable) {
       taskList.push(aiRedPackTask)
       taskList.push(aiCloudTask)
+    }
+
+    if (config.云朵大作战 && config.云朵大作战.开启) {
+      taskList.push(hc1Task)
+    }
+
+    if (config.盲盒 && config.盲盒.开启) {
+      taskList.push(blindboxTask)
     }
 
     if (config.cloudPhoneRedpack && config.cloudPhoneRedpack.enable) {
