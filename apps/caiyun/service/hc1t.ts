@@ -1,5 +1,5 @@
 import type { Caiyun, M } from '@asign/caiyun-core'
-import { hc1tHandler, printHc1t } from '@asign/caiyun-core/service/hc1t'
+import { hc1tHandler, loginHecheng1T, printHc1t } from '@asign/caiyun-core/service/hc1t'
 import type { Hecheng1T } from '@asign/caiyun-core/types/hc1t'
 import { getStorage } from '@asign/unstorage'
 import { hidePhone } from '@asign/utils-pure'
@@ -100,6 +100,12 @@ async function hc1tTask($: M) {
 
   const inviters = config.邀请用户
   if (!inviters || !inviters.length) return $.logger.warn('云朵大作战未配置邀请用户，跳过执行')
+
+  try {
+    await loginHecheng1T($)
+  } catch (error) {
+    $.logger.error('云朵大作战登录失败', error)
+  }
 
   // @TODO: 兼容旧的 base64 配置
   inviters.forEach((item, i, arr) => (arr[i] = b64ToStr(item)))

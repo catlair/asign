@@ -27,6 +27,7 @@ export const config = z.object({
 
   aiRedPack: z.object({
     enable: z.boolean().default(true).optional().describe('是否开启该功能'),
+    最大次数: z.number().default(10).optional().describe('最大次数'),
   }).optional().describe('AI 红包'),
 
   backupWaitTime: z.number().default(20).optional().describe('备份等待时间（秒）'),

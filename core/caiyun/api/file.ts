@@ -133,6 +133,7 @@ function getFileOpHeader(
       'x-yun-svc-type': '1',
       // x-yun-device-id
       'x-yun-client-info': CAIYUN_PC_CLIENT,
+      'User-Agent': 'Mozilla/5.0',
     }
   }
   if (channelSrc === CHANNEL_SRC.android) {
@@ -209,7 +210,7 @@ export interface CompleteFileParams {
   opType?: OpType
 }
 
-export function completeFile(http: Http, { channelSrc, fileId, uploadId, contentHash }: CompleteFileParams) {
+export function completeFile(http: Http, { channelSrc, fileId, uploadId, contentHash, opType }: CompleteFileParams) {
   return http.post<FileResponse>(
     `https://personal-kd-njs.yun.139.com/hcy/file/complete`,
     {
@@ -220,7 +221,7 @@ export function completeFile(http: Http, { channelSrc, fileId, uploadId, content
     },
     {
       headers: {
-        ...getFileOpHeader({ channelSrc }),
+        ...getFileOpHeader({ channelSrc, opType }),
       },
     },
   )

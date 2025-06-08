@@ -10,7 +10,7 @@ type UploadFileOptions = Partial<CreateFileParams> & {
 
 export async function uploadFileRequest(
   $: M,
-  { name, parentFileId, channelSrc, size, ext, contentHash }: UploadFileOptions,
+  { name, parentFileId, channelSrc, size, ext, contentHash, ...options }: UploadFileOptions,
 ) {
   try {
     size || (size = randomNumber(1, 1000))
@@ -21,6 +21,7 @@ export async function uploadFileRequest(
       contentHash,
       size,
       channelSrc,
+      ...options,
     })
 
     if (!success) {
@@ -85,6 +86,7 @@ export async function uploadFile(
       uploadId,
       contentHash,
       channelSrc: options.channelSrc,
+      ...options,
     })
 
     if (!success) {
@@ -93,6 +95,7 @@ export async function uploadFile(
     }
 
     $.logger.debug(`上传文件成功 2`)
+    return true
   } catch (error) {
     $.logger.error(`上传文件异常`, error)
   }
@@ -102,7 +105,7 @@ export async function uploadFile(
 export async function uploadRandomFile($: M, options?: UploadFileOptions) {
   try {
     const buffer = randomHex(32)
-    return await uploadFile($, { ...options, parentFileId: $.config.catalog }, buffer)
+    return await uploadFile($, { ...options, parentFileId: '/' }, buffer)
   } catch (error) {
     $.logger.error(`uploadRandomFile 异常`, error)
   }

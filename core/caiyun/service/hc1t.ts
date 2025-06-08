@@ -1,5 +1,7 @@
 import type { LoggerType } from '@asign/types'
 import { randomNumber } from '@asign/utils-pure'
+import { createRequest } from '@asunajs/http'
+import { getSignHeader } from '@asunajs/utils'
 import type { Journaling } from '../api'
 import { encryptDataLogin } from '../api/auth'
 import { reqAction } from '../api/tools'
@@ -8,9 +10,11 @@ import type { Hecheng1T } from '../types/hc1t'
 import { request } from '../utils'
 
 export async function hc1Task($: M) {
-  const { logger, config, sleep, api } = $
+  const { logger, config, api } = $
   logger.start('------【云朵大作战】------')
   try {
+    await loginHecheng1T($)
+
     const data = await request($, api.getHecheng1T, '获取云朵大作战')
 
     printHc1t(logger, data)
@@ -67,6 +71,33 @@ export async function hc1tHandler($: M, 游戏时间: number, inviter?: string) 
     await callJournaling($, 'synthesisonet_game_tap')
     await $.sleep(3 * randomNumber(990, 1010))
   }
+}
+
+export async function loginHecheng1T($: M) {
+  const http = createRequest()
+
+  const specToken = await $.http.post('https://user-njs.yun.139.com/user/querySpecToken', {
+    toSourceId: '001005',
+  })
+
+  const loginInfo = await http.get(
+    `https://caiyun.feixin.10086.cn/portal/auth/v2/tyrzLogin.action?ssoToken=${specToken.data.token}&openAccount=0&channel=&marketName=hecheng1T&sourceId=1169`,
+    {
+      headers: getSignHeader(
+        new Date().getTime(),
+        2,
+        `ssoToken=${specToken.data.token}&openAccount=0&channel=&marketName=hecheng1T&sourceId=1169`,
+      ),
+    },
+  )
+
+  if (loginInfo.code !== 0) {
+    throw new Error(`登录云朵大作战失败: ${loginInfo.msg} (code: ${loginInfo.code})`)
+  }
+
+  http.setHeader('jwttoken', loginInfo.result.token)
+
+  return { ...$, http }
 }
 
 export async function getSignTimestamp({ logger, http }: M) {

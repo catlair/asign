@@ -10,6 +10,11 @@ export interface Http {
     data?: Record<string, any> | string,
     options?: Option,
   ): Promise<T>
+  put<T = any>(
+    url: string,
+    data?: Record<string, any> | string,
+    options?: Option,
+  ): Promise<T>
   get<T = any>(url: string, options?: Option): Promise<T>
   request?<T = any>(options?: Option): Promise<T>
   setOptions?(option: Option): Http

@@ -79,7 +79,15 @@ async function loginBlindBox($: M) {
     toSourceId: '001005',
   })
 
+  if (specToken.code !== 0 && specToken.code !== '0000' && specToken.success !== true) {
+    throw new Error(`获取 specToken 失败: ${specToken.msg || specToken.message}`)
+  }
+
   const { var: { rmkey, sid } } = await $.api.loginMail(specToken.data.token)
+
+  if (!rmkey || !sid) {
+    throw new Error('登录失败，rmkey 或 sid 未获取到')
+  }
 
   const artifact = await http.post(
     `https://smsrebuild1.mail.10086.cn/setting/s?func=umc:getArtifact&sid=${sid}&cguid=${new Date().getTime()}`,
@@ -90,6 +98,10 @@ async function loginBlindBox($: M) {
       },
     },
   )
+
+  if (!artifact.var?.artifact) {
+    throw new Error(`获取 artifact 失败: ${artifact.msg}`)
+  }
 
   const loginInfo = await http.get(
     `https://caiyun.feixin.10086.cn/portal/auth/v2/tyrzLogin.action?ssoToken=${artifact.var.artifact}&openAccount=0&channel=&marketName=National_BlindBox&sourceId=1005`,
@@ -102,6 +114,10 @@ async function loginBlindBox($: M) {
     },
   )
 
+  if (loginInfo.code !== 0) {
+    throw new Error(`登录盲盒失败: ${loginInfo.msg || loginInfo.message} (code: ${loginInfo.code})`)
+  }
+
   http.setHeader('jwttoken', loginInfo.result.token)
 
   return { ...$, http }
@@ -113,7 +129,8 @@ export async function blindboxTask(_$: M) {
   try {
     $ = await loginBlindBox(_$)
   } catch (error) {
-    $.logger.error('登录异常', error)
+    _$.logger.error('登录异常', error)
+    // $ = _$
     return
   }
   try {
