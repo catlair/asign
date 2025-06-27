@@ -46,12 +46,12 @@ export type Journaling =
   | 'synthesisonet_pv'
   | 'synthesisonet_cookie'
   | 'synthesisonet_cookie_notApp'
-  |  'National_BlindBox_clickDraw_app_oldUser'
-  |  'National_BlindBox_clickDraw'
-  |  'National_BlindBox_clickDraw_app'
-  |  'National_BlindBox_clickDraw_hasBoxPop'
-  |  'National_LanternRiddles_click_draw'
-  |  'National_LanternRiddles_click_completed_nonApp'
+  | 'National_BlindBox_clickDraw_app_oldUser'
+  | 'National_BlindBox_clickDraw'
+  | 'National_BlindBox_clickDraw_app'
+  | 'National_BlindBox_clickDraw_hasBoxPop'
+  | 'National_LanternRiddles_click_draw'
+  | 'National_LanternRiddles_click_completed_nonApp'
 
 type JournalingId =
   | '1002'
