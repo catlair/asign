@@ -2,8 +2,10 @@ import { createRequest } from '@asunajs/http'
 import { getSignHeader } from '@asunajs/utils'
 import type { M } from '../types'
 import { request } from '../utils/index.js'
+
 async function openBlindbox($: M) {
   try {
+    await blindboxJournaling2($)
     $.logger.debug('开盲盒')
     const { code, msg, result } = await $.api.openBlindbox()
     switch (code) {
@@ -69,6 +71,17 @@ async function blindboxJournaling({ api, sleep }: M) {
   await api.journaling('National_BlindBox_login')
   await sleep(200)
   await api.journaling('National_BlindBox_loginAppOuterEnd')
+  await sleep(200)
+}
+
+async function blindboxJournaling2({ api, sleep }: M) {
+  await api.journaling('National_BlindBox_clickDraw_hasBoxPop')
+  await sleep(200)
+  await api.journaling('National_BlindBox_clickDraw_app')
+  await sleep(200)
+  await api.journaling('National_BlindBox_clickDraw')
+  await sleep(200)
+  await api.journaling('National_BlindBox_clickDraw_app_oldUser')
   await sleep(200)
 }
 

@@ -191,6 +191,10 @@ async function submitAnswered($: M, id: string, a: string) {
 
 async function openRedPack($: M, puzzleId: string) {
   try {
+    await $.api.journaling('National_LanternRiddles_click_completed_nonApp', '1011')
+    await $.sleep(200)
+    await $.api.journaling('National_LanternRiddles_click_draw', '1011')
+    await $.sleep(200)
     const { code, msg, result } = await $.api.getAwarding(puzzleId)
 
     switch (code) {
